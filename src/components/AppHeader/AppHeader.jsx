@@ -5,7 +5,7 @@ import {
   ListIcon,
   ProfileIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import logo from "../images/headerLogo.svg";
+import logo from "../../images/headerLogo.svg";
 export default function AppHeader() {
   return (
     <header className={mainStyle.header}>

@@ -6,7 +6,7 @@ import PropTypes from "prop-types";
 export default function IngridientsList({ data, name }) {
   return (
     <section className={List.head}>
-      <p className={`text text_type_main-medium mt-10 mb-6`}>{name}</p>
+      <p className={`text text_type_main-medium mt-10`}>{name}</p>
       <ul className={`${List.item} ml-4 mr-4`}>
         {data.map((item) => (
           <Ingridient

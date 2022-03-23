@@ -41,7 +41,7 @@ export default function BurgerConstructor() {
                 key={item._id}
                 className={`${ConstructorStyle.element}  mb-4 pr-2`}
               >
-                <span className={`mr-5`}>
+                <span className={`mr-2`}>
                   <DragIcon />
                 </span>
                 <ConstructorBlock

@@ -8,7 +8,9 @@ export default function BurgerIngredients({ sauce, main, bun }) {
   return (
     <>
       <section className={mainStyle.head}>
-        <h1 className={`text text_type_main-large mt-10`}>Соберите бургер</h1>
+        <h1 className={`text text_type_main-large mt-10 mb-5`}>
+          Соберите бургер
+        </h1>
         <Tabs />
         <div className={mainStyle.list}>
           <IngridientsList name={"Булки"} data={bun} />

@@ -2,3 +2,9 @@
   margin: 0 auto;
   max-width: 1920px;
 }
+
+.content {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}

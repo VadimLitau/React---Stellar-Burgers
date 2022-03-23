@@ -2,12 +2,7 @@ import React from "react";
 import mainStyle from "./App.module.css";
 import AppHeader from "../AppHeader/AppHeader";
 import BurgerIngredients from "../BurgerIngredients/BurgerIngredients.jsx";
-import { BurgersData } from "../../utils/data.js";
-
-const bun = BurgersData.filter((element) => element.type === "bun");
-const main = BurgersData.filter((element) => element.type === "main");
-const sauce = BurgersData.filter((element) => element.type === "sauce");
-console.log(bun);
+import { bun, main, sauce } from "../../utils/data.js";
 
 function App() {
   return (

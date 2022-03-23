@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-export const BurgersData = [
+const BurgersData = [
     {
      "_id":"60666c42cc7b410027a1a9b1",
      "name":"Краторная булка N-200i",
@@ -212,3 +212,6 @@ export const BurgersData = [
      "__v":0
     }
 ];
+export const bun = BurgersData.filter((element) => element.type === "bun");
+export const main = BurgersData.filter((element) => element.type === "main");
+export const sauce = BurgersData.filter((element) => element.type === "sauce"); 

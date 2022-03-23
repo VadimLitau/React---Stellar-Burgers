@@ -20,3 +20,7 @@ export default function IngridientsList({ data, name }) {
     </section>
   );
 }
+IngridientsList.propTypes = {
+  data: PropTypes.array,
+  name: PropTypes.string,
+};

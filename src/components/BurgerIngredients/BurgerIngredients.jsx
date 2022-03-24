@@ -3,6 +3,7 @@ import mainStyle from "./BurgerIngredients.module.css";
 import Tabs from "./Tab/Tab";
 import PropTypes from "prop-types";
 import IngridientsList from "./IngridientsList/IngridientsList";
+import { ingredientsPropTypes } from "../../utils/data";
 
 export default function BurgerIngredients({ sauce, main, bun }) {
   return (
@@ -21,3 +22,9 @@ export default function BurgerIngredients({ sauce, main, bun }) {
     </>
   );
 }
+
+BurgerIngredients.propTypes = {
+  sauce: PropTypes.arrayOf(ingredientsPropTypes).isRequired,
+  main: PropTypes.arrayOf(ingredientsPropTypes).isRequired,
+  bun: PropTypes.arrayOf(ingredientsPropTypes).isRequired,
+};

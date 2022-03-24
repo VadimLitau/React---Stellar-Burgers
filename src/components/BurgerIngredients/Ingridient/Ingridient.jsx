@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import {
   CurrencyIcon,
   Counter,
@@ -8,7 +9,7 @@ import IngridientStyle from "./Ingridient.module.css";
 export default function Ingridient(elem) {
   return (
     <li className={`${IngridientStyle.head} mt-6 mb-8`}>
-      <img src={elem.src} alt="" className={`mb-1`} />
+      <img src={elem.src} alt="ingridienImage" className={`mb-1`} />
       <div className={`${IngridientStyle.priceWrap} mb-1`}>
         <p
           className={`${IngridientStyle.price} mr-2 text text_type_main-medium`}
@@ -26,3 +27,6 @@ export default function Ingridient(elem) {
     </li>
   );
 }
+Ingridient.propTypes = {
+  elem: PropTypes.object,
+};

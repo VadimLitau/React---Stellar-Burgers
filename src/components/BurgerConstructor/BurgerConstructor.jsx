@@ -21,7 +21,7 @@ export default function BurgerConstructor() {
                 <ConstructorBlock
                   type="top"
                   isLocked={true}
-                  text={item.name}
+                  text={`${item.name} (верх)`}
                   price={item.price}
                   thumbnail={item.image}
                 />
@@ -62,7 +62,7 @@ export default function BurgerConstructor() {
                 <ConstructorBlock
                   type="bottom"
                   isLocked={true}
-                  text={item.name}
+                  text={`${item.name} (низ)`}
                   price={item.price}
                   thumbnail={item.image}
                 />

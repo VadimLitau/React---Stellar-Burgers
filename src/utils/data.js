@@ -228,4 +228,7 @@ export const ingredientsPropTypes = PropTypes.shape({
     image_mobile: PropTypes.string,
     image_large: PropTypes.string,
     __v: PropTypes.number,
+    bun: PropTypes.array,
+    main:PropTypes.array,
+    sauce:PropTypes.array,
 });

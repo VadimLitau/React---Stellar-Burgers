@@ -13,3 +13,6 @@ export default function ConstructorBlock(props) {
     />
   );
 }
+ConstructorBlock.propTypes = {
+  props: PropTypes.object,
+};

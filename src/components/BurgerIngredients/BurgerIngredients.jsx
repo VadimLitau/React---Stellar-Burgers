@@ -3,7 +3,7 @@ import mainStyle from "./BurgerIngredients.module.css";
 import Tabs from "./Tab/Tab";
 import PropTypes from "prop-types";
 import IngridientsList from "./IngridientsList/IngridientsList";
-import { ingredientsPropTypes } from "../../utils/data";
+import { ingredientsPropTypes } from "../../utils/constants";
 
 export default function BurgerIngredients({ sauce, main, bun }) {
   return (

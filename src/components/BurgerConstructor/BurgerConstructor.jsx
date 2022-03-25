@@ -1,7 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
 import ConstructorStyle from "./BurgerConstructor.module.css";
-import { bun, BurgersData } from "../../utils/data";
 import ConstructorBlock from "./ConstructorBlock/ConstructorBlock";
 import {
   Button,
@@ -10,7 +9,8 @@ import {
 import Substract from "../../images/BurgerConstructor/Subtract.png";
 /*Достаточно долго ломал голову, не понимаю как в моей реализации кода, проверить входящие данные, т.к они приходят после работы с .filter и опционно возвращаются массивом
 Проверка через стандртное .propTypes не дает необходимого результата. Допускаю что я неправильно реализовал сам BurgerConstructor*/
-export default function BurgerConstructor() {
+export default function BurgerConstructor({ data }) {
+  const bun = data.filter((element) => element.type === "bun");
   return (
     <section className={`${ConstructorStyle.head} ml-10`}>
       <ul className={`${ConstructorStyle.list} mt-25`}>
@@ -34,7 +34,7 @@ export default function BurgerConstructor() {
       <ul
         className={`${ConstructorStyle.list} ${ConstructorStyle.element_scroll} ml-4 mr-4`}
       >
-        {BurgersData.map((item) => {
+        {data.map((item) => {
           if (item.type != "bun") {
             return (
               <li
@@ -81,3 +81,6 @@ export default function BurgerConstructor() {
     </section>
   );
 }
+BurgerConstructor.propTypes = {
+  data: PropTypes.array,
+};

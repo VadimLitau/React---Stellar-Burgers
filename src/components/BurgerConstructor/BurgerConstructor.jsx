@@ -9,13 +9,12 @@ import {
 import Substract from "../../images/BurgerConstructor/Subtract.png";
 /*Достаточно долго ломал голову, не понимаю как в моей реализации кода, проверить входящие данные, т.к они приходят после работы с .filter и опционно возвращаются массивом
 Проверка через стандртное .propTypes не дает необходимого результата. Допускаю что я неправильно реализовал сам BurgerConstructor*/
-export default function BurgerConstructor({ data }) {
-  const bun = data.filter((element) => element.type === "bun");
+export default function BurgerConstructor({ data, openModal }) {
   return (
     <section className={`${ConstructorStyle.head} ml-10`}>
       <ul className={`${ConstructorStyle.list} mt-25`}>
-        {bun.map((item) => {
-          if (item._id === "60666c42cc7b410027a1a9b1") {
+        {data.map((item) => {
+          if (item._id === "60d3b41abdacab0026a733c6") {
             return (
               <li key={item._id} className={`${ConstructorStyle.element} pr-4`}>
                 <ConstructorBlock
@@ -55,8 +54,8 @@ export default function BurgerConstructor({ data }) {
         })}
       </ul>
       <ul className={`${ConstructorStyle.list} mb-10`}>
-        {bun.map((item) => {
-          if (item._id === "60666c42cc7b410027a1a9b1") {
+        {data.map((item) => {
+          if (item._id === "60d3b41abdacab0026a733c6") {
             return (
               <li key={item._id} className={`${ConstructorStyle.element} pr-4`}>
                 <ConstructorBlock
@@ -74,7 +73,7 @@ export default function BurgerConstructor({ data }) {
       <div className={`${ConstructorStyle.sell} mr-4 mb-10`}>
         <p className={`text text_type_digits-medium mr-3`}>610</p>
         <img src={Substract} alt="icon" className={`mr-10`} />
-        <Button type="primary" size="large">
+        <Button type="primary" size="large" onClick={openModal}>
           Оформить заказ
         </Button>
       </div>

@@ -3,7 +3,7 @@ import Ingridient from "../Ingridient/Ingridient";
 import List from "./IngridientsList.module.css";
 import PropTypes from "prop-types";
 
-export default function IngridientsList({ data, name }) {
+export default function IngridientsList({ data, name, onCardClick }) {
   return (
     <section className={List.head}>
       <p className={`text text_type_main-medium mt-10`}>{name}</p>
@@ -14,6 +14,7 @@ export default function IngridientsList({ data, name }) {
             key={item._id}
             src={item.image}
             price={item.price}
+            onCardClick={onCardClick}
           />
         ))}
       </ul>
@@ -23,4 +24,5 @@ export default function IngridientsList({ data, name }) {
 IngridientsList.propTypes = {
   data: PropTypes.array,
   name: PropTypes.string,
+  onCardClick: PropTypes.func.isRequired,
 };

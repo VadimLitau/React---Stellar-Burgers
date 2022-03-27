@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-export  const burgerDataUrl = 'https://norma.nomoreparties.space/api/ingredients';
+export  const burgerDataUrl = 'https://norma.nomoreparties.space/api/';
 
 export const ingredientsPropTypes = PropTypes.shape({
     _id: PropTypes.string,
@@ -15,7 +15,4 @@ export const ingredientsPropTypes = PropTypes.shape({
     image_mobile: PropTypes.string,
     image_large: PropTypes.string,
     __v: PropTypes.number,
-    bun: PropTypes.array,
-    main:PropTypes.array,
-    sauce:PropTypes.array,
 });

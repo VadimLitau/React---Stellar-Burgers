@@ -11,28 +11,30 @@ export default function AppHeader() {
     <header className={mainStyle.header}>
       <nav>
         <ul className={mainStyle.navMenu}>
-          <li className={`pl-5 pr-5 pb-4 pt-4 mr-2`}>
-            <a href="#" target="_blank" className={`${mainStyle.listItem}`}>
+          <li className="pl-5 pr-5 pb-4 pt-4 mr-2">
+            <a href="#" className={mainStyle.listItem}>
               <BurgerIcon type="primary" />
-              <p className={`text text_type_main-default ml-2`}>Конструктор</p>
+              <p
+                className={`text text_type_main-default ml-2 ${mainStyle.itemMenu_active}`}
+              >
+                Конструктор
+              </p>
             </a>
           </li>
-          <li className={`pl-5 pr-5 pb-4 pt-4 mr-2`}>
-            <a href="#" target="_blank" className={`${mainStyle.listItem} `}>
+          <li className="l-5 pr-5 pb-4 pt-4 mr-2">
+            <a href="#" className={mainStyle.listItem}>
               <ListIcon type="secondary" />
-              <p className={`text text_type_main-default ml-2`}>
-                Лента заказов
-              </p>
+              <p className="text text_type_main-default ml-2">Лента заказов</p>
             </a>
           </li>
         </ul>
       </nav>
-      <a href="#" target="_blank">
-        <img src={logo} alt="логотип" className={`${mainStyle.logo}`} />
+      <a href="#">
+        <img src={logo} alt="логотип" className={mainStyle.logo} />
       </a>
-      <a href="#" target="_blank" className={`${mainStyle.listItem}`}>
+      <a href="#" className={mainStyle.listItem}>
         <ProfileIcon type="secondary" />
-        <p className={`text text_type_main-default ml-2`}>Личный Кабинет</p>
+        <p className="text text_type_main-default ml-2">Личный Кабинет</p>
       </a>
     </header>
   );

@@ -1,23 +1,27 @@
 import React from "react";
 import PropTypes from "prop-types";
 import ConstructorStyle from "./BurgerConstructor.module.css";
-import ConstructorBlock from "./ConstructorBlock/ConstructorBlock";
 import {
   Button,
   DragIcon,
+  CurrencyIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
+import { ingredientsPropTypes } from "../../utils/constants";
 import Substract from "../../images/BurgerConstructor/Subtract.png";
+
+import { ConstructorElement } from "@ya.praktikum/react-developer-burger-ui-components";
 /*Достаточно долго ломал голову, не понимаю как в моей реализации кода, проверить входящие данные, т.к они приходят после работы с .filter и опционно возвращаются массивом
 Проверка через стандртное .propTypes не дает необходимого результата. Допускаю что я неправильно реализовал сам BurgerConstructor*/
 export default function BurgerConstructor({ data, openModal }) {
+  const bun = data.filter((element) => element.type === "bun");
   return (
     <section className={`${ConstructorStyle.head} ml-10`}>
       <ul className={`${ConstructorStyle.list} mt-25`}>
-        {data.map((item) => {
+        {bun.map((item) => {
           if (item._id === "60d3b41abdacab0026a733c6") {
             return (
               <li key={item._id} className={`${ConstructorStyle.element} pr-4`}>
-                <ConstructorBlock
+                <ConstructorElement
                   type="top"
                   isLocked={true}
                   text={`${item.name} (верх)`}
@@ -43,7 +47,7 @@ export default function BurgerConstructor({ data, openModal }) {
                 <span className={`mr-2`}>
                   <DragIcon />
                 </span>
-                <ConstructorBlock
+                <ConstructorElement
                   text={item.name}
                   price={item.price}
                   thumbnail={item.image}
@@ -54,11 +58,11 @@ export default function BurgerConstructor({ data, openModal }) {
         })}
       </ul>
       <ul className={`${ConstructorStyle.list} mb-10`}>
-        {data.map((item) => {
+        {bun.map((item) => {
           if (item._id === "60d3b41abdacab0026a733c6") {
             return (
               <li key={item._id} className={`${ConstructorStyle.element} pr-4`}>
-                <ConstructorBlock
+                <ConstructorElement
                   type="bottom"
                   isLocked={true}
                   text={`${item.name} (низ)`}
@@ -72,7 +76,9 @@ export default function BurgerConstructor({ data, openModal }) {
       </ul>
       <div className={`${ConstructorStyle.sell} mr-4 mb-10`}>
         <p className={`text text_type_digits-medium mr-3`}>610</p>
-        <img src={Substract} alt="icon" className={`mr-10`} />
+        <div className={`${ConstructorStyle.logo} pr-10`}>
+          <CurrencyIcon />
+        </div>
         <Button type="primary" size="large" onClick={openModal}>
           Оформить заказ
         </Button>
@@ -81,5 +87,6 @@ export default function BurgerConstructor({ data, openModal }) {
   );
 }
 BurgerConstructor.propTypes = {
-  data: PropTypes.array,
+  data: PropTypes.arrayOf(ingredientsPropTypes).isRequired,
+  openModal: PropTypes.func.isRequired,
 };

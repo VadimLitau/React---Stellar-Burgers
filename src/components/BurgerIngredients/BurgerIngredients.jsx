@@ -2,16 +2,11 @@ import React from "react";
 import mainStyle from "./BurgerIngredients.module.css";
 import Tabs from "./Tab/Tab";
 import PropTypes from "prop-types";
-import IngridientsList from "./IngridientsList/IngridientsList";
+import IngridientsList from "./IngredientsList/IngredientsList";
 import { ingredientsPropTypes } from "../../utils/constants";
 
-export default function BurgerIngredients({
-  sauce,
-  main,
-  bun,
-  handleElement,
-  data,
-}) {
+export default function BurgerIngredients({ handleElement, data }) {
+  /*
   function handleIngredientCard(evt) {
     //Таргетинг на конкретного родителя
     const cardElement = evt.currentTarget.querySelector(
@@ -23,7 +18,10 @@ export default function BurgerIngredients({
     const card = cardItem(data, cardElement);
     handleElement(card);
   }
-
+*/
+  const bun = data.filter((element) => element.type === "bun");
+  const main = data.filter((element) => element.type === "main");
+  const sauce = data.filter((element) => element.type === "sauce");
   return (
     <>
       <section className={mainStyle.head}>
@@ -35,17 +33,17 @@ export default function BurgerIngredients({
           <IngridientsList
             name={"Булки"}
             data={bun}
-            onCardClick={handleIngredientCard}
+            onCardClick={handleElement}
           />
           <IngridientsList
             name={"Соусы"}
             data={sauce}
-            onCardClick={handleIngredientCard}
+            onCardClick={handleElement}
           />
           <IngridientsList
             name={"Начинки"}
             data={main}
-            onCardClick={handleIngredientCard}
+            onCardClick={handleElement}
           />
         </div>
       </section>
@@ -54,8 +52,6 @@ export default function BurgerIngredients({
 }
 
 BurgerIngredients.propTypes = {
-  sauce: PropTypes.arrayOf(ingredientsPropTypes).isRequired,
-  main: PropTypes.arrayOf(ingredientsPropTypes).isRequired,
-  bun: PropTypes.arrayOf(ingredientsPropTypes).isRequired,
+  data: PropTypes.arrayOf(ingredientsPropTypes).isRequired,
   handleElement: PropTypes.func.isRequired,
 };

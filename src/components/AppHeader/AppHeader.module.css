@@ -17,6 +17,9 @@
   align-items: center;
   max-width: 1240px;
 }
+.itemMenu_active {
+  color: #fff;
+}
 .listItem {
   display: flex;
   align-items: center;

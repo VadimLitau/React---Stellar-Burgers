@@ -8,17 +8,18 @@ import ModalOverlay from "./ModalOverlay/ModalOverlay";
 
 export default function Modal({ children, title, closeModal }) {
   const modalRoot = document.getElementById("react-modals");
+
   useEffect(() => {
     const handleEscClose = (evt) => {
       if (evt.key === "Escape") {
         closeModal();
       }
     };
+    document.addEventListener("keydown", handleEscClose);
     return () => {
-      document.addEventListener("keydown", handleEscClose);
+      document.removeEventListener("keydown", handleEscClose);
     };
   }, [closeModal]);
-
   return createPortal(
     <>
       <section>
@@ -38,3 +39,9 @@ export default function Modal({ children, title, closeModal }) {
     modalRoot
   );
 }
+
+Modal.propTypes = {
+  children: PropTypes.object.isRequired,
+  title: PropTypes.string.isRequired,
+  closeModal: PropTypes.func.isRequired,
+};

@@ -36,14 +36,15 @@ function App() {
       setIngredient(elem);
     }
   };
-
   useEffect(() => {
     const getBurgerData = async () => {
       try {
         setState({ ...state, isLoading: true, hasError: false });
-        const res = await fetch(burgerDataUrl);
-        const data = await res.json();
-        setState({ ...state, burgerData: data.data });
+        fetch(`${burgerDataUrl}` + "ingredients")
+          .then((res) => res.json())
+          .then((data) => {
+            setState({ ...state, burgerData: data.data });
+          });
       } catch (err) {
         console.log("Ошибка загрузки данных", err.message);
         setState({ ...state, isLoading: false, hasError: true });
@@ -52,25 +53,15 @@ function App() {
     getBurgerData();
   }, []);
 
-  const bun = state.burgerData.filter((element) => element.type === "bun");
-  const main = state.burgerData.filter((element) => element.type === "main");
-  const sauce = state.burgerData.filter((element) => element.type === "sauce");
   return (
     <section className={mainStyle.page}>
       <AppHeader />
       <main className={mainStyle.content}>
         <BurgerIngredients
-          main={main}
-          sauce={sauce}
-          bun={bun}
           handleElement={handleElement}
           data={state.burgerData}
         />
-        <BurgerConstructor
-          data={state.burgerData}
-          bun={bun}
-          openModal={openOrderModal}
-        />
+        <BurgerConstructor data={state.burgerData} openModal={openOrderModal} />
       </main>
       {isOrder && (
         <Modal closeModal={closeModals} title="">

@@ -16,7 +16,9 @@ export default function IngredientsList({ data, name, onCardClick }) {
             key={item._id}
             src={item.image}
             price={item.price}
-            onCardClick={onCardClick}
+            onCardClick={() =>
+              onCardClick(item)
+            } /*зараза)))это гениально)Спасибо)ы */
           />
         ))}
       </ul>

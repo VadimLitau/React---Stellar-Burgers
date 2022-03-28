@@ -38,9 +38,7 @@
   justify-content: flex-end;
   align-items: center;
 }
-.logo,
-CurrencyIcon,
-svg {
+.logo svg {
   width: 33px;
   height: 33px;
 }

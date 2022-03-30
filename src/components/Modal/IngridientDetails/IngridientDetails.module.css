@@ -1,0 +1,25 @@
+.head {
+  display: flex;
+  flex-direction: column;
+  border-radius: 32px;
+  align-items: center;
+}
+.list {
+  display: flex;
+  justify-content: center;
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+.image {
+  max-width: 480px;
+  max-height: 240px;
+  align-self: center;
+}
+.alignment {
+  text-align: center;
+}
+
+.element:last-child {
+  margin-right: 0;
+}

@@ -23,7 +23,7 @@ export default function Modal({ children, title, closeModal }) {
   return createPortal(
     <>
       <section>
-        <ModalOverlay closeModalOverlay={closeModal}>
+        <ModalOverlay>
           <div className={ModalStyle.container}>
             <div className={`${ModalStyle.text} pt-10 pr-10 pl-10`}>
               <h1 className="text text_type_main-large">{title}</h1>

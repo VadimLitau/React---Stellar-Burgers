@@ -1,6 +1,6 @@
 import React from "react";
 import { useEffect, useState, useContext } from "react";
-import { burgerDataUrl } from "../../utils/constants.js";
+import { burgerDataUrl, checkResponse } from "../../utils/constants.js";
 import mainStyle from "./App.module.css";
 import AppHeader from "../AppHeader/AppHeader";
 import BurgerIngredients from "../BurgerIngredients/BurgerIngredients";
@@ -33,7 +33,7 @@ function App() {
       try {
         setState({ ...state, isLoading: true, hasError: false });
         fetch(`${burgerDataUrl}` + "ingredients")
-          .then((res) => res.json())
+          .then(checkResponse)
           .then((data) => {
             setState({ ...state, burgerData: data.data });
           });
@@ -49,12 +49,8 @@ function App() {
       <AppHeader />
       <main className={mainStyle.content}>
         <DataContext.Provider value={{ state, setState }}>
-          <HandleContext.Provider value={setIngredient}>
+          <HandleContext.Provider value={(setOrder, setIngredient)}>
             <BurgerIngredients />
-          </HandleContext.Provider>
-        </DataContext.Provider>
-        <DataContext.Provider value={{ state, setState }}>
-          <HandleContext.Provider value={setOrder}>
             <BurgerConstructor />
           </HandleContext.Provider>
         </DataContext.Provider>

@@ -3,6 +3,13 @@ import PropTypes from 'prop-types';
 export  const burgerDataUrl = 'https://norma.nomoreparties.space/api/';
 export const orderURL = 'https://norma.nomoreparties.space/api/';
 
+export function checkResponse(res) {
+    if (res.ok) {
+      return res.json();
+    }
+    return Promise.reject(`Ошибка: ${res.status}`);
+  }
+
 export const ingredientsPropTypes = PropTypes.shape({
     _id: PropTypes.string,
     name: PropTypes.string.isRequired,

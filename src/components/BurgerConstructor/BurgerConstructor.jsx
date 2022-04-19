@@ -7,7 +7,7 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import Modal from "../Modal/Modal";
 import OrderDetails from "../Modal/OrderDetails/OrderDetails";
-import { ingredientsPropTypes } from "../../utils/constants";
+import { checkResponse } from "../../utils/constants";
 import { orderURL } from "../../utils/constants";
 import { ConstructorElement } from "@ya.praktikum/react-developer-burger-ui-components";
 import { DataContext, HandleContext } from "../../services/productsContext";
@@ -15,7 +15,6 @@ import { DataContext, HandleContext } from "../../services/productsContext";
 Проверка через стандртное .propTypes не дает необходимого результата. Допускаю что я неправильно реализовал сам BurgerConstructor*/
 export default function BurgerConstructor() {
   const state = useContext(DataContext);
-  const info = useContext(DataContext);
   const setOrder = useContext(HandleContext);
   const [testNumber, setState] = useState({
     overlay: false,
@@ -28,7 +27,7 @@ export default function BurgerConstructor() {
   const openOrderModal = () => {
     setOrder(true);
   };
-  const data = info.state.burgerData;
+  const data = state.state.burgerData;
   const bun = state.state.burgerData.filter(
     (element) => element.type === "bun"
   );
@@ -55,12 +54,7 @@ export default function BurgerConstructor() {
       },
       body: JSON.stringify({ ingredients: orderId }),
     })
-      .then((res) => {
-        if (res.ok) {
-          return res.json();
-        }
-        return Promise.reject(`Ошибка: ${res.status}`);
-      })
+      .then(checkResponse)
       .then((data) => {
         setState({
           ...testNumber,

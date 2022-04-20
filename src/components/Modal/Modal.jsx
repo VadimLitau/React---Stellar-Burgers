@@ -23,24 +23,24 @@ export default function Modal({ children, title, closeModal }) {
   return createPortal(
     <>
       <section>
-        <ModalOverlay>
-          <div className={ModalStyle.container}>
-            <div className={`${ModalStyle.text} pt-10 pr-10 pl-10`}>
-              <h1 className="text text_type_main-large">{title}</h1>
-              <button className={ModalStyle.button} onClick={closeModal}>
-                <CloseIcon type="primary" />
-              </button>
-            </div>
-            {children}
+        <ModalOverlay closeModalOverlay={closeModal} />
+        <div className={ModalStyle.container}>
+          <div className={`${ModalStyle.text} pt-10 pr-10 pl-10`}>
+            <h1 className="text text_type_main-large">{title}</h1>
+            <button className={ModalStyle.button} onClick={closeModal}>
+              <CloseIcon type="primary" />
+            </button>
           </div>
-        </ModalOverlay>
+          {children}
+        </div>
       </section>
     </>,
     modalRoot
   );
 }
-
+//Если мне кто-то сможет сказать, зачем я оберунул в компонент оверлея все выводимое им содержимое, я скажу тому человеку спасибо)
 Modal.propTypes = {
+  children: PropTypes.object.isRequired,
   children: PropTypes.oneOfType([
     PropTypes.object.isRequired,
     PropTypes.array.isRequired,

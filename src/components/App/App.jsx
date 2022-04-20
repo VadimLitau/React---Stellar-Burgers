@@ -1,6 +1,6 @@
 import React from "react";
 import { useEffect, useState, useContext } from "react";
-import { burgerDataUrl, checkResponse } from "../../utils/constants.js";
+import { baseUrl, checkResponse } from "../../utils/constants.js";
 import mainStyle from "./App.module.css";
 import AppHeader from "../AppHeader/AppHeader";
 import BurgerIngredients from "../BurgerIngredients/BurgerIngredients";
@@ -32,7 +32,7 @@ function App() {
     const getBurgerData = async () => {
       try {
         setState({ ...state, isLoading: true, hasError: false });
-        fetch(`${burgerDataUrl}` + "ingredients")
+        fetch(`${baseUrl}` + "ingredients")
           .then(checkResponse)
           .then((data) => {
             setState({ ...state, burgerData: data.data });

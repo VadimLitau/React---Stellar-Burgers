@@ -8,7 +8,7 @@ import {
 import Modal from "../Modal/Modal";
 import OrderDetails from "../Modal/OrderDetails/OrderDetails";
 import { checkResponse } from "../../utils/constants";
-import { orderURL } from "../../utils/constants";
+import { baseUrl } from "../../utils/constants";
 import { ConstructorElement } from "@ya.praktikum/react-developer-burger-ui-components";
 import { DataContext, HandleContext } from "../../services/productsContext";
 /*Достаточно долго ломал голову, не понимаю как в моей реализации кода, проверить входящие данные, т.к они приходят после работы с .filter и опционно возвращаются массивом
@@ -47,7 +47,7 @@ export default function BurgerConstructor() {
       hasError: false,
       isLoading: true,
     });
-    await fetch(`${orderURL}orders`, {
+    await fetch(`${baseUrl}orders`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json;charset=utf-8",

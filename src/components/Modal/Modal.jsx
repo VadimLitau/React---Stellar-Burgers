@@ -38,7 +38,7 @@ export default function Modal({ children, title, closeModal }) {
     modalRoot
   );
 }
-//Если мне кто-то сможет сказать, зачем я оберунул в компонент оверлея все выводимое им содержимое, я скажу тому человеку спасибо)
+//Хм, интерсно, спасибо, надо будет попробовать)))
 Modal.propTypes = {
   children: PropTypes.object.isRequired,
   children: PropTypes.oneOfType([

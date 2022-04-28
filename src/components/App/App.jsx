@@ -9,6 +9,21 @@ import Modal from "../Modal/Modal";
 import OrderDetails from "../Modal/OrderDetails/OrderDetails";
 import IngredientDetails from "../Modal/IngridientDetails/IngridientDetails";
 import { DataContext, HandleContext } from "../../services/productsContext.js";
+import Test from "../Test/Test";
+//Redux
+import { createStore, applyMiddleware, compose } from "redux";
+import { Provider } from "react-redux";
+import { rootReducer } from "../../services/reducers/index.js";
+import thunk from "redux-thunk";
+const composeEnhancers =
+  typeof window === "object" && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
+    ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({})
+    : compose;
+
+const enhancer = composeEnhancers(applyMiddleware(thunk));
+
+const store = createStore(rootReducer, enhancer);
+console.log(store.item);
 /*Ситуация аналогичная как и в BurgerConstructor */
 function App() {
   const [state, setState] = useState({
@@ -55,6 +70,9 @@ function App() {
           </HandleContext.Provider>
         </DataContext.Provider>
       </main>
+      <Provider store={store}>
+        <Test />
+      </Provider>
       {isOrder && (
         <Modal closeModal={closeModals} title="">
           <OrderDetails />

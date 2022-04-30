@@ -11,26 +11,31 @@ import { checkResponse } from "../../utils/constants";
 import { baseUrl } from "../../utils/constants";
 import { ConstructorElement } from "@ya.praktikum/react-developer-burger-ui-components";
 import { DataContext, HandleContext } from "../../services/productsContext";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  OPEN_ORDER_MODAL,
+  CLOSE_ORDER_MODAL,
+  ORDER_FAIL,
+} from "../../services/actions";
 /*Достаточно долго ломал голову, не понимаю как в моей реализации кода, проверить входящие данные, т.к они приходят после работы с .filter и опционно возвращаются массивом
 Проверка через стандртное .propTypes не дает необходимого результата. Допускаю что я неправильно реализовал сам BurgerConstructor*/
 export default function BurgerConstructor() {
-  const state = useContext(DataContext);
-  const setOrder = useContext(HandleContext);
+  const state = useSelector((store) => store);
+  const orderOverlay = state.item.overlay;
+  const dispatch = useDispatch();
+
+  const setOrder = state.item.setOrder;
   const [testNumber, setState] = useState({
     overlay: false,
     isLoading: false,
     hasError: false,
   });
+
   const closeModal = () => {
-    setState({ ...testNumber, overlay: false });
+    dispatch({ type: CLOSE_ORDER_MODAL });
   };
-  const openOrderModal = () => {
-    setOrder(true);
-  };
-  const data = state.state.burgerData;
-  const bun = state.state.burgerData.filter(
-    (element) => element.type === "bun"
-  );
+  const data = state.item.burgerData;
+  const bun = state.item.burgerData.filter((element) => element.type === "bun");
   const orderPrice = [];
   const orderId = [];
   const setOrderPrice = () => {
@@ -41,12 +46,7 @@ export default function BurgerConstructor() {
     getServOrder();
   };
   const getServOrder = async () => {
-    setState({
-      ...testNumber,
-      overlay: true,
-      hasError: false,
-      isLoading: true,
-    });
+    dispatch({ type: OPEN_ORDER_MODAL, hasError: false, isLoading: true });
     await fetch(`${baseUrl}orders`, {
       method: "POST",
       headers: {
@@ -56,16 +56,13 @@ export default function BurgerConstructor() {
     })
       .then(checkResponse)
       .then((data) => {
+        dispatch({ type: OPEN_ORDER_MODAL, isLoading: false });
         setState({
           ...testNumber,
           order: data.order.number,
-          overlay: true,
-          isLoading: false,
         });
       })
-      .catch((err) =>
-        setState({ ...testNumber, hasError: true, isLoading: false })
-      );
+      .catch((err) => dispatch({ type: ORDER_FAIL }));
   };
   return (
     <section className={`${ConstructorStyle.head} ml-10`}>
@@ -94,6 +91,7 @@ export default function BurgerConstructor() {
       >
         {data.map((item) => {
           if (item.type != "bun") {
+            //dispatch({ type: CLOSE_ORDER_MODAL, orderPrice: item.price, orderId: item.orderId })
             orderPrice.push(item.price);
             orderId.push(item._id);
             return (
@@ -138,11 +136,11 @@ export default function BurgerConstructor() {
         <div className={`${ConstructorStyle.logo} pr-10`}>
           <CurrencyIcon />
         </div>
-        {testNumber.overlay && (
+        {orderOverlay && (
           <Modal closeModal={closeModal} title={""}>
-            {testNumber.isLoading && "Загрузка..."}
-            {testNumber.hasError && "Произошла ошибка"}
-            {!testNumber.isLoading && !testNumber.hasError && (
+            {state.item.isLoading && "Загрузка..."}
+            {state.item.hasError && "Произошла ошибка"}
+            {!state.item.isLoading && !state.item.hasError && (
               <OrderDetails orderNumber={testNumber.order} />
             )}
           </Modal>
@@ -154,3 +152,4 @@ export default function BurgerConstructor() {
     </section>
   );
 }
+//

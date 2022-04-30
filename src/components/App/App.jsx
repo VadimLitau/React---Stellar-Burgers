@@ -12,23 +12,23 @@ import { DataContext, HandleContext } from "../../services/productsContext.js";
 import Test from "../Test/Test";
 /*Ситуация аналогичная как и в BurgerConstructor */
 function App() {
-  const [state, setState] = useState({
-    burgerData: [],
-    isLoading: false,
-    hasError: false,
-  });
+  // const [state, setState] = useState({
+  //   burgerData: [],
+  //   isLoading: false,
+  //   hasError: false,
+  // });
 
   //Состояние попапов
-  const [isOrder, setOrder] = useState(false);
+  // const [isOrder, setOrder] = useState(false);
 
-  const closeModals = () => {
-    setOrder(false);
-    setIngredient(null);
-  };
+  // const closeModals = () => {
+  //   setOrder(false);
+  //   setIngredient(null);
+  // };
 
   //Состояние выбора ингредиента
-  const [currentItem, setIngredient] = useState(null);
-
+  //const [currentItem, setIngredient] = useState(null);
+  /*
   useEffect(() => {
     const getBurgerData = async () => {
       try {
@@ -45,28 +45,15 @@ function App() {
     };
     getBurgerData();
   }, []);
+  */
   return (
     <section className={mainStyle.page}>
       <AppHeader />
       <main className={mainStyle.content}>
         <BurgerIngredients />
-        <DataContext.Provider value={{ state, setState }}>
-          <HandleContext.Provider value={(setOrder, setIngredient)}>
-            <BurgerConstructor />
-          </HandleContext.Provider>
-        </DataContext.Provider>
+        <BurgerConstructor />
         <Test />
       </main>
-      {isOrder && (
-        <Modal closeModal={closeModals} title="">
-          <OrderDetails />
-        </Modal>
-      )}
-      {currentItem && (
-        <Modal closeModal={closeModals} title="Детали ингредиента">
-          <IngredientDetails ingredient={currentItem} />
-        </Modal>
-      )}
     </section>
   );
 }

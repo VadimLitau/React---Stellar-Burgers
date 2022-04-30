@@ -33,10 +33,11 @@ export default function Ingredient({ src, name, price, onCardClick }) {
     </li>
   );
 }
-
+/*
 Ingredient.propTypes = {
   src: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
   price: PropTypes.number.isRequired,
   onCardClick: PropTypes.func.isRequired,
 };
+*/

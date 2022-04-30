@@ -9,7 +9,9 @@ export const initialState = {
     hasError: false,
     testAdd: 'textAdd',
     testDelete: ' testDelete',
-    count: 0
+    count: 0,
+    current: 'bun',
+
 }
 
 

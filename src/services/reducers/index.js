@@ -1,5 +1,5 @@
 import { combineReducers } from 'redux';
-import { OPEN_ORDER_MODAL, DELETE_ITEM, GET_API_ITEMS_SUCCESS, CLOSE_ORDER_MODAL, ADD_ITEM, ORDER_FAIL } from '../actions/index.js'
+import { OPEN_ORDER_MODAL, DELETE_ITEM, GET_API_ITEMS_SUCCESS, CLOSE_ORDER_MODAL, ADD_ITEM, ORDER_FAIL, GET_SERV_ORDER_REQUEST, GET_SERV_ORDER_SUCCESS, GET_SERV_ORDER_FAILED } from '../actions/index.js'
 import { burgerData } from '../../utils/Api.js';
 import { baseUrl, checkResponse } from '../../utils/constants.js';
 
@@ -7,16 +7,15 @@ export const initialState = {
     burgerData: [],
     burgerConstructorItems: [],
     bun: {},
+    servOrder: null,
     isLoading: false,
     hasError: false,
     current: 'bun',
     isOrder: false,
     setOrder: false,
     overlay: false,
-    isLoading: false,
-    hasError: false,
-    orderPrice: [],
-    orderId: []
+    servOrderRequest: false,
+    servOrderFailed: false,
 }
 
 
@@ -102,6 +101,32 @@ export const itemReducer = (state = initialState, action) => {
                         return {...item, count: 0 }
                     })
                 }
+            }
+        case GET_SERV_ORDER_REQUEST:
+            {
+                return {
+                    ...state,
+                    servOrderRequest: true
+                }
+            }
+        case GET_SERV_ORDER_SUCCESS:
+            {
+                console.log(action)
+                return {
+                    ...state,
+                    servOrderFailed: false,
+                    servOrder: action.servOrder,
+                    servOrderRequest: false,
+                    burgerConstructorItems: [],
+                    bun: {},
+                    burgerData: [...state.burgerData].map((item) => {
+                        return {...item, count: 0 }
+                    })
+                }
+            }
+        case GET_SERV_ORDER_FAILED:
+            {
+                return {...state, servOrderFailed: true, servOrderRequest: false };
             }
         default:
             {

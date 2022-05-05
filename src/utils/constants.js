@@ -1,13 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-export  const baseUrl = 'https://norma.nomoreparties.space/api/';
+export const baseUrl = 'https://norma.nomoreparties.space/api/';
 
 export function checkResponse(res) {
     if (res.ok) {
-      return res.json();
+        return res.json();
     }
     return Promise.reject(`Ошибка: ${res.status}`);
-  }
+}
 
 export const ingredientsPropTypes = PropTypes.shape({
     _id: PropTypes.string,

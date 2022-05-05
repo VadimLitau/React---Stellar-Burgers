@@ -23,6 +23,7 @@ import { useDrop } from "react-dnd";
 import DragAndDropContainer from "../DragAndDropContainer/DragAndDropContainer";
 import { v4 as uuidv4 } from "uuid";
 import { current } from "@reduxjs/toolkit";
+import { getServOrder } from "../../services/actions/index";
 /*Достаточно долго ломал голову, не понимаю как в моей реализации кода, проверить входящие данные, т.к они приходят после работы с .filter и опционно возвращаются массивом
 Проверка через стандртное .propTypes не дает необходимого результата. Допускаю что я неправильно реализовал сам BurgerConstructor*/
 export default function BurgerConstructor() {
@@ -33,11 +34,10 @@ export default function BurgerConstructor() {
   const orderOverlay = state.item.overlay;
   const dispatch = useDispatch();
   const setOrder = state.item.setOrder;
-  const [testNumber, setState] = useState({
-    overlay: false,
-    isLoading: false,
-    hasError: false,
-  });
+  // const [testNumber, setState] = useState({
+  //   isLoading: false,
+  //   hasError: false,
+  // });
 
   const closeModal = () => {
     dispatch({ type: CLOSE_ORDER_MODAL });
@@ -47,15 +47,13 @@ export default function BurgerConstructor() {
   const bun = state.item.bun;
   //console.log(burgerConstructorItems);
   //const orderPrice = [];
-  const fullId = [bun];
-
-  const orderId = [
-    `${burgerConstructorItems.map((item) => item.id)}` +
-      "," +
-      `${fullId.map((item) => item.id)}`,
-  ];
+  const bunArr = [bun].map((item) => item.id);
+  const burgerConstructorItemsArr = burgerConstructorItems.map(
+    (item) => item.id
+  );
+  const orderId = [...bunArr, ...burgerConstructorItemsArr];
   //Опять какая-то ересь, но работает) и вроде даже правильно
-  console.log(orderId);
+  //console.log(orderId);
   const setOrderPrice = () => {
     return burgerConstructorItems.reduce(
       (sum, current) => sum + current.price,
@@ -65,28 +63,30 @@ export default function BurgerConstructor() {
       : 0;
     /*Да, я понимаю что это нужно сделать через state, но без d&d мне делать это лень =) */
   };
+
   const getOrder = () => {
-    getServOrder();
+    dispatch(getServOrder(orderId));
+    dispatch({ type: OPEN_ORDER_MODAL });
   };
-  const getServOrder = async () => {
-    dispatch({ type: OPEN_ORDER_MODAL, hasError: false, isLoading: true });
-    await fetch(`${baseUrl}orders`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json;charset=utf-8",
-      },
-      body: JSON.stringify({ ingredients: orderId }),
-    })
-      .then(checkResponse)
-      .then((data) => {
-        dispatch({ type: OPEN_ORDER_MODAL, isLoading: false });
-        setState({
-          ...testNumber,
-          order: data.order.number,
-        });
-      })
-      .catch((err) => dispatch({ type: ORDER_FAIL }));
-  };
+  // const getServOrder = async () => {
+  //   dispatch({ type: OPEN_ORDER_MODAL, hasError: false, isLoading: true });
+  //   await fetch(`${baseUrl}orders`, {
+  //     method: "POST",
+  //     headers: {
+  //       "Content-Type": "application/json;charset=utf-8",
+  //     },
+  //     body: JSON.stringify({ ingredients: orderId }),
+  //   })
+  //     .then(checkResponse)
+  //     .then((data) => {
+  //       dispatch({ type: OPEN_ORDER_MODAL, isLoading: false });
+  //       setState({
+  //         ...testNumber,
+  //         order: data.order.number,
+  //       });
+  //     })
+  //     .catch((err) => dispatch({ type: ORDER_FAIL }));
+  // };
   const handleDrop = (itemId) => {
     dispatch({
       type: ADD_ITEM,
@@ -235,10 +235,10 @@ export default function BurgerConstructor() {
         </div>
         {orderOverlay && (
           <Modal closeModal={closeModal} title={""}>
-            {state.item.isLoading && "Загрузка..."}
-            {state.item.hasError && "Произошла ошибка"}
-            {!state.item.isLoading && !state.item.hasError && (
-              <OrderDetails orderNumber={testNumber.order} />
+            {state.item.servOrderRequest && "Загрузка..."}
+            {state.item.servOrderFailed && "Произошла ошибка"}
+            {!state.item.servOrderRequest && !state.item.servOrderFailed && (
+              <OrderDetails orderNumber={state.item.servOrder} />
             )}
           </Modal>
         )}

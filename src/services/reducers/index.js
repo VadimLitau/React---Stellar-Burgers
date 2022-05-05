@@ -5,9 +5,10 @@ import { baseUrl, checkResponse } from '../../utils/constants.js';
 
 export const initialState = {
     burgerData: [],
+    burgerConstructorItems: [],
+    bun: {},
     isLoading: false,
     hasError: false,
-    count: 0,
     current: 'bun',
     isOrder: false,
     setOrder: false,
@@ -23,7 +24,40 @@ export const itemReducer = (state = initialState, action) => {
     switch (action.type) {
         case ADD_ITEM:
             {
-                return {...state }
+                if (action.item.type === 'bun') {
+                    if (action.item.count < 1) {
+                        return {...state,
+                            bun: action.item,
+                            burgerData: [...state.burgerData].map((item) => {
+                                if (item.type === 'bun' && item._id === action.item.id) {
+                                    return {...item, count: ++item.count }
+                                } else if (item.type === 'bun') {
+                                    return {...item, count: 0 }
+                                } else {
+                                    return {...item }
+                                }
+                            })
+                        }
+                    }
+                } else if (action.item.type != 'bun') {
+                    return {
+                        ...state,
+                        burgerConstructorItems: [...state.burgerConstructorItems, action.item],
+                        burgerData: [...state.burgerData].map((item) => {
+                            if (item.type != 'bun' && item._id === action.item.id) {
+                                return {...item, count: ++item.count }
+                            } else {
+                                return {...item }
+                            }
+                        })
+                    }
+                } else {
+                    return {...state, bun: action.item }
+                }
+                return {
+                    ...state,
+                    burgerConstructorItems: [...state.burgerConstructorItems, action.item],
+                }
             }
         case OPEN_ORDER_MODAL:
             {
@@ -49,7 +83,16 @@ export const itemReducer = (state = initialState, action) => {
             }
         case DELETE_ITEM:
             {
-                console.log(state.testDelete);
+                const deletetElement = state.burgerConstructorItems.find(item =>
+                    item.index === action.item.index
+                )
+                console.log(action.item.index);
+                return {
+
+                    ...state,
+                    burgerData: [...state.burgerData].map(item => item._id === action.item.id ? {...item, count: --item.count } : item),
+                    burgerConstructorItems: state.burgerConstructorItems.filter(item => item != deletetElement)
+                }
             }
         case GET_API_ITEMS_SUCCESS:
             {
@@ -57,7 +100,7 @@ export const itemReducer = (state = initialState, action) => {
                     ...state,
                     burgerData: action.burgerData.map((item) => {
                         return {...item, count: 0 }
-                    }),
+                    })
                 }
             }
         default:

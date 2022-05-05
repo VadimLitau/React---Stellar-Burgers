@@ -1,4 +1,5 @@
 import { getBurgerDataRequest } from "../../utils/Api";
+import { checkResponse } from "../../utils/constants";
 export const OPEN_ORDER_MODAL = 'OPEN_ORDER_MODAL';
 export const CLOSE_ORDER_MODAL = 'CLOSE_ORDER_MODAL';
 export const ORDER_FAIL = 'ORDER_FAIL'
@@ -16,12 +17,7 @@ export function getApiBurgerData() {
         dispatch({
             type: GET_API_ITEMS_REQUEST
         });
-        getBurgerDataRequest().then((res) => {
-                if (res.ok) {
-                    return res.json()
-                }
-                return Promise.reject(res.status)
-            })
+        getBurgerDataRequest().then(checkResponse)
             .then((data) => {
                 dispatch({
                     type: GET_API_ITEMS_SUCCESS,

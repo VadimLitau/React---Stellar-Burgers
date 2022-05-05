@@ -9,6 +9,9 @@ import List from "./IngredientsList/IngredientsList.module.css";
 import Ingredient from "./Ingredient/Ingredient";
 import Modal from "../Modal/Modal";
 import IngredientDetails from "../Modal/IngridientDetails/IngridientDetails";
+import { v4 as uuidv4 } from "uuid";
+import { useDispatch } from "react-redux";
+import { getApiBurgerData } from "../../services/actions";
 export default function BurgerIngredients() {
   const [current, setCurrent] = useState("bun");
   const handleClick = (evt) => {
@@ -17,12 +20,17 @@ export default function BurgerIngredients() {
 
   const data = useSelector((store) => store.item.burgerData);
   const [state, setState] = useState({ overlay: false });
-  //console.log(data);
+  // console.log(data);
 
   const bun = data.filter((element) => element.type === "bun");
   const main = data.filter((element) => element.type === "main");
   const sauce = data.filter((element) => element.type === "sauce");
-
+  //console.log(bun);
+  const dispatch = useDispatch();
+  useEffect(() => {
+    document.title = "react burger";
+    dispatch(getApiBurgerData());
+  }, [dispatch]);
   const openModal = (item) => {
     setState({ ...state, overlay: true, ingredient: item });
     //console.log(state.ingredient);
@@ -70,6 +78,9 @@ export default function BurgerIngredients() {
             <ul className={`${List.item} ml-4 mr-4`}>
               {bun.map((item) => (
                 <Ingredient
+                  type={item.type}
+                  count={item.count}
+                  id={item._id}
                   name={item.name}
                   key={item._id}
                   src={item.image}
@@ -86,6 +97,10 @@ export default function BurgerIngredients() {
             <ul className={`${List.item} ml-4 mr-4`}>
               {main.map((item) => (
                 <Ingredient
+                  index={uuidv4()}
+                  type={item.type}
+                  count={item.count}
+                  id={item._id}
                   name={item.name}
                   key={item._id}
                   src={item.image}
@@ -102,6 +117,10 @@ export default function BurgerIngredients() {
             <ul className={`${List.item} ml-4 mr-4`}>
               {sauce.map((item) => (
                 <Ingredient
+                  index={uuidv4()}
+                  type={item.type}
+                  count={item.count}
+                  id={item._id}
                   name={item.name}
                   key={item._id}
                   src={item.image}

@@ -6,10 +6,27 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import IngredientStyle from "./Ingredient.module.css";
 import { ItemContext } from "../../../services/productsContext";
-
-export default function Ingredient({ src, name, price, onCardClick }) {
+import { useDrag } from "react-dnd";
+import { useSelector } from "react-redux";
+export default function Ingredient({
+  src,
+  name,
+  price,
+  onCardClick,
+  id,
+  count,
+  type,
+  index,
+}) {
+  const [{ isDrag }, dragRef] = useDrag({
+    type: "item",
+    item: { id, name, price, src, count, type, index },
+    collect: (monitor) => ({
+      isDrag: monitor.isDragging(),
+    }),
+  });
   return (
-    <li className={`${IngredientStyle.head} mt-6 mb-8`}>
+    <li className={`${IngredientStyle.head} mt-6 mb-8`} ref={dragRef}>
       <img
         src={src}
         alt="ingridienImage"
@@ -28,7 +45,7 @@ export default function Ingredient({ src, name, price, onCardClick }) {
         {name}
       </p>
       <div>
-        <Counter count={0} size="default" />
+        <Counter count={count} size="default" />
       </div>
     </li>
   );

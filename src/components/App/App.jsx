@@ -10,6 +10,8 @@ import OrderDetails from "../Modal/OrderDetails/OrderDetails";
 import IngredientDetails from "../Modal/IngridientDetails/IngridientDetails";
 import { DataContext, HandleContext } from "../../services/productsContext.js";
 import Test from "../Test/Test";
+import { DndProvider } from "react-dnd";
+import { HTML5Backend } from "react-dnd-html5-backend";
 /*Ситуация аналогичная как и в BurgerConstructor */
 function App() {
   // const [state, setState] = useState({
@@ -50,9 +52,10 @@ function App() {
     <section className={mainStyle.page}>
       <AppHeader />
       <main className={mainStyle.content}>
-        <BurgerIngredients />
-        <BurgerConstructor />
-        <Test />
+        <DndProvider backend={HTML5Backend}>
+          <BurgerIngredients />
+          <BurgerConstructor />
+        </DndProvider>
       </main>
     </section>
   );

@@ -57,10 +57,8 @@ export default function BurgerConstructor() {
   const setOrderPrice = () => {
     return burgerConstructorItems.reduce(
       (sum, current) => sum + current.price,
-      0
-    ) + bun.price
-      ? bun.price * 2
-      : 0;
+      0 + bun.price ? bun.price * 2 : 0
+    );
     /*Да, я понимаю что это нужно сделать через state, но без d&d мне делать это лень =) */
   };
 

@@ -1,7 +1,6 @@
 import { combineReducers } from 'redux';
-import { OPEN_ORDER_MODAL, DELETE_ITEM, GET_API_ITEMS_SUCCESS, CLOSE_ORDER_MODAL, ADD_ITEM, ORDER_FAIL, GET_SERV_ORDER_REQUEST, GET_SERV_ORDER_SUCCESS, GET_SERV_ORDER_FAILED } from '../actions/index.js'
-import { burgerData } from '../../utils/Api.js';
-import { baseUrl, checkResponse } from '../../utils/constants.js';
+import { OPEN_ORDER_MODAL, DELETE_ITEM, GET_API_ITEMS_SUCCESS, CLOSE_ORDER_MODAL, ADD_ITEM, ORDER_FAIL, GET_SERV_ORDER_REQUEST, GET_SERV_ORDER_SUCCESS, GET_SERV_ORDER_FAILED, CHANGE_ITEM } from '../actions/index.js'
+
 
 export const initialState = {
     burgerData: [],
@@ -111,7 +110,6 @@ export const itemReducer = (state = initialState, action) => {
             }
         case GET_SERV_ORDER_SUCCESS:
             {
-                console.log(action)
                 return {
                     ...state,
                     servOrderFailed: false,
@@ -127,6 +125,13 @@ export const itemReducer = (state = initialState, action) => {
         case GET_SERV_ORDER_FAILED:
             {
                 return {...state, servOrderFailed: true, servOrderRequest: false };
+            }
+        case CHANGE_ITEM:
+            {
+                const newArray = [...state.burgerConstructorItems]
+                newArray.splice(action.dragIndex, 1)
+                newArray.splice(action.hoverIndex, 0, action.dragItem)
+                return {...state, burgerConstructorItems: newArray }
             }
         default:
             {

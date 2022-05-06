@@ -1,7 +1,6 @@
 import { baseUrl } from './constants'
 
 export const getServOrderRequest = async(orderId) => {
-    //console.log(orderId)
     return await fetch(`${baseUrl}orders`, {
         method: 'POST',
         headers: {

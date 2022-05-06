@@ -4,7 +4,6 @@ import ItemStyle from "./IngridientDetails.module.css";
 import { ingredientsPropTypes } from "../../../utils/constants";
 
 export default function IngredientDetails({ ingredient }) {
-  //console.log(ingredient);
   return (
     <div className={`${ItemStyle.head} pr-25 pb-15 pl-25`}>
       <img src={ingredient.image_large} alt={ingredient.name} />

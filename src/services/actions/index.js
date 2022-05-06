@@ -15,6 +15,7 @@ export const GET_SERV_ORDER_REQUEST = 'GET_SERV_ORDER_REQUEST';
 export const GET_SERV_ORDER_SUCCESS = 'GET_SERV_ORDER_SUCCESS';
 export const GET_SERV_ORDER_FAILED = 'GET_SERV_ORDER_FAILED';
 
+export const CHANGE_ITEM = 'CHANGE_ITEM';
 export function getServOrder(orderId) {
 
     return function(dispatch) {

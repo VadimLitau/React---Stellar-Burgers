@@ -5,9 +5,7 @@ import {
   Counter,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import IngredientStyle from "./Ingredient.module.css";
-import { ItemContext } from "../../../services/productsContext";
 import { useDrag } from "react-dnd";
-import { useSelector } from "react-redux";
 export default function Ingredient({
   src,
   name,
@@ -50,11 +48,14 @@ export default function Ingredient({
     </li>
   );
 }
-/*
+
 Ingredient.propTypes = {
   src: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
   price: PropTypes.number.isRequired,
   onCardClick: PropTypes.func.isRequired,
+  count: PropTypes.number.isRequired,
+  type: PropTypes.string.isRequired,
+  id: PropTypes.string.isRequired,
+  index: PropTypes.string,
 };
-*/

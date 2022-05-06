@@ -1,11 +1,8 @@
-import React, { useContext, useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import mainStyle from "./BurgerIngredients.module.css";
-import Tabs from "./Tab/Tab";
-import IngridientsList from "./IngredientsList/IngredientsList";
 import tabStyle from "./Tab/Tab.module.css";
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useSelector } from "react-redux";
-import List from "./IngredientsList/IngredientsList.module.css";
 import Ingredient from "./Ingredient/Ingredient";
 import Modal from "../Modal/Modal";
 import IngredientDetails from "../Modal/IngridientDetails/IngridientDetails";
@@ -20,12 +17,10 @@ export default function BurgerIngredients() {
 
   const data = useSelector((store) => store.item.burgerData);
   const [state, setState] = useState({ overlay: false });
-  // console.log(data);
 
   const bun = data.filter((element) => element.type === "bun");
   const main = data.filter((element) => element.type === "main");
   const sauce = data.filter((element) => element.type === "sauce");
-  //console.log(bun);
   const dispatch = useDispatch();
   useEffect(() => {
     document.title = "react burger";
@@ -33,7 +28,6 @@ export default function BurgerIngredients() {
   }, [dispatch]);
   const openModal = (item) => {
     setState({ ...state, overlay: true, ingredient: item });
-    //console.log(state.ingredient);
   };
 
   const closeModals = () => {
@@ -73,9 +67,9 @@ export default function BurgerIngredients() {
           </Tab>
         </div>
         <div className={mainStyle.list} onScroll={ingridietScroll}>
-          <section className={List.head}>
+          <section className={mainStyle.headIngridient}>
             <p className={`text text_type_main-medium mt-10`}>Булки</p>
-            <ul className={`${List.item} ml-4 mr-4`}>
+            <ul className={`${mainStyle.itemIngridient} ml-4 mr-4`}>
               {bun.map((item) => (
                 <Ingredient
                   type={item.type}
@@ -85,16 +79,14 @@ export default function BurgerIngredients() {
                   key={item._id}
                   src={item.image}
                   price={item.price}
-                  onCardClick={() =>
-                    openModal(item)
-                  } /*зараза)))это гениально)Спасибо)ы */
+                  onCardClick={() => openModal(item)}
                 />
               ))}
             </ul>
           </section>
-          <section className={List.head}>
+          <section className={mainStyle.headIngridient}>
             <p className={`text text_type_main-medium mt-10`}>Начинки</p>
-            <ul className={`${List.item} ml-4 mr-4`}>
+            <ul className={`${mainStyle.itemIngridient} ml-4 mr-4`}>
               {main.map((item) => (
                 <Ingredient
                   index={uuidv4()}
@@ -105,16 +97,14 @@ export default function BurgerIngredients() {
                   key={item._id}
                   src={item.image}
                   price={item.price}
-                  onCardClick={() =>
-                    openModal(item)
-                  } /*зараза)))это гениально)Спасибо)ы */
+                  onCardClick={() => openModal(item)}
                 />
               ))}
             </ul>
           </section>
-          <section className={List.head}>
+          <section className={mainStyle.headIngridient}>
             <p className={`text text_type_main-medium mt-10`}>Соусы</p>
-            <ul className={`${List.item} ml-4 mr-4`}>
+            <ul className={`${mainStyle.itemIngridient} ml-4 mr-4`}>
               {sauce.map((item) => (
                 <Ingredient
                   index={uuidv4()}
@@ -125,9 +115,7 @@ export default function BurgerIngredients() {
                   key={item._id}
                   src={item.image}
                   price={item.price}
-                  onCardClick={() =>
-                    openModal(item)
-                  } /*зараза)))это гениально)Спасибо)ы */
+                  onCardClick={() => openModal(item)}
                 />
               ))}
             </ul>

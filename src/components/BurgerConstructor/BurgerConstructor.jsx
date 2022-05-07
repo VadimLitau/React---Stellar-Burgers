@@ -52,7 +52,7 @@ export default function BurgerConstructor() {
     //console.log(itemId);
     dispatch({
       type: ADD_ITEM,
-      item: itemId,
+      item: { ...itemId }, //теперь при каждой новой отрисовке ингридиентов конструктора их ключ, не меняется
     });
   };
   const [{ isHover }, dropTarget] = useDrop({

@@ -37,7 +37,7 @@ export const itemReducer = (state = initialState, action) => {
                         }
                     } else if (action.item.payload.count >= 1) { return {...state } }
                 } else if (action.item.payload.type != 'bun') {
-                    console.log(action.item.payload)
+                    console.log(state.burgerConstructorItems)
                     return {
                         ...state,
                         burgerConstructorItems: [...state.burgerConstructorItems, action.item.payload],

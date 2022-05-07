@@ -28,6 +28,8 @@ export const addIngredient = (item) => {
         payload: {...item, key: uuids },
     }
 }
+
+//Все что вы указали как "можно лучше" я обязуюсь доделать. Сейчас сдам работу как есть, т.к в любой момент могут вызвать на работу и я боюсь не успеть до дедлайна
 export function getServOrder(orderId) {
 
     return function(dispatch) {

@@ -17,17 +17,16 @@ export const initialState = {
     servOrderFailed: false,
 }
 
-
 export const itemReducer = (state = initialState, action) => {
     switch (action.type) {
         case ADD_ITEM:
             {
-                if (action.item.type === 'bun') {
-                    if (action.item.count < 1) {
+                if (action.item.payload.type === 'bun') {
+                    if (action.item.payload.count < 1) {
                         return {...state,
-                            bun: action.item,
+                            bun: action.item.payload,
                             burgerData: [...state.burgerData].map((item) => {
-                                if (item.type === 'bun' && item._id === action.item.id) {
+                                if (item.type === 'bun' && item._id === action.item.payload.id) {
                                     return {...item, count: ++item.count }
                                 } else if (item.type === 'bun') {
                                     return {...item, count: 0 }
@@ -36,13 +35,14 @@ export const itemReducer = (state = initialState, action) => {
                                 }
                             })
                         }
-                    }
-                } else if (action.item.type != 'bun') {
+                    } else if (action.item.payload.count >= 1) { return {...state } }
+                } else if (action.item.payload.type != 'bun') {
+                    console.log(action.item.payload)
                     return {
                         ...state,
-                        burgerConstructorItems: [...state.burgerConstructorItems, action.item],
+                        burgerConstructorItems: [...state.burgerConstructorItems, action.item.payload],
                         burgerData: [...state.burgerData].map((item) => {
-                            if (item.type != 'bun' && item._id === action.item.id) {
+                            if (item.type != 'bun' && item._id === action.item.payload.id) {
                                 return {...item, count: ++item.count }
                             } else {
                                 return {...item }
@@ -54,7 +54,7 @@ export const itemReducer = (state = initialState, action) => {
                 }
                 return {
                     ...state,
-                    burgerConstructorItems: [...state.burgerConstructorItems, action.item],
+                    burgerConstructorItems: [...state.burgerConstructorItems, action.item.payload],
                 }
             }
         case OPEN_ORDER_MODAL:
@@ -84,7 +84,7 @@ export const itemReducer = (state = initialState, action) => {
                 const deletetElement = state.burgerConstructorItems.find(item =>
                     item.index === action.item.index
                 )
-                console.log(action.item.index);
+
                 return {
 
                     ...state,

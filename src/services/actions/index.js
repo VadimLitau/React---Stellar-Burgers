@@ -1,5 +1,6 @@
 import { getBurgerDataRequest, getServOrderRequest } from "../../utils/Api";
 import { checkResponse } from "../../utils/constants";
+import { v4 as uuid } from "uuid";
 export const OPEN_ORDER_MODAL = 'OPEN_ORDER_MODAL';
 export const CLOSE_ORDER_MODAL = 'CLOSE_ORDER_MODAL';
 export const ORDER_FAIL = 'ORDER_FAIL'
@@ -16,6 +17,17 @@ export const GET_SERV_ORDER_SUCCESS = 'GET_SERV_ORDER_SUCCESS';
 export const GET_SERV_ORDER_FAILED = 'GET_SERV_ORDER_FAILED';
 
 export const CHANGE_ITEM = 'CHANGE_ITEM';
+
+export const ADD_INGREDIENT_BURGER = 'CONSTRUCTOR_UUID';
+
+
+export const addIngredient = (item) => {
+    const uuids = uuid();
+    return {
+        //type: ADD_INGREDIENT_BURGER,
+        payload: {...item, key: uuids },
+    }
+}
 export function getServOrder(orderId) {
 
     return function(dispatch) {

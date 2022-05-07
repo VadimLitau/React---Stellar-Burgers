@@ -12,6 +12,7 @@ import {
   OPEN_ORDER_MODAL,
   CLOSE_ORDER_MODAL,
   ADD_ITEM,
+  addIngredient,
 } from "../../services/actions";
 import { useDrop } from "react-dnd";
 import { v4 as uuidv4 } from "uuid";
@@ -48,6 +49,7 @@ export default function BurgerConstructor() {
     dispatch({ type: OPEN_ORDER_MODAL });
   };
   const handleDrop = (itemId) => {
+    //console.log(itemId);
     dispatch({
       type: ADD_ITEM,
       item: itemId,
@@ -56,7 +58,7 @@ export default function BurgerConstructor() {
   const [{ isHover }, dropTarget] = useDrop({
     accept: "item",
     drop(itemId) {
-      handleDrop(itemId);
+      handleDrop(addIngredient(itemId));
     },
     collect: (monitor) => ({
       isHover: monitor.isOver(),
@@ -90,7 +92,7 @@ export default function BurgerConstructor() {
           </p>
         )}
         {burgerConstructorItems.map((item, index) => (
-          <ChangeItem item={item} index={index} key={uuidv4()}></ChangeItem>
+          <ChangeItem item={item} index={index} key={item.key}></ChangeItem>
         ))}
       </ul>
       <ul className={`${ConstructorStyle.list} mb-10`}>
@@ -120,7 +122,12 @@ export default function BurgerConstructor() {
             )}
           </Modal>
         )}
-        <Button type="primary" size="large" onClick={getOrder}>
+        <Button
+          type="primary"
+          size="large"
+          onClick={getOrder}
+          disabled={bun.price && burgerConstructorItems.length ? false : true}
+        >
           Оформить заказ
         </Button>
       </div>

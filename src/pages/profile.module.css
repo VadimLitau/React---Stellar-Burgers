@@ -1,0 +1,31 @@
+.page {
+    margin: 0 auto;
+    max-width: 1920px;
+}
+
+.main {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    padding-top: 120px;
+}
+
+.wrap {
+    margin: 0 auto;
+    max-width: 1240px;
+}
+
+.userProfile {}
+
+.navList {
+    max-width: 320px;
+    list-style: none;
+}
+
+.navItem {
+    height: 64px;
+}
+
+.test {
+    width: 480px;
+}

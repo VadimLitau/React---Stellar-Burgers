@@ -1,3 +1,3 @@
-import { Constructor, Login } from './constructor';
+import { Constructor, Login, Profile } from './constructor';
 
-export { Constructor, Login };
+export { Constructor, Login, Profile };

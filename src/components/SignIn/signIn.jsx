@@ -33,7 +33,9 @@ function SignIn() {
         <Button>Войти</Button>
       </div>
       <div className={`pb-4 ${SignInStyle.wrap}`}>
-        <p className={`text text_type_main-small ${SignInStyle.text}`}>
+        <p
+          className={`text text_type_main-small text_color_inactive ${SignInStyle.text}`}
+        >
           Вы — новый пользователь?
         </p>
         <a
@@ -44,7 +46,9 @@ function SignIn() {
         </a>
       </div>
       <div className={SignInStyle.wrap}>
-        <p className={`text text_type_main-small ${SignInStyle.text}`}>
+        <p
+          className={`text text_type_main-small text_color_inactive ${SignInStyle.text}`}
+        >
           Забыли пароль?
         </p>
         <a

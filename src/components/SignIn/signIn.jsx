@@ -4,9 +4,16 @@ import {
   PasswordInput,
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
+import { Link } from "react-router-dom";
 import SignInStyle from "./signIn.module.css";
+import { userAuthorization } from "../../services/actions/route";
+import { useDispatch, useSelector } from "react-redux";
 
 function SignIn() {
+  const state = useSelector((store) => store);
+  console.log(state.route);
+
+  const dispatch = useDispatch();
   const [value, setValue] = React.useState("");
   const onChange = (e) => {
     setValue(e.target.value);
@@ -16,48 +23,54 @@ function SignIn() {
   const onChangePassword = (e) => {
     setValuePassword(e.target.value);
   };
+  const loginHandler = (evt) => {
+    evt.preventDefault();
+    dispatch(userAuthorization(value, valuePassword));
+  };
   return (
     <section className={SignInStyle.main}>
-      <h1 className="pb-6 text text_type_main-medium">Вход</h1>
-      <div className="pb-6">
-        <EmailInput name={"email"} value={value} onChange={onChange} />
-      </div>
-      <div className="pb-6">
-        <PasswordInput
-          onChange={onChangePassword}
-          value={valuePassword}
-          name={"password"}
-        />
-      </div>
-      <div className="pb-20 text">
-        <Button>Войти</Button>
-      </div>
-      <div className={`pb-4 ${SignInStyle.wrap}`}>
-        <p
-          className={`text text_type_main-small text_color_inactive ${SignInStyle.text}`}
-        >
-          Вы — новый пользователь?
-        </p>
-        <a
-          href="#"
-          className={`text text_type_main-small ${SignInStyle.textLink}`}
-        >
-          Зарегистрироваться
-        </a>
-      </div>
-      <div className={SignInStyle.wrap}>
-        <p
-          className={`text text_type_main-small text_color_inactive ${SignInStyle.text}`}
-        >
-          Забыли пароль?
-        </p>
-        <a
-          href="#"
-          className={`text text_type_main-small ${SignInStyle.textLink}`}
-        >
-          Восстановить пароль
-        </a>
-      </div>
+      <form className={SignInStyle.form} onSubmit={loginHandler}>
+        <h1 className="pb-6 text text_type_main-medium">Вход</h1>
+        <div className="pb-6">
+          <EmailInput name={"email"} value={value} onChange={onChange} />
+        </div>
+        <div className="pb-6">
+          <PasswordInput
+            onChange={onChangePassword}
+            value={valuePassword}
+            name={"password"}
+          />
+        </div>
+        <div className="pb-20 text">
+          <Button>Войти</Button>
+        </div>
+        <div className={`pb-4 ${SignInStyle.wrap}`}>
+          <p
+            className={`text text_type_main-small text_color_inactive ${SignInStyle.text}`}
+          >
+            Вы — новый пользователь?
+          </p>
+          <Link
+            to="/register"
+            className={`text text_type_main-small ${SignInStyle.textLink}`}
+          >
+            Зарегистрироваться
+          </Link>
+        </div>
+        <div className={SignInStyle.wrap}>
+          <p
+            className={`text text_type_main-small text_color_inactive ${SignInStyle.text}`}
+          >
+            Забыли пароль?
+          </p>
+          <Link
+            to="/forgot-password"
+            className={`text text_type_main-small ${SignInStyle.textLink}`}
+          >
+            Восстановить пароль
+          </Link>
+        </div>
+      </form>
     </section>
   );
 }

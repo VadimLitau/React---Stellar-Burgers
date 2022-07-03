@@ -6,20 +6,22 @@ import {
   ProfileIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import logo from "../../images/headerLogo.svg";
+import { Link } from "react-router-dom";
 export default function AppHeader() {
   return (
     <header className={mainStyle.header}>
       <nav>
         <ul className={mainStyle.navMenu}>
           <li className="pl-5 pr-5 pb-4 pt-4 mr-2">
-            <a href="#" className={mainStyle.listItem}>
+            <span className={mainStyle.listItem}>
               <BurgerIcon type="primary" />
-              <p
+              <Link
+                to="/"
                 className={`text text_type_main-default ml-2 ${mainStyle.itemMenu_active}`}
               >
                 Конструктор
-              </p>
-            </a>
+              </Link>
+            </span>
           </li>
           <li className="l-5 pr-5 pb-4 pt-4 mr-2">
             <a href="#" className={mainStyle.listItem}>
@@ -32,10 +34,12 @@ export default function AppHeader() {
       <a href="#">
         <img src={logo} alt="логотип" className={mainStyle.logo} />
       </a>
-      <a href="#" className={mainStyle.listItem}>
+      <span className={mainStyle.listItem}>
         <ProfileIcon type="secondary" />
-        <p className="text text_type_main-default ml-2">Личный Кабинет</p>
-      </a>
+        <Link to="/profile" className={mainStyle.link}>
+          <p className="text text_type_main-default ml-2">Личный Кабинет</p>
+        </Link>
+      </span>
     </header>
   );
 }

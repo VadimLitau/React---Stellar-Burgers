@@ -7,25 +7,43 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import forgotStyle from "./forgot.module.css";
 import AppHeader from "../components/AppHeader/AppHeader";
+import { userResetPass } from "../services/actions/route";
+import { useDispatch } from "react-redux";
+import { Link } from "react-router-dom";
 
 function Reset() {
+  const dispatch = useDispatch();
+  const [valuePass, setValuePass] = React.useState("");
+  const [valueToken, setValueToken] = React.useState("");
+  const onClickToken = () => {
+    setValueToken(valueToken);
+    dispatch(userResetPass(valueToken, valuePass));
+    //console.log(valueToken, valuePass);
+  };
   return (
     <section className={forgotStyle.page}>
       <AppHeader />
       <div className={forgotStyle.wrap}>
         <h1 className="text text_type_main-medium">Восстановление пароля</h1>
         <div className="pb-6 pt-6">
-          <PasswordInput />
+          <PasswordInput
+            value={valuePass}
+            onChange={(e) => setValuePass(e.target.value)}
+          />
         </div>
-        <Input placeholder="Введите код из письма" />
+        <Input
+          placeholder="Введите код из письма"
+          value={valueToken}
+          onChange={(e) => setValueToken(e.target.value)}
+        />
         <div className="pb-20 pt-6">
-          <Button>Сохранить</Button>
+          <Button onClick={onClickToken}>Сохранить</Button>
         </div>
         <p className="text text_type_main-small text_color_inactive">
           Вспомнили пароль?
-          <a href="#" className={forgotStyle.textLink}>
+          <Link to="/login" className={forgotStyle.textLink}>
             Войти
-          </a>
+          </Link>
         </p>
       </div>
     </section>

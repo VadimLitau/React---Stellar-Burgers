@@ -1,25 +1,38 @@
-import { useEffect, useState, React } from "react";
-import { Redirect, useLocation, Route } from "react-router-dom";
-import { useSelector } from "react-redux";
-export const ProtectedRoute = ({
-  children,
-  anonymus = true,
-  reset = false,
-}) => {
-  const state = useSelector((store) => store);
-  const { userAuth } = useSelector((store) => store.route);
+import React,{ useEffect, useState } from "react";
+import { useAuth } from "../../services/auth";
+import { Redirect,Route } from 'react-router-dom';
 
-  const location = useLocation();
+export function ProtectedRoute({ children, ...rest }) {
+  let { getUser, ...auth } = useAuth();
+    const [isUserLoaded, setUserLoaded] = useState(false);
+console.log(auth)
+    const init = async () => {
+    await getUser();
+    setUserLoaded(true);
+  };
 
-  const from = location.state?.from.pathname;
+  useEffect(() => {
+    init();
+  }, []);
 
-  console.log(userAuth);
-
-  return (
-    <Route
-      render={() => {
-        userAuth ? <Redirect to="/" /> : <Redirect to="/login" />;
-      }}
+    if (!isUserLoaded) {
+    return null;
+  }
+    return (
+      <Route
+      {...rest}
+      render={({ location }) =>
+        auth.user ? (
+          children
+        ) : (
+                    <Redirect
+                        to={{
+                            pathname: '/login',
+              state: { from: location }
+                        }}
+          />
+                )
+      }
     />
   );
-};
+} 

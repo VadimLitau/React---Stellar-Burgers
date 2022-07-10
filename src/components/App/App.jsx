@@ -8,8 +8,10 @@ import Reset from "../../pages/resetPassword";
 import PageNotFound from "../../pages/page404";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { ProtectedRoute } from "../ProtectedRoute/ProtectedRoute";
+import { ProvideAuth } from "../../services/auth";
 function App() {
   return (
+    <ProvideAuth>
     <Router>
       <Switch>
         <Route path="/login" exact={true}>
@@ -27,14 +29,15 @@ function App() {
         <Route path="/reset-password" exact={true}>
           <Reset />
         </Route>
-        <Route path="/" exact={true}>
+        <ProtectedRoute path="/" exact={true}>
           <Constructor />
-        </Route>
+        </ProtectedRoute>
         <Route>
           <PageNotFound />
         </Route>
       </Switch>
     </Router>
+    </ProvideAuth>
   );
 }
 

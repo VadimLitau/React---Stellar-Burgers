@@ -1,4 +1,4 @@
-import { getResetPass, getUserRegister, getForgotPass, getUserAuthorization } from '../../utils/Api';
+import { getResetPass, getUserRegister, getForgotPass, getUserAuthorization, getUserRequest, apdateTokenRequest } from '../../utils/Api';
 import { checkResponse } from '../../utils/constants';
 import { setCookie } from '../../utils/utils'
 
@@ -92,6 +92,7 @@ export function userAuthorization(userEmail, usePass) {
                 let accessToken = data.accessToken.split('Bearer ')[1]
                 setCookie('accessToken', accessToken)
                 localStorage.setItem("refreshToken", data.refreshToken);
+                //console.log(localStorage)
                 dispatch({
                     type: USER_AUTHORIZATION_SUCCESS,
                     data
@@ -101,6 +102,78 @@ export function userAuthorization(userEmail, usePass) {
                 dispatch({
                     type: USER_AUTHORIZATION_FAILED
                 });
+            })
+    }
+}
+
+export function userLogin(userEmail, userPassword) {
+    return function(dispatch) {
+        const data = userAuthorization(userEmail, userPassword)
+            .then(res => {
+                let authToken;
+                res.headers.forEach(header => {
+                    if (header.indexOf('Bearer') === 0) {
+                        authToken = header.split('Bearer ')[1];
+                    }
+                });
+                if (authToken) {
+                    setCookie('token', authToken);
+                }
+
+                return res.json();
+            })
+            .then(data => data);
+        console.log(data);
+
+        if (data.success) {
+            dispatch({
+                type: USER_AUTHORIZATION_SUCCESS,
+                data
+            });
+
+        }
+    }
+
+
+}
+
+export function getUserDate(user) {
+    return function(dispatch) {
+        getUserRequest()
+            .then(checkResponse)
+            .then(data => {
+                if (data.success) {
+                    dispatch({
+                        type: USER_AUTHORIZATION_SUCCESS,
+                        payload: { password: localStorage.getItem('password'), ...data.user }
+
+                    })
+
+                    console.log(localStorage)
+                }
+                return data.success;
+            })
+            .catch(e => {
+                if (user) {
+                    console.log(user.name)
+                    const data = apdateTokenRequest()
+                        .then(checkResponse)
+                        .then(data => {
+                            let authToken;
+                            if (data.accessToken && data.accessToken.indexOf('Bearer') === 0) {
+                                authToken = data.accessToken.split('Bearer ')[1];
+                            }
+                            if (authToken) {
+                                setCookie('token', authToken, 0);
+                                localStorage.setItem('refreshToken', `${data.refreshToken}`);
+                                console.log('Token обновлен')
+                            }
+                        })
+                        .catch(e => {
+                            console.log(e.type);
+                        })
+                }
+                console.log(e.type);
             })
     }
 }

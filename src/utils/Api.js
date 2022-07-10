@@ -1,4 +1,6 @@
 import { baseUrl } from './constants'
+import { getCookie } from './utils'
+console.log(getCookie('token'))
 
 export const getServOrderRequest = async(orderId) => {
     return await fetch(`${baseUrl}orders`, {
@@ -66,3 +68,46 @@ export const getUserAuthorization = async(userEmail, userPassword) => {
     })
 
 }
+
+export const getUserRequest = async() =>
+    await fetch(`${baseUrl}auth/user`, {
+        method: 'GET',
+        mode: 'cors',
+        cache: 'no-cache',
+        credentials: 'same-origin',
+        headers: {
+            'Content-Type': 'application/json',
+            Authorization: 'Bearer ' + getCookie('token')
+        },
+        redirect: 'follow',
+        referrerPolicy: 'no-referrer'
+    });
+
+export const apdateUserDataRequest = async(userEmail, userPassword) =>
+    await fetch(`${baseUrl}auth/user`, {
+        method: 'PATCH',
+        mode: 'cors',
+        cache: 'no-cache',
+        credentials: 'same-origin',
+        headers: {
+            'Content-Type': 'application/json',
+            Authorization: 'Bearer ' + getCookie('token')
+        },
+        redirect: 'follow',
+        referrerPolicy: 'no-referrer',
+        body: JSON.stringify(userEmail, userPassword)
+    });
+
+export const apdateTokenRequest = async() =>
+    await fetch(`${baseUrl}auth/token`, {
+        method: 'POST',
+        mode: 'cors',
+        cache: 'no-cache',
+        credentials: 'same-origin',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        redirect: 'follow',
+        referrerPolicy: 'no-referrer',
+        body: localStorage.getItem('refreshToken')
+    });

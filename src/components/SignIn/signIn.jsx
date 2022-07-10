@@ -1,18 +1,20 @@
-import React from "react";
+import React,{ useCallback}  from "react";
 import {
   EmailInput,
   PasswordInput,
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import { Link } from "react-router-dom";
+import { Link,Redirect, useHistory  } from "react-router-dom";
 import SignInStyle from "./signIn.module.css";
 import { userAuthorization } from "../../services/actions/route";
 import { useDispatch, useSelector } from "react-redux";
+import { useAuth } from "../../services/auth";
 
 function SignIn() {
   const state = useSelector((store) => store);
-  console.log(state.route);
-
+  //console.log(state.route.userAuthorizationSuccess);
+  let auth = useAuth();
+  let history = useHistory();
   const dispatch = useDispatch();
   const [value, setValue] = React.useState("");
   const onChange = (e) => {
@@ -27,6 +29,26 @@ function SignIn() {
     evt.preventDefault();
     dispatch(userAuthorization(value, valuePassword));
   };
+  let login = useCallback(
+    e => {
+      e.preventDefault();
+      //console.log(auth)
+      auth.signIn(() => {
+        history.replace({ pathname: '/' });
+      });
+    },
+    [auth, history]
+  );
+
+  if (state.route.userAuthorizationSuccess) {
+    return (
+      <Redirect
+        to={{
+          pathname: '/'
+        }}
+      />
+    );
+  }
   return (
     <section className={SignInStyle.main}>
       <form className={SignInStyle.form} onSubmit={loginHandler}>

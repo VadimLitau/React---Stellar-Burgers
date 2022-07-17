@@ -49,7 +49,7 @@ export default function BurgerConstructor() {
     dispatch({ type: OPEN_ORDER_MODAL });
   };
   const handleDrop = (itemId) => {
-    //console.log(itemId);
+    console.log(itemId);
     dispatch({
       type: ADD_ITEM,
       item: { ...itemId }, //теперь при каждой новой отрисовке ингридиентов конструктора их ключ, не меняется
@@ -58,6 +58,7 @@ export default function BurgerConstructor() {
   const [{ isHover }, dropTarget] = useDrop({
     accept: "item",
     drop(itemId) {
+      console.log(itemId);
       handleDrop(addIngredient(itemId));
     },
     collect: (monitor) => ({

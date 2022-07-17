@@ -34,11 +34,13 @@ export default function ChangeItem({ item, index }) {
     drop(item) {
       changeItem(index, item);
     },
-  });
+  }
+  );
 
   drag(drop(ref));
 
   const changeItem = (hoverIndex, item) => {
+    console.log(item);
     dispatch({
       type: CHANGE_ITEM,
       dragItem: item.item,

@@ -137,6 +137,8 @@ export function userLogin(userEmail, userPassword) {
 
 }
 
+export function logoutRequest() {}
+
 export function getUserDate(user) {
     return function(dispatch) {
         getUserRequest()

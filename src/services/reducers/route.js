@@ -71,7 +71,7 @@ export const routeReducer = (state = initialState, action) => {
                     userAuthorizationRequest: false,
                     userAuthorizationSuccess: true,
                     userAuth: true,
-                    userAuthProfile: { name: action.data.user.name, email: action.data.user.email }
+                    userAuthProfile: { name: action.data.user.name, email: action.data.user.email, password: action.data.user.password }
                 }
             }
         case USER_AUTHORIZATION_FAILED:

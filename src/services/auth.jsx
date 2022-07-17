@@ -1,6 +1,6 @@
 import React from "react";
 import { useContext, useState, createContext } from 'react';
-import { userLogin,getUserDate } from "./actions/route";
+import { userLogin,getUserDate} from "./actions/route";
 import { setCookie } from "../utils/utils";
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -71,6 +71,9 @@ const signIn = (userEmail, userPassword) => dispatch(userLogin(userEmail, userPa
   //   });
   // };
 
+  const signOut =async()=>{
+    await logoutRequest()
+  }
   return {
     user,
     signIn,

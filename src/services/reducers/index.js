@@ -23,12 +23,13 @@ export const itemReducer = (state = initialState, action) => {
         case ADD_ITEM:
             {
                 if (action.item.payload.type === 'bun') {
+                    console.log(action.item.payload)
                     if (action.item.payload.count < 1) {
                         return {...state,
                             bun: action.item.payload,
                             burgerData: [...state.burgerData].map((item) => {
                                 if (item.type === 'bun' && item._id === action.item.payload.id) {
-                                    return {...item, count: ++item.count }
+                                    return {...item, count: ++item.count + 1 }
                                 } else if (item.type === 'bun') {
                                     return {...item, count: 0 }
                                 } else {
@@ -38,11 +39,12 @@ export const itemReducer = (state = initialState, action) => {
                         }
                     } else if (action.item.payload.count >= 1) { return {...state } }
                 } else if (action.item.payload.type != 'bun') {
-                    console.log(state.burgerConstructorItems)
+                    //console.log(state.burgerConstructorItems)
                     return {
                         ...state,
                         burgerConstructorItems: [...state.burgerConstructorItems, action.item.payload],
                         burgerData: [...state.burgerData].map((item) => {
+                            //console.log(action.item)
                             if (item.type != 'bun' && item._id === action.item.payload.id) {
                                 return {...item, count: ++item.count }
                             } else {
@@ -82,6 +84,7 @@ export const itemReducer = (state = initialState, action) => {
             }
         case DELETE_ITEM:
             {
+                console.log(action.item)
                 const deletetElement = state.burgerConstructorItems.find(item =>
                     item.index === action.item.index
                 )

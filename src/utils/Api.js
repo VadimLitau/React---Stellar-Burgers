@@ -69,6 +69,22 @@ export const getUserAuthorization = async(userEmail, userPassword) => {
 
 }
 
+
+export const logoutRequest = async(token) => {
+    return await fetch(`${baseUrl}auth/logout`, {
+        method: 'POST',
+        mode: 'cors',
+        cache: 'no-cache',
+        credentials: 'same-origin',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        redirect: 'follow',
+        referrerPolicy: 'no-referrer',
+        body: JSON.stringify(token)
+    });
+};
+
 export const getUserRequest = async() =>
     await fetch(`${baseUrl}auth/user`, {
         method: 'GET',

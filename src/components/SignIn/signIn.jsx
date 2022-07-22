@@ -1,46 +1,42 @@
-import React,{ useCallback}  from "react";
+import React,{ useCallback, useState}  from "react";
 import {
   EmailInput,
   PasswordInput,
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import { Link,Redirect, useHistory  } from "react-router-dom";
+import { Link,Redirect, useHistory,useLocation  } from "react-router-dom";
 import SignInStyle from "./signIn.module.css";
 import { userAuthorization } from "../../services/actions/route";
 import { useDispatch, useSelector } from "react-redux";
 import { useAuth } from "../../services/auth";
+import { setCookie } from '../../utils/utils'
 
 function SignIn() {
-  const state = useSelector((store) => store);
   //console.log(state.route.userAuthorizationSuccess);
-  let auth = useAuth();
-  let history = useHistory();
-  const dispatch = useDispatch();
-  const [value, setValue] = React.useState("");
+  const auth = useAuth();
+  const [value, setValue] = useState("");
   const onChange = (e) => {
     setValue(e.target.value);
   };
 
-  const [valuePassword, setValuePassword] = React.useState("");
+  const [valuePassword, setValuePassword] = useState("");
   const onChangePassword = (e) => {
     setValuePassword(e.target.value);
   };
-  const loginHandler = (evt) => {
-    evt.preventDefault();
-    dispatch(userAuthorization(value, valuePassword));
-  };
-  let login = useCallback(
+  // const loginHandler = (evt) => {
+  //   evt.preventDefault();
+  //   dispatch(userAuthorization(value, valuePassword));
+  // };
+  const loginHandler = useCallback(
     e => {
       e.preventDefault();
-      //console.log(auth)
-      auth.signIn(() => {
-        history.replace({ pathname: '/' });
-      });
+      auth.signIn(value, valuePassword);      
+      console.log(auth)
     },
-    [auth, history]
+    [auth, value, valuePassword]
   );
-
-  if (state.route.userAuthorizationSuccess) {
+  console.log(auth)
+  if (auth.user) {
     return (
       <Redirect
         to={{

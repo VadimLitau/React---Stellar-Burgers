@@ -1,20 +1,20 @@
 import React from "react";
 import { useContext, useState, createContext } from 'react';
-import { userLogin,getUserDate} from "./actions/route";
+import { userAuthorization,getUserDate,logoutRequest,signOutUser} from "./actions/route";
 import { setCookie } from "../utils/utils";
 import { useDispatch, useSelector } from 'react-redux';
 
-const fakeAuth = {
-  isAuthenticated: false,
-  signIn(cb) {
-    fakeAuth.isAuthenticated = true;
-    setTimeout(cb, 100); // fake async
-  },
-  signOut(cb) {
-    fakeAuth.isAuthenticated = false;
-    setTimeout(cb, 100);
-  }
-};
+// const fakeAuth = {
+//   isAuthenticated: false,
+//   signIn(cb) {
+//     fakeAuth.isAuthenticated = true;
+//     setTimeout(cb, 100); // fake async
+//   },
+//   signOut(cb) {
+//     fakeAuth.isAuthenticated = false;
+//     setTimeout(cb, 100);
+//   }
+// };
 
 const AuthContext = createContext(undefined);
 
@@ -39,7 +39,9 @@ export function useProvideAuth() {
   console.log(user)
   
   const getUser = () => dispatch(getUserDate(user));
-const signIn = (userEmail, userPassword) => dispatch(userLogin(userEmail, userPassword))
+const signIn = (userEmail, userPassword) => dispatch(userAuthorization(userEmail, userPassword))
+const signOut = (token) => dispatch(signOutUser(token));
+
   // const signIn = async (userEmail, userPassword) => {
   //   const data = await userAuthorization(userEmail, userPassword)
   //   .then(res => {
@@ -71,13 +73,13 @@ const signIn = (userEmail, userPassword) => dispatch(userLogin(userEmail, userPa
   //   });
   // };
 
-  const signOut =async()=>{
-    await logoutRequest()
-  }
+  // const signOut =async()=>{
+  //   await logoutRequest()
+  // }
   return {
     user,
     signIn,
     getUser,
-    //signOut
+    signOut
   };
 }

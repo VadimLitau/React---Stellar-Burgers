@@ -13,7 +13,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 function Registration() {
   const state = useSelector((store) => store);
-  console.log(state);
+  //console.log(state);
   const dispatch = useDispatch();
   const [valueName, setValueName] = React.useState("");
   const [valuePassword, setValuePassword] = React.useState("");

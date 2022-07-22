@@ -58,7 +58,7 @@ export default function BurgerConstructor() {
   const [{ isHover }, dropTarget] = useDrop({
     accept: "item",
     drop(itemId) {
-      console.log(itemId);
+      //console.log(itemId);
       handleDrop(addIngredient(itemId));
     },
     collect: (monitor) => ({

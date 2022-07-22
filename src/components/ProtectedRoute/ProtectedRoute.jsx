@@ -5,7 +5,7 @@ import { Redirect,Route } from 'react-router-dom';
 export function ProtectedRoute({ children, ...rest }) {
   let { getUser, ...auth } = useAuth();
     const [isUserLoaded, setUserLoaded] = useState(false);
-console.log(auth)
+//console.log(auth)
     const init = async () => {
     await getUser();
     setUserLoaded(true);
@@ -18,11 +18,13 @@ console.log(auth)
     if (!isUserLoaded) {
     return null;
   }
+
+ // console.log(auth.user)
     return (
       <Route
       {...rest}
       render={({ location }) =>
-        auth.user ? (
+        auth.user? (
           children
         ) : (
                     <Redirect

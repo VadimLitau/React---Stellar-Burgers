@@ -1,4 +1,4 @@
-import { USER_REGISTER_SUCCESS, USER_REGISTER_REQUEST, USER_REGISTER_FAILED, USER_FORGOT_SUCCESS, USER_FORGOT_REQUEST, USER_FORGOT_FAILED, USER_AUTHORIZATION_SUCCESS, USER_AUTHORIZATION_REQUEST, USER_AUTHORIZATION_FAILED } from '../actions/route';
+import { USER_REGISTER_SUCCESS, USER_REGISTER_REQUEST, USER_REGISTER_FAILED, USER_FORGOT_SUCCESS, USER_FORGOT_REQUEST, USER_FORGOT_FAILED, USER_AUTHORIZATION_SUCCESS, USER_AUTHORIZATION_REQUEST, USER_AUTHORIZATION_FAILED, USER_LOGOUT } from '../actions/route';
 
 export const initialState = {
     userRegistrationSuccess: false,
@@ -67,11 +67,16 @@ export const routeReducer = (state = initialState, action) => {
             }
         case USER_AUTHORIZATION_SUCCESS:
             {
+                const { email, name, password } = action.payload;
                 return {...state,
                     userAuthorizationRequest: false,
                     userAuthorizationSuccess: true,
                     userAuth: true,
-                    userAuthProfile: { name: action.data.user.name, email: action.data.user.email, password: action.data.user.password }
+                    userAuthProfile: {...state.user,
+                        email: email,
+                        name: name,
+                        password: password
+                    }
                 }
             }
         case USER_AUTHORIZATION_FAILED:
@@ -81,6 +86,17 @@ export const routeReducer = (state = initialState, action) => {
                     userAuthorizationFailed: true,
                     userAuth: false
                 }
+            }
+        case USER_LOGOUT:
+            {
+                return {
+                    ...state,
+                    user: {...state.user,
+                        email: '',
+                        name: '',
+                        password: ''
+                    }
+                };
             }
         default:
             {

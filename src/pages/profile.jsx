@@ -1,30 +1,44 @@
-import React from "react";
+import React, {useState, useCallback} from "react";
 import {
   EmailInput,
   PasswordInput,
   Input,
+  Button
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import ProfileStyle from "./profile.module.css";
 import AppHeader from "../components/AppHeader/AppHeader";
-
+import { useSelector } from "react-redux";
+import { useAuth } from "../services/auth";
 function Profile() {
+  const state = useSelector((store) => store);
+  console.log(state.route.userAuthProfile)
   //Input
-  const [valueInput, setValueInput] = React.useState("Марк");
+  const [valueInput, setValueInput] = useState(`${state.route.userAuthProfile.name}`);
   const inputRefInput = React.useRef(null);
   const onIconClickInput = () => {
     setTimeout(() => inputRefInput.current.focus(), 0);
-    alert("Icon Click Callback");
+    //alert("Icon Click Callback");
   };
   //Email
-  const [valueEmail, setValueEmail] = React.useState("bob@example.com");
+  const [valueEmail, setValueEmail] = useState(`${state.route.userAuthProfile.email}`);
   const onChangeEmail = (e) => {
     setValueEmail(e.target.value);
   };
   //Password
-  const [valuePassword, setValuePassword] = React.useState("password");
+  const [valuePassword, setValuePassword] = useState("password");
   const onChangePassword = (e) => {
     setValuePassword(e.target.value);
   };
+  let auth = useAuth();
+const handleClickLogout = useCallback(
+  e => {
+    e.preventDefault();
+    console.log(localStorage.getItem('token'))
+    auth.signOut(localStorage.getItem('token'));
+  },
+  [auth]
+);
+  
   return (
     <section className={ProfileStyle.page}>
       <AppHeader />
@@ -42,7 +56,7 @@ function Profile() {
               >
                 История Заказов
               </li>
-              <li
+              <li onClick={handleClickLogout} style={{cursor:'pointer'}}
                 className={`text text_type_main-medium text_color_inactive ${ProfileStyle.navItem}`}
               >
                 Выход

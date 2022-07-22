@@ -1,6 +1,5 @@
 import { baseUrl } from './constants'
 import { getCookie } from './utils'
-console.log(getCookie('token'))
 
 export const getServOrderRequest = async(orderId) => {
     return await fetch(`${baseUrl}orders`, {
@@ -58,9 +57,14 @@ export const getUserRegister = async(userName, userEmail, userPassword) => {
 export const getUserAuthorization = async(userEmail, userPassword) => {
     return await fetch(`${baseUrl}auth/login`, {
         method: 'POST',
+        mode: 'cors',
+        cache: 'no-cache',
+        credentials: 'same-origin',
         headers: {
-            'Content-Type': 'application/json;charset=utf-8',
+            'Content-Type': 'application/json'
         },
+        redirect: 'follow',
+        referrerPolicy: 'no-referrer',
         body: JSON.stringify({
             "email": userEmail,
             "password": userPassword
@@ -85,8 +89,8 @@ export const logoutRequest = async(token) => {
     });
 };
 
-export const getUserRequest = async() =>
-    await fetch(`${baseUrl}auth/user`, {
+export const getUserRequest = async() => {
+    return await fetch(`${baseUrl}auth/user`, {
         method: 'GET',
         mode: 'cors',
         cache: 'no-cache',
@@ -98,9 +102,10 @@ export const getUserRequest = async() =>
         redirect: 'follow',
         referrerPolicy: 'no-referrer'
     });
+}
 
-export const apdateUserDataRequest = async(userEmail, userPassword) =>
-    await fetch(`${baseUrl}auth/user`, {
+export const apdateUserDataRequest = async(userEmail, userPassword) => {
+    return await fetch(`${baseUrl}auth/user`, {
         method: 'PATCH',
         mode: 'cors',
         cache: 'no-cache',
@@ -113,6 +118,7 @@ export const apdateUserDataRequest = async(userEmail, userPassword) =>
         referrerPolicy: 'no-referrer',
         body: JSON.stringify(userEmail, userPassword)
     });
+}
 
 export const apdateTokenRequest = async() =>
     await fetch(`${baseUrl}auth/token`, {

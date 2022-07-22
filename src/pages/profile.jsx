@@ -9,9 +9,10 @@ import ProfileStyle from "./profile.module.css";
 import AppHeader from "../components/AppHeader/AppHeader";
 import { useSelector } from "react-redux";
 import { useAuth } from "../services/auth";
+import {Redirect} from "react-router-dom";
 function Profile() {
   const state = useSelector((store) => store);
-  console.log(state.route.userAuthProfile)
+  //console.log(state.route.userAuthProfile)
   //Input
   const [valueInput, setValueInput] = useState(`${state.route.userAuthProfile.name}`);
   const inputRefInput = React.useRef(null);
@@ -33,11 +34,21 @@ function Profile() {
 const handleClickLogout = useCallback(
   e => {
     e.preventDefault();
-    console.log(localStorage.getItem('token'))
-    auth.signOut(localStorage.getItem('token'));
+    //console.log(localStorage.getItem('token'))
+    auth.signOut(localStorage.getItem('refreshToken'));
   },
   [auth]
 );
+//
+if (!state.route.userAuth) {
+  return (
+    <Redirect
+      to={{
+        pathname: '/'
+      }}
+    />
+  );
+}
   
   return (
     <section className={ProfileStyle.page}>

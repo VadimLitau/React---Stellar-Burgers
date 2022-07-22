@@ -91,6 +91,7 @@ export const routeReducer = (state = initialState, action) => {
             {
                 return {
                     ...state,
+                    userAuth: false,
                     user: {...state.user,
                         email: '',
                         name: '',

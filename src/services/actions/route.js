@@ -95,11 +95,13 @@ export function userAuthorization(userEmail, usePass) {
                     authToken = data.accessToken.split('Bearer ')[1];
                 }
                 if (authToken) {
+                    console.log(data.refreshToken);
                     setCookie('token', authToken, 0);
                     localStorage.setItem('refreshToken', `${data.refreshToken}`);
+                    //localStorage.setItem('token', `${authToken}`);
                 }
                 if (data.success) {
-                    console.log(data);
+                    // console.log(data);
                     dispatch({
                         type: USER_AUTHORIZATION_SUCCESS,
                         payload: { userEmail, usePass, ...data.user }
@@ -169,7 +171,9 @@ export function userAuthorization(userEmail, usePass) {
 // }
 
 export function signOutUser(token) {
+
     return function(dispatch) {
+        console.log(token)
         logoutRequest(token)
             .then(checkResponse)
             .then(data => data)

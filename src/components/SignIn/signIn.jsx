@@ -13,6 +13,8 @@ import { setCookie } from '../../utils/utils'
 
 function SignIn() {
   //console.log(state.route.userAuthorizationSuccess);
+  
+  const state = useSelector((store) => store);
   const auth = useAuth();
   const [value, setValue] = useState("");
   const onChange = (e) => {
@@ -31,11 +33,11 @@ function SignIn() {
     e => {
       e.preventDefault();
       auth.signIn(value, valuePassword);      
-      console.log(auth)
+      //console.log(auth)
     },
     [auth, value, valuePassword]
   );
-  console.log(auth)
+  //console.log(auth)
   if (auth.user) {
     return (
       <Redirect

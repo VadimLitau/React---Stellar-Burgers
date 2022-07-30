@@ -8,10 +8,11 @@ import {
 import forgotStyle from "./forgot.module.css";
 import AppHeader from "../components/AppHeader/AppHeader";
 import { userResetPass } from "../services/actions/route";
-import { useDispatch } from "react-redux";
-import { Link } from "react-router-dom";
+import { useDispatch, useSelector  } from "react-redux";
+import { Link,Redirect } from "react-router-dom";
 
 function Reset() {
+  const state = useSelector((store) => store);
   const dispatch = useDispatch();
   const [valuePass, setValuePass] = React.useState("");
   const [valueToken, setValueToken] = React.useState("");
@@ -20,6 +21,16 @@ function Reset() {
     dispatch(userResetPass(valueToken, valuePass));
     //console.log(valueToken, valuePass);
   };
+
+  if (state.route.userAuthorizationSuccess) {
+    return (
+      <Redirect
+        to={{
+          pathname: '/'
+        }}
+      />
+    );
+  }
   return (
     <section className={forgotStyle.page}>
       <AppHeader />

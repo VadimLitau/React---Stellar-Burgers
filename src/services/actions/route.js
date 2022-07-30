@@ -18,6 +18,7 @@ export const USER_AUTHORIZATION_SUCCESS = 'USER_AUTHORIZATION_SUCCESS';
 export const USER_AUTHORIZATION_REQUEST = 'USER_AUTHORIZATION_REQUEST';
 export const USER_AUTHORIZATION_FAILED = 'USER_AUTHORIZATION_FAILED';
 
+
 export const USER_LOGOUT = 'USER_LOGOUT';
 
 
@@ -95,7 +96,7 @@ export function userAuthorization(userEmail, usePass) {
                     authToken = data.accessToken.split('Bearer ')[1];
                 }
                 if (authToken) {
-                    console.log(data.refreshToken);
+                    //console.log(data.refreshToken);
                     setCookie('token', authToken, 0);
                     localStorage.setItem('refreshToken', `${data.refreshToken}`);
                     //localStorage.setItem('token', `${authToken}`);
@@ -173,7 +174,7 @@ export function userAuthorization(userEmail, usePass) {
 export function signOutUser(token) {
 
     return function(dispatch) {
-        console.log(token)
+        //console.log(token)
         logoutRequest(token)
             .then(checkResponse)
             .then(data => data)
@@ -194,10 +195,10 @@ export function getUserDate(user) {
         getUserRequest()
             .then(checkResponse)
             .then(data => {
-                console.log(data)
+                //console.log(data)
                 if (data.success) {
-                    console.log("data.success")
-                    console.log(localStorage)
+                    //console.log("data.success")
+                    //console.log(localStorage)
                     dispatch({
                         type: USER_AUTHORIZATION_SUCCESS,
                         payload: { password: localStorage.getItem('password'), ...data.user }
@@ -207,7 +208,7 @@ export function getUserDate(user) {
             })
             .catch(e => {
                 if (user) {
-                    console.log(user)
+                    //console.log(user)
                     const data = apdateTokenRequest()
                         .then(checkResponse)
                         .then(data => {
@@ -222,10 +223,10 @@ export function getUserDate(user) {
                             }
                         })
                         .catch(e => {
-                            console.log(e.type);
+                            //console.log(e.type);
                         })
                 }
-                console.log(e.type);
+                //console.log(e.type);
             })
     }
 }

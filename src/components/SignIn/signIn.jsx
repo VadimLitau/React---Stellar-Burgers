@@ -13,22 +13,23 @@ import { setCookie } from '../../utils/utils'
 
 function SignIn() {
   //console.log(state.route.userAuthorizationSuccess);
-  
+  //const location = useLocation();
   const state = useSelector((store) => store);
-  const auth = useAuth();
+  //const stateLocation = location.state;
   const [value, setValue] = useState("");
   const onChange = (e) => {
     setValue(e.target.value);
   };
-
   const [valuePassword, setValuePassword] = useState("");
   const onChangePassword = (e) => {
     setValuePassword(e.target.value);
   };
   // const loginHandler = (evt) => {
   //   evt.preventDefault();
-  //   dispatch(userAuthorization(value, valuePassword));
+  //   auth.signIn(value, valuePassword);
   // };
+//console.log(stateLocation);
+  const auth = useAuth();
   const loginHandler = useCallback(
     e => {
       e.preventDefault();
@@ -37,16 +38,43 @@ function SignIn() {
     },
     [auth, value, valuePassword]
   );
-  //console.log(auth)
-  if (auth.user) {
+  
+//console.log(auth.user);
+  // if (auth.user.name!='') {
+  //   return (
+  //     <Redirect
+  //       to={ stateLocation && stateLocation.from || '/' }
+  //     />
+  //   );
+  // }
+console.log(auth.user.name)
+  if (auth.user.name) {
     return (
       <Redirect
         to={{
-          pathname: '/'
+          pathname: '/profile'
         }}
       />
     );
-  }
+  } 
+  // else if (state.route.userAuthorizationSuccess) {
+  //   return (
+  //     <Redirect
+  //       to={{
+  //         pathname: '/login'
+  //       }}
+  //     />
+  //   );
+  // }
+  // else if (auth.user.name!='') {
+  //   return (
+  //     <Redirect
+  //       to={{
+  //         pathname: '/'
+  //       }}
+  //     />
+  //   );
+  // }
   return (
     <section className={SignInStyle.main}>
       <form className={SignInStyle.form} onSubmit={loginHandler}>

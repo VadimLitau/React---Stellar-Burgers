@@ -30,7 +30,7 @@ function Profile() {
   const onChangePassword = (e) => {
     setValuePassword(e.target.value);
   };
-  let auth = useAuth();
+ const auth = useAuth();
 const handleClickLogout = useCallback(
   e => {
     e.preventDefault();
@@ -40,15 +40,16 @@ const handleClickLogout = useCallback(
   [auth]
 );
 //
-if (!state.route.userAuth) {
-  return (
-    <Redirect
-      to={{
-        pathname: '/'
-      }}
-    />
-  );
-}
+console.log(auth);
+// if (!state.route.userAuth) {
+//   return (
+//     <Redirect
+//       to={{
+//         pathname: '/login'
+//       }}
+//     />
+//   );
+// }
   
   return (
     <section className={ProfileStyle.page}>

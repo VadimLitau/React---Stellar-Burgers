@@ -11,9 +11,11 @@ import AppHeader from "../components/AppHeader/AppHeader";
 import { userRegister } from "../services/actions/route";
 import { useDispatch, useSelector } from "react-redux";
 
+import { Redirect, useHistory,useLocation  } from "react-router-dom";
+
 function Registration() {
   const state = useSelector((store) => store);
-  //console.log(state);
+  //console.log(state.route);
   const dispatch = useDispatch();
   const [valueName, setValueName] = React.useState("");
   const [valuePassword, setValuePassword] = React.useState("");
@@ -26,12 +28,24 @@ function Registration() {
     setValueEmail(e.target.value);
   };
 
-  const onClickRegister = () => {
+  const onClickRegister = (e) => {
+    e.preventDefault();
     dispatch(userRegister(valueName, valueEmail, valuePassword));
   };
+
+  if (state.route.userAuthorizationSuccess) {
+    return (
+      <Redirect
+        to={{
+          pathname: '/'
+        }}
+      />
+    );
+  }
   return (
     <section className={RegistrationStyle.page}>
       <AppHeader />
+      <form onSubmit={onClickRegister}>
       <div className={RegistrationStyle.wrap}>
         <p className="text text_type_main-medium">Регистрация</p>
         <div className="pb-6 pt-6">
@@ -56,7 +70,7 @@ function Registration() {
         />
 
         <div className="pb-20 pt-6">
-          <Button type="primary" size="medium" onClick={onClickRegister}>
+          <Button type="primary" size="medium">
             Зарегистрироваться
           </Button>
         </div>
@@ -67,6 +81,7 @@ function Registration() {
           </Link>
         </p>
       </div>
+      </form>
     </section>
   );
 }

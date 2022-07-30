@@ -1,4 +1,4 @@
-import React from "react";
+import React,{ useCallback} from "react";
 import { useContext, useState, createContext } from 'react';
 import { userAuthorization,getUserDate,logoutRequest,signOutUser} from "./actions/route";
 import { setCookie } from "../utils/utils";
@@ -41,6 +41,8 @@ export function useProvideAuth() {
   const getUser = () => dispatch(getUserDate(user));
 const signIn = (userEmail, userPassword) => dispatch(userAuthorization(userEmail, userPassword))
 const signOut = (token) => dispatch(signOutUser(token));
+
+
 
   // const signIn = async (userEmail, userPassword) => {
   //   const data = await userAuthorization(userEmail, userPassword)

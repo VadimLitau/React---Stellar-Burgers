@@ -1,6 +1,6 @@
 import { USER_REGISTER_SUCCESS, USER_REGISTER_REQUEST, USER_REGISTER_FAILED, USER_FORGOT_SUCCESS, USER_FORGOT_REQUEST, USER_FORGOT_FAILED, USER_AUTHORIZATION_SUCCESS, USER_AUTHORIZATION_REQUEST, USER_AUTHORIZATION_FAILED, USER_LOGOUT } from '../actions/route';
 
-export const initialState = {
+export const routeState = {
     userRegistrationSuccess: false,
     userRegistrationRequest: false,
     userRegistrationFailed: false,
@@ -11,11 +11,11 @@ export const initialState = {
     userAuthorizationSuccess: false,
     userAuthorizationFailed: false,
     userAuth: false,
-    userAuthProfile: null,
-    newUserProfile: null
+    userAuthProfile: { name: '', email: '', password: '' },
+    newUserProfile: null,
 }
 
-export const routeReducer = (state = initialState, action) => {
+export const routeReducer = (state = routeState, action) => {
     switch (action.type) {
         case USER_REGISTER_REQUEST:
             {
@@ -74,8 +74,7 @@ export const routeReducer = (state = initialState, action) => {
                     userAuth: true,
                     userAuthProfile: {...state.user,
                         email: email,
-                        name: name,
-                        password: password
+                        name: name
                     }
                 }
             }
@@ -91,11 +90,11 @@ export const routeReducer = (state = initialState, action) => {
             {
                 return {
                     ...state,
+                    userAuthorizationSuccess: false,
                     userAuth: false,
-                    user: {...state.user,
-                        email: '',
+                    userAuthProfile: {
                         name: '',
-                        password: ''
+                        email: ''
                     }
                 };
             }

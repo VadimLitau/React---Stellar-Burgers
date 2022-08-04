@@ -22,6 +22,7 @@ import { ProvideAuth } from "../../services/auth";
 import { useAuth } from "../../services/auth";
 import { getUserDate } from "../../services/actions/route";
 import Ingredient from "../BurgerIngredients/Ingredient/Ingredient";
+import { getApiBurgerData } from "../../services/actions";
 
 function App() {
   const history = useHistory();
@@ -30,6 +31,7 @@ function App() {
   const dispatch = useDispatch();
   React.useEffect(() => {
     document.title = "react burger";
+    dispatch(getApiBurgerData());
     dispatch(getUserDate(auth.user));
   }, [dispatch, auth]);
 
@@ -63,13 +65,8 @@ function App() {
         <Route path="/" exact={true}>
           <Constructor />
         </Route>
-        {/* <Route
-          path="/ingredients/:id"
-          children={<IngredientDetails />}
-          exact={true}
-        /> */}
         <Route path={"/ingredients/:id"} exact>
-          <IngredientDetailsPage />
+          <IngredientDetails />
         </Route>
         <Route>
           <PageNotFound />

@@ -41,11 +41,11 @@ function BurgerIngredients() {
     [data]
   );
 
-  const dispatch = useDispatch();
-  useEffect(() => {
-    document.title = "react burger";
-    dispatch(getApiBurgerData());
-  }, [dispatch]);
+  // const dispatch = useDispatch();
+  // useEffect(() => {
+  //   document.title = "react burger";
+  //   dispatch(getApiBurgerData());
+  // }, [dispatch]);
 
   const openModal = (item) => {
     setState({ ...state, overlay: true, ingredient: item });

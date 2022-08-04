@@ -1,27 +1,31 @@
-import React, {useState, useCallback} from "react";
+import React, { useState, useCallback } from "react";
 import {
   EmailInput,
   PasswordInput,
   Input,
-  Button
+  Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import ProfileStyle from "./profile.module.css";
 import AppHeader from "../components/AppHeader/AppHeader";
 import { useSelector } from "react-redux";
 import { useAuth } from "../services/auth";
-import {Redirect} from "react-router-dom";
+import { Redirect } from "react-router-dom";
 function Profile() {
   const state = useSelector((store) => store);
   //console.log(state.route.userAuthProfile)
   //Input
-  const [valueInput, setValueInput] = useState(`${state.route.userAuthProfile.name}`);
+  const [valueInput, setValueInput] = useState(
+    `${state.route.userAuthProfile.name}`
+  );
   const inputRefInput = React.useRef(null);
   const onIconClickInput = () => {
     setTimeout(() => inputRefInput.current.focus(), 0);
     //alert("Icon Click Callback");
   };
   //Email
-  const [valueEmail, setValueEmail] = useState(`${state.route.userAuthProfile.email}`);
+  const [valueEmail, setValueEmail] = useState(
+    `${state.route.userAuthProfile.email}`
+  );
   const onChangeEmail = (e) => {
     setValueEmail(e.target.value);
   };
@@ -30,27 +34,27 @@ function Profile() {
   const onChangePassword = (e) => {
     setValuePassword(e.target.value);
   };
- const auth = useAuth();
-const handleClickLogout = useCallback(
-  e => {
-    e.preventDefault();
-    //console.log(localStorage.getItem('token'))
-    auth.signOut(localStorage.getItem('refreshToken'));
-  },
-  [auth]
-);
-//
-console.log(auth);
-// if (!state.route.userAuth) {
-//   return (
-//     <Redirect
-//       to={{
-//         pathname: '/login'
-//       }}
-//     />
-//   );
-// }
-  
+  const auth = useAuth();
+  const handleClickLogout = useCallback(
+    (e) => {
+      e.preventDefault();
+      //console.log(localStorage.getItem('token'))
+      auth.signOut(localStorage.getItem("refreshToken"));
+    },
+    [auth]
+  );
+  //
+  //console.log(auth);
+  // if (!state.route.userAuth) {
+  //   return (
+  //     <Redirect
+  //       to={{
+  //         pathname: '/login'
+  //       }}
+  //     />
+  //   );
+  // }
+
   return (
     <section className={ProfileStyle.page}>
       <AppHeader />
@@ -68,7 +72,9 @@ console.log(auth);
               >
                 История Заказов
               </li>
-              <li onClick={handleClickLogout} style={{cursor:'pointer'}}
+              <li
+                onClick={handleClickLogout}
+                style={{ cursor: "pointer" }}
                 className={`text text_type_main-medium text_color_inactive ${ProfileStyle.navItem}`}
               >
                 Выход
@@ -79,7 +85,7 @@ console.log(auth);
             </ul>
           </nav>
           <div className={ProfileStyle.userProfile}>
-            <div className={ProfileStyle.test}>
+            <div className={ProfileStyle.input}>
               <Input
                 type={"text"}
                 placeholder={"Имя"}
@@ -94,18 +100,20 @@ console.log(auth);
                 size={"default"}
               />
             </div>
-            <div className="pt-6 pb-6">
+            <div className={`${ProfileStyle.input} pt-6 pb-6`}>
               <EmailInput
                 onChange={onChangeEmail}
                 value={valueEmail}
                 name={"email"}
               />
             </div>
-            <PasswordInput
-              onChange={onChangePassword}
-              value={valuePassword}
-              name={"password"}
-            />
+            <div className={`${ProfileStyle.input}`}>
+              <PasswordInput
+                onChange={onChangePassword}
+                value={valuePassword}
+                name={"password"}
+              />
+            </div>
           </div>
         </div>
       </div>

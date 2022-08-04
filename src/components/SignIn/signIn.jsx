@@ -1,15 +1,15 @@
-import React,{ useCallback, useState}  from "react";
+import React, { useCallback, useState } from "react";
 import {
   EmailInput,
   PasswordInput,
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import { Link,Redirect, useHistory,useLocation  } from "react-router-dom";
+import { Link, Redirect, useHistory, useLocation } from "react-router-dom";
 import SignInStyle from "./signIn.module.css";
 import { userAuthorization } from "../../services/actions/route";
 import { useDispatch, useSelector } from "react-redux";
 import { useAuth } from "../../services/auth";
-import { setCookie } from '../../utils/utils'
+import { setCookie } from "../../utils/utils";
 
 function SignIn() {
   //console.log(state.route.userAuthorizationSuccess);
@@ -28,18 +28,18 @@ function SignIn() {
   //   evt.preventDefault();
   //   auth.signIn(value, valuePassword);
   // };
-//console.log(stateLocation);
+  //console.log(stateLocation);
   const auth = useAuth();
   const loginHandler = useCallback(
-    e => {
+    (e) => {
       e.preventDefault();
-      auth.signIn(value, valuePassword);      
+      auth.signIn(value, valuePassword);
       //console.log(auth)
     },
     [auth, value, valuePassword]
   );
-  
-//console.log(auth.user);
+
+  //console.log(auth.user);
   // if (auth.user.name!='') {
   //   return (
   //     <Redirect
@@ -47,16 +47,16 @@ function SignIn() {
   //     />
   //   );
   // }
-console.log(auth.user.name)
+  //console.log(auth.user.name)
   if (auth.user.name) {
     return (
       <Redirect
         to={{
-          pathname: '/profile'
+          pathname: "/profile",
         }}
       />
     );
-  } 
+  }
   // else if (state.route.userAuthorizationSuccess) {
   //   return (
   //     <Redirect
@@ -79,10 +79,10 @@ console.log(auth.user.name)
     <section className={SignInStyle.main}>
       <form className={SignInStyle.form} onSubmit={loginHandler}>
         <h1 className="pb-6 text text_type_main-medium">Вход</h1>
-        <div className="pb-6">
+        <div className={`${SignInStyle.input} pb-6`}>
           <EmailInput name={"email"} value={value} onChange={onChange} />
         </div>
-        <div className="pb-6">
+        <div className={`${SignInStyle.input} pb-6`}>
           <PasswordInput
             onChange={onChangePassword}
             value={valuePassword}

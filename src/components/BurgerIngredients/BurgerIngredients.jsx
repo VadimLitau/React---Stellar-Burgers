@@ -9,35 +9,46 @@ import IngredientDetails from "../Modal/IngridientDetails/IngridientDetails";
 import { v4 as uuidv4 } from "uuid";
 import { useDispatch } from "react-redux";
 import { getApiBurgerData } from "../../services/actions";
+import { useLocation, Link } from "react-router-dom";
+
 function BurgerIngredients() {
- // console.log(BurgerIngredients)
+  // console.log(BurgerIngredients)
   const [current, setCurrent] = useState("bun");
   const handleClick = (evt) => {
     setCurrent(evt);
   };
-
   const data = useSelector((store) => store.item.burgerData);
-  const [state, setState] = useState({ overlay: false });
+
+  //console.log(data);
 
   // const bun = data.filter((element) => element.type === "bun");
   // const main = data.filter((element) => element.type === "main");
   // const sauce = data.filter((element) => element.type === "sauce");
+  const [state, setState] = useState({ overlay: false });
+  const closeModals = () => {
+    setState({ ...state, overlay: false });
+  };
+  const resultBun = React.useMemo(
+    () => data.filter((element) => element.type === "bun"),
+    [data]
+  );
+  const resultMain = React.useMemo(
+    () => data.filter((element) => element.type === "main"),
+    [data]
+  );
+  const resultSauce = React.useMemo(
+    () => data.filter((element) => element.type === "sauce"),
+    [data]
+  );
 
-  const resultBun = React.useMemo(()=>data.filter((element) => element.type === "bun"),[data]);
-  const resultMain = React.useMemo(()=>data.filter((element) => element.type === "main"),[data]);
-  const resultSauce = React.useMemo(()=>data.filter((element) => element.type === "sauce"),[data])
-  //console.log(bun);
   const dispatch = useDispatch();
   useEffect(() => {
     document.title = "react burger";
     dispatch(getApiBurgerData());
   }, [dispatch]);
+
   const openModal = (item) => {
     setState({ ...state, overlay: true, ingredient: item });
-  };
-
-  const closeModals = () => {
-    setState({ ...state, overlay: false });
   };
 
   const ingridietScroll = (evt) => {
@@ -49,7 +60,7 @@ function BurgerIngredients() {
       : setCurrent("main");
   };
   /*на мой взггляд это очень топорное решение, привязанное к конкретному кол-ву элементов. Увы, подругому я не смог =(*/
-
+  //console.log(location)
   return (
     <>
       <section className={mainStyle.head}>
@@ -77,6 +88,12 @@ function BurgerIngredients() {
             <p className={`text text_type_main-medium mt-10`}>Булки</p>
             <ul className={`${mainStyle.itemIngridient} ml-4 mr-4`}>
               {resultBun.map((item) => (
+                //   <Link to={{
+                //     pathname: `/ingredients/${item._id}`,
+                //     state: {background: location}
+                // }}
+                // >
+
                 <Ingredient
                   type={item.type}
                   count={item.count}
@@ -125,11 +142,11 @@ function BurgerIngredients() {
                 />
               ))}
             </ul>
-            {state.overlay && (
+            {/* {state.overlay && (
               <Modal closeModal={closeModals} title={"Детали заказа"}>
                 <IngredientDetails ingredient={state.ingredient} />
               </Modal>
-            )}
+            )} */}
           </section>
         </div>
       </section>

@@ -19,3 +19,7 @@
     flex-direction: column;
     align-items: center
 }
+
+.input>div>div {
+    width: 480px
+}

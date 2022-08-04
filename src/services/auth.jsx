@@ -1,8 +1,13 @@
-import React,{ useCallback} from "react";
-import { useContext, useState, createContext } from 'react';
-import { userAuthorization,getUserDate,logoutRequest,signOutUser} from "./actions/route";
+import React, { useCallback } from "react";
+import { useContext, useState, createContext } from "react";
+import {
+  userAuthorization,
+  getUserDate,
+  logoutRequest,
+  signOutUser,
+} from "./actions/route";
 import { setCookie } from "../utils/utils";
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from "react-redux";
 
 // const fakeAuth = {
 //   isAuthenticated: false,
@@ -21,9 +26,7 @@ const AuthContext = createContext(undefined);
 export function ProvideAuth({ children }) {
   const auth = useProvideAuth();
   //console.log(auth);
-  return <AuthContext.Provider value={auth}>
-    {children}
-  </AuthContext.Provider>;
+  return <AuthContext.Provider value={auth}>{children}</AuthContext.Provider>;
 }
 
 export function useAuth() {
@@ -34,15 +37,14 @@ export function useProvideAuth() {
   //const [users, setUser] = useState(null);
   const dispatch = useDispatch();
   const user = useSelector((store) => {
-    return store.route.userAuthProfile
+    return store.route.userAuthProfile;
   });
-  console.log(user)
-  
+  //console.log(user)
+
   const getUser = () => dispatch(getUserDate(user));
-const signIn = (userEmail, userPassword) => dispatch(userAuthorization(userEmail, userPassword))
-const signOut = (token) => dispatch(signOutUser(token));
-
-
+  const signIn = (userEmail, userPassword) =>
+    dispatch(userAuthorization(userEmail, userPassword));
+  const signOut = (token) => dispatch(signOutUser(token));
 
   // const signIn = async (userEmail, userPassword) => {
   //   const data = await userAuthorization(userEmail, userPassword)
@@ -63,7 +65,7 @@ const signOut = (token) => dispatch(signOutUser(token));
 
   //   if (data.success) {
   //     //setUser({ ...data.user, id: data.user._id });
-      
+
   //   }
   //   console.log(user);
   // };
@@ -82,6 +84,6 @@ const signOut = (token) => dispatch(signOutUser(token));
     user,
     signIn,
     getUser,
-    signOut
+    signOut,
   };
 }

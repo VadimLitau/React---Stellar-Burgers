@@ -11,7 +11,7 @@ import AppHeader from "../components/AppHeader/AppHeader";
 import { userRegister } from "../services/actions/route";
 import { useDispatch, useSelector } from "react-redux";
 
-import { Redirect, useHistory,useLocation  } from "react-router-dom";
+import { Redirect, useHistory, useLocation } from "react-router-dom";
 
 function Registration() {
   const state = useSelector((store) => store);
@@ -37,7 +37,7 @@ function Registration() {
     return (
       <Redirect
         to={{
-          pathname: '/'
+          pathname: "/",
         }}
       />
     );
@@ -46,41 +46,42 @@ function Registration() {
     <section className={RegistrationStyle.page}>
       <AppHeader />
       <form onSubmit={onClickRegister}>
-      <div className={RegistrationStyle.wrap}>
-        <p className="text text_type_main-medium">Регистрация</p>
-        <div className="pb-6 pt-6">
-          <Input
-            type="text"
-            placeholder="Имя"
-            onChange={(e) => setValueName(e.target.value)}
-            value={valueName}
-          />
+        <div className={RegistrationStyle.wrap}>
+          <p className="text text_type_main-medium">Регистрация</p>
+          <div className={`${RegistrationStyle.input} pb-6 pt-6`}>
+            <Input
+              type="text"
+              placeholder="Имя"
+              onChange={(e) => setValueName(e.target.value)}
+              value={valueName}
+            />
+          </div>
+          <div className={`${RegistrationStyle.input} pb-6`}>
+            <EmailInput
+              onChange={onChangeEmail}
+              value={valueEmail}
+              name={"email"}
+            />
+          </div>
+          <div className={`${RegistrationStyle.input}`}>
+            <PasswordInput
+              onChange={onChangePassword}
+              value={valuePassword}
+              name={"password"}
+            />
+          </div>
+          <div className="pb-20 pt-6">
+            <Button type="primary" size="medium">
+              Зарегистрироваться
+            </Button>
+          </div>
+          <p className="text text_type_main-small text_color_inactive">
+            Уже зарегистрированы?
+            <Link to="/login" className={RegistrationStyle.textLink}>
+              Войти
+            </Link>
+          </p>
         </div>
-        <div className="pb-6">
-          <EmailInput
-            onChange={onChangeEmail}
-            value={valueEmail}
-            name={"email"}
-          />
-        </div>
-        <PasswordInput
-          onChange={onChangePassword}
-          value={valuePassword}
-          name={"password"}
-        />
-
-        <div className="pb-20 pt-6">
-          <Button type="primary" size="medium">
-            Зарегистрироваться
-          </Button>
-        </div>
-        <p className="text text_type_main-small text_color_inactive">
-          Уже зарегистрированы?
-          <Link to="/login" className={RegistrationStyle.textLink}>
-            Войти
-          </Link>
-        </p>
-      </div>
       </form>
     </section>
   );

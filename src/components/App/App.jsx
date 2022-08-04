@@ -1,5 +1,5 @@
-import React from "react";
-import { useDispatch,useSelector} from "react-redux";
+import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import Constructor from "../../pages/constructor";
 import Login from "../../pages/login";
 import Profile from "../../pages/profile";
@@ -7,23 +7,44 @@ import Registration from "../../pages/registration";
 import Forgot from "../../pages/forgot";
 import Reset from "../../pages/resetPassword";
 import PageNotFound from "../../pages/page404";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import Modal from "../Modal/Modal";
+import IngredientDetails from "../Modal/IngridientDetails/IngridientDetails";
+import IngredientDetailsPage from "../Modal/IngridientDetails/IngridientDetailsPage";
+import {
+  BrowserRouter as Router,
+  Route,
+  Switch,
+  useLocation,
+  useHistory,
+} from "react-router-dom";
 import { ProtectedRoute } from "../ProtectedRoute/ProtectedRoute";
 import { ProvideAuth } from "../../services/auth";
 import { useAuth } from "../../services/auth";
 import { getUserDate } from "../../services/actions/route";
+import Ingredient from "../BurgerIngredients/Ingredient/Ingredient";
+
 function App() {
-  const userAuth  = useSelector((store) => store.route.userAuthorizationSuccess);
-  const auth = useAuth()
+  const history = useHistory();
+  const userAuth = useSelector((store) => store.route.userAuthorizationSuccess);
+  const auth = useAuth();
   const dispatch = useDispatch();
   React.useEffect(() => {
     document.title = "react burger";
     dispatch(getUserDate(auth.user));
-  }, [dispatch, userAuth]);
+  }, [dispatch, auth]);
+
+  const location = useLocation();
+
+  const background = location.state?.background;
+  // console.log(location);
+  // console.log(background);
+  function closeModals() {
+    history.push("/");
+  }
+
   return (
     <ProvideAuth>
-    <Router>
-      <Switch>
+      <Switch location={background || location}>
         <Route path="/login" exact={true}>
           <Login />
         </Route>
@@ -33,7 +54,7 @@ function App() {
         <Route path="/register" exact={true}>
           <Registration />
         </Route>
-        <Route path="/forgot-pasword" exact={true}>
+        <Route path="/forgot-password" exact={true}>
           <Forgot />
         </Route>
         <Route path="/reset-password" exact={true}>
@@ -42,11 +63,25 @@ function App() {
         <Route path="/" exact={true}>
           <Constructor />
         </Route>
+        {/* <Route
+          path="/ingredients/:id"
+          children={<IngredientDetails />}
+          exact={true}
+        /> */}
+        <Route path={"/ingredients/:id"} exact>
+          <IngredientDetailsPage />
+        </Route>
         <Route>
           <PageNotFound />
         </Route>
       </Switch>
-    </Router>
+      {background && (
+        <Route path={"/ingredients/:id"}>
+          <Modal closeModal={closeModals} title={"Детали Ингредиента"}>
+            <IngredientDetails />
+          </Modal>
+        </Route>
+      )}
     </ProvideAuth>
   );
 }

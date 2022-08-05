@@ -32,6 +32,15 @@ function Forgot() {
       />
     );
   }
+  if (state.route.userForgotPasswordSuccess) {
+    return (
+      <Redirect
+        to={{
+          pathname: "/reset-password",
+        }}
+      />
+    );
+  }
   return (
     <section className={forgotStyle.page}>
       <form onSubmit={forgotHandler}>

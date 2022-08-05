@@ -21,7 +21,6 @@ export default function AppHeader() {
       ? setLinkState({ burger: false, feeds: true, profile: false })
       : setLinkState({ burger: false, feeds: false, profile: true });
   };
-  console.log(linkState.burger);
   return (
     <header className={mainStyle.header}>
       <nav>

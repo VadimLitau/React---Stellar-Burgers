@@ -30,6 +30,16 @@ function Reset() {
       />
     );
   }
+  console.log(state.route.userForgotPasswordSuccess);
+  if (!state.route.userForgotPasswordSuccess) {
+    return (
+      <Redirect
+        to={{
+          pathname: "/forgot-password",
+        }}
+      />
+    );
+  }
   return (
     <section className={forgotStyle.page}>
       <div className={forgotStyle.wrap}>

@@ -19,13 +19,15 @@ export const routeReducer = (state = routeState, action) => {
     switch (action.type) {
         case USER_REGISTER_REQUEST:
             {
-                return {...state,
+                return {
+                    ...state,
                     userRegistrationRequest: true
                 }
             }
         case USER_REGISTER_SUCCESS:
             {
-                return {...state,
+                return {
+                    ...state,
                     userRegistrationRequest: false,
                     userRegistrationSuccess: true,
                     newUserProfile: { name: action.data.user.name, email: action.data.user.email }
@@ -33,34 +35,39 @@ export const routeReducer = (state = routeState, action) => {
             }
         case USER_REGISTER_FAILED:
             {
-                return {...state,
+                return {
+                    ...state,
                     userRegistrationRequest: false,
                     userRegistrationFailed: true
                 }
             }
         case USER_FORGOT_REQUEST:
             {
-                return {...state,
+                return {
+                    ...state,
                     userForgotPasswordRequest: true
                 }
             }
         case USER_FORGOT_SUCCESS:
             {
-                return {...state,
+                return {
+                    ...state,
                     userForgotPasswordSuccess: true,
                     userForgotPasswordRequest: false
                 }
             }
         case USER_FORGOT_FAILED:
             {
-                return {...state,
+                return {
+                    ...state,
                     userForgotPasswordRequest: false,
                     userForgotPasswordFailed: true
                 }
             }
         case USER_AUTHORIZATION_REQUEST:
             {
-                return {...state,
+                return {
+                    ...state,
                     userAuthorizationRequest: true,
                     userAuth: false
                 }
@@ -68,11 +75,13 @@ export const routeReducer = (state = routeState, action) => {
         case USER_AUTHORIZATION_SUCCESS:
             {
                 const { email, name, password } = action.payload;
-                return {...state,
+                return {
+                    ...state,
                     userAuthorizationRequest: false,
                     userAuthorizationSuccess: true,
                     userAuth: true,
-                    userAuthProfile: {...state.user,
+                    userAuthProfile: {
+                        ...state.user,
                         email: email,
                         name: name
                     }
@@ -80,7 +89,8 @@ export const routeReducer = (state = routeState, action) => {
             }
         case USER_AUTHORIZATION_FAILED:
             {
-                return {...state,
+                return {
+                    ...state,
                     userAuthorizationRequest: false,
                     userAuthorizationFailed: true,
                     userAuth: false

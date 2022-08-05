@@ -6,7 +6,6 @@ import {
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import forgotStyle from "./forgot.module.css";
-import AppHeader from "../components/AppHeader/AppHeader";
 import { userResetPass } from "../services/actions/route";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, Redirect } from "react-router-dom";
@@ -33,7 +32,6 @@ function Reset() {
   }
   return (
     <section className={forgotStyle.page}>
-      <AppHeader />
       <div className={forgotStyle.wrap}>
         <h1 className="text text_type_main-medium">Восстановление пароля</h1>
         <div className={`${forgotStyle.input} pb-6 pt-6`}>

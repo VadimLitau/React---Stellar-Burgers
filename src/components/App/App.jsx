@@ -9,7 +9,6 @@ import Reset from "../../pages/resetPassword";
 import PageNotFound from "../../pages/page404";
 import Modal from "../Modal/Modal";
 import IngredientDetails from "../Modal/IngridientDetails/IngridientDetails";
-import IngredientDetailsPage from "../Modal/IngridientDetails/IngridientDetailsPage";
 import {
   BrowserRouter as Router,
   Route,
@@ -21,19 +20,28 @@ import { ProtectedRoute } from "../ProtectedRoute/ProtectedRoute";
 import { ProvideAuth } from "../../services/auth";
 import { useAuth } from "../../services/auth";
 import { getUserDate } from "../../services/actions/route";
-import Ingredient from "../BurgerIngredients/Ingredient/Ingredient";
 import { getApiBurgerData } from "../../services/actions";
+import AppHeader from "../AppHeader/AppHeader";
 
 function App() {
   const history = useHistory();
   const userAuth = useSelector((store) => store.route.userAuthorizationSuccess);
+  const burgerData = useSelector((store) => store.item.burgerData);
   const auth = useAuth();
   const dispatch = useDispatch();
   React.useEffect(() => {
-    document.title = "react burger";
-    dispatch(getApiBurgerData());
-    dispatch(getUserDate(auth.user));
-  }, [dispatch, auth]);
+    if (!userAuth) {
+      document.title = "react burger";
+      dispatch(getUserDate(auth.user));
+    }
+  }, [dispatch, userAuth]);
+
+  React.useEffect(() => {
+    if (burgerData.length === 0) {
+      document.title = "react burger";
+      dispatch(getApiBurgerData());
+    }
+  }, [dispatch]);
 
   const location = useLocation();
 
@@ -43,9 +51,10 @@ function App() {
   function closeModals() {
     history.push("/");
   }
-
+  //console.log(burgerData.length);
   return (
     <ProvideAuth>
+      <AppHeader />
       <Switch location={background || location}>
         <Route path="/login" exact={true}>
           <Login />

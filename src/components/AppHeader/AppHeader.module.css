@@ -1,6 +1,6 @@
 .header {
     background-color: #1c1c21;
-    margin: 0;
+    margin: 0 auto;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -18,19 +18,15 @@
     max-width: 1240px;
 }
 
-.itemMenu_active {
+.link_active {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
     color: #fff;
     text-decoration: none;
 }
 
-.listItem {
-    display: flex;
-    align-items: center;
-    text-decoration: none;
-    color: #8585ad;
-}
-
-.listItem:hover {
+.link:hover {
     color: #fff;
 }
 
@@ -41,6 +37,9 @@
 }
 
 .link {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
     text-decoration: none;
     color: #8585ad;
 }

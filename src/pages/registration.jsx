@@ -7,7 +7,6 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { Link } from "react-router-dom";
 import RegistrationStyle from "./registration.module.css";
-import AppHeader from "../components/AppHeader/AppHeader";
 import { userRegister } from "../services/actions/route";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -44,7 +43,6 @@ function Registration() {
   }
   return (
     <section className={RegistrationStyle.page}>
-      <AppHeader />
       <form onSubmit={onClickRegister}>
         <div className={RegistrationStyle.wrap}>
           <p className="text text_type_main-medium">Регистрация</p>

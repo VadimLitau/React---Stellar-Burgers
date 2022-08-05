@@ -9,15 +9,15 @@ import { store } from "./services/store";
 import { ProvideAuth } from "./services/auth";
 
 ReactDOM.render(
-  <React.StrictMode>
-    <Provider store={store}>
-      <BrowserRouter>
+  <BrowserRouter>
+    <React.StrictMode>
+      <Provider store={store}>
         <ProvideAuth>
           <App />
         </ProvideAuth>
-      </BrowserRouter>
-    </Provider>
-  </React.StrictMode>,
+      </Provider>
+    </React.StrictMode>
+  </BrowserRouter>,
   document.getElementById("root")
 );
 

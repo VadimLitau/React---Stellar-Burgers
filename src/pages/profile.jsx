@@ -6,7 +6,6 @@ import {
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import ProfileStyle from "./profile.module.css";
-import AppHeader from "../components/AppHeader/AppHeader";
 import { useSelector } from "react-redux";
 import { useAuth } from "../services/auth";
 import { Redirect } from "react-router-dom";
@@ -57,7 +56,6 @@ function Profile() {
 
   return (
     <section className={ProfileStyle.page}>
-      <AppHeader />
       <div className={ProfileStyle.wrap}>
         <div className={ProfileStyle.main}>
           <nav className={`pr-30 ${ProfileStyle.nav}`}>

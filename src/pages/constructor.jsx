@@ -1,5 +1,5 @@
 import React from "react";
-import mainStyle from "./constructor.module.css";
+import mainStyle from "./main.module.css";
 import BurgerIngredients from "../components/BurgerIngredients/BurgerIngredients";
 import BurgerConstructor from "../components/BurgerConstructor/BurgerConstructor";
 import { DndProvider } from "react-dnd";

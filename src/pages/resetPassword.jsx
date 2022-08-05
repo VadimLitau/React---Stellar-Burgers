@@ -5,7 +5,7 @@ import {
   Input,
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import forgotStyle from "./forgot.module.css";
+import mainStyle from "./main.module.css";
 import { userResetPass } from "../services/actions/route";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, Redirect } from "react-router-dom";
@@ -41,16 +41,16 @@ function Reset() {
     );
   }
   return (
-    <section className={forgotStyle.page}>
-      <div className={forgotStyle.wrap}>
+    <section className={mainStyle.page}>
+      <div className={mainStyle.wrap}>
         <h1 className="text text_type_main-medium">Восстановление пароля</h1>
-        <div className={`${forgotStyle.input} pb-6 pt-6`}>
+        <div className={`${mainStyle.input} pb-6 pt-6`}>
           <PasswordInput
             value={valuePass}
             onChange={(e) => setValuePass(e.target.value)}
           />
         </div>
-        <div className={`${forgotStyle.input}`}>
+        <div className={`${mainStyle.input}`}>
           <Input
             placeholder="Введите код из письма"
             value={valueToken}
@@ -62,7 +62,7 @@ function Reset() {
         </div>
         <p className="text text_type_main-small text_color_inactive">
           Вспомнили пароль?
-          <Link to="/login" className={forgotStyle.textLink}>
+          <Link to="/login" className={mainStyle.textLink}>
             Войти
           </Link>
         </p>

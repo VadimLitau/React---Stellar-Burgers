@@ -5,6 +5,7 @@ import {
   Input,
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
+import mainStyle from "./main.module.css";
 import ProfileStyle from "./profile.module.css";
 import { useSelector } from "react-redux";
 import { useAuth } from "../services/auth";
@@ -55,7 +56,7 @@ function Profile() {
   // }
 
   return (
-    <section className={ProfileStyle.page}>
+    <section className={mainStyle.page}>
       <div className={ProfileStyle.wrap}>
         <div className={ProfileStyle.main}>
           <nav className={`pr-30 ${ProfileStyle.nav}`}>
@@ -83,7 +84,7 @@ function Profile() {
             </ul>
           </nav>
           <div className={ProfileStyle.userProfile}>
-            <div className={ProfileStyle.input}>
+            <div className={mainStyle.input}>
               <Input
                 type={"text"}
                 placeholder={"Имя"}
@@ -98,14 +99,14 @@ function Profile() {
                 size={"default"}
               />
             </div>
-            <div className={`${ProfileStyle.input} pt-6 pb-6`}>
+            <div className={`${mainStyle.input} pt-6 pb-6`}>
               <EmailInput
                 onChange={onChangeEmail}
                 value={valueEmail}
                 name={"email"}
               />
             </div>
-            <div className={`${ProfileStyle.input}`}>
+            <div className={`${mainStyle.input}`}>
               <PasswordInput
                 onChange={onChangePassword}
                 value={valuePassword}

@@ -5,7 +5,7 @@ import {
   Input,
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import forgotStyle from "./forgot.module.css";
+import mainStyle from "./main.module.css";
 import { Link } from "react-router-dom";
 import { userForgotPass } from "../services/actions/route";
 import { useDispatch, useSelector } from "react-redux";
@@ -42,11 +42,11 @@ function Forgot() {
     );
   }
   return (
-    <section className={forgotStyle.page}>
+    <section className={mainStyle.page}>
       <form onSubmit={forgotHandler}>
-        <div className={forgotStyle.wrap}>
+        <div className={mainStyle.wrap}>
           <h1 className="text text_type_main-medium">Восстановление пароля</h1>
-          <div className={`${forgotStyle.input} pb-6 pt-6`}>
+          <div className={`${mainStyle.input} pb-6 pt-6`}>
             <Input
               type="email"
               placeholder="Укажите e-mail"
@@ -59,7 +59,7 @@ function Forgot() {
           </div>
           <p className="text text_type_main-small text_color_inactive">
             Вспомнили пароль?
-            <Link to="/login" className={forgotStyle.textLink}>
+            <Link to="/login" className={mainStyle.textLink}>
               Войти
             </Link>
           </p>

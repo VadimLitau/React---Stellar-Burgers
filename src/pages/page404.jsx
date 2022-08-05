@@ -1,12 +1,12 @@
 import React from "react";
-import page404Style from "./page404.module.css";
+import mainStyle from "./main.module.css";
 import { Button } from "@ya.praktikum/react-developer-burger-ui-components";
 import { Link } from "react-router-dom";
 
 function PageNotFound() {
   return (
-    <section className={page404Style.page}>
-      <div className={page404Style.wrap}>
+    <section className={mainStyle.page}>
+      <div className={mainStyle.wrap}>
         <h1 className="text text_type_digits-large">404</h1>
         <p className="text text_type_main-large">Страница не найдена</p>
         <div className="pt-10 pb-10">

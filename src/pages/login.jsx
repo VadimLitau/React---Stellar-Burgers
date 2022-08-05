@@ -5,6 +5,7 @@ import {
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { Link, Redirect, useHistory, useLocation } from "react-router-dom";
+import mainStyle from "./main.module.css";
 import SignInStyle from "./login.module.css";
 import { useDispatch, useSelector } from "react-redux";
 import { useAuth } from "../services/auth";
@@ -77,10 +78,10 @@ function Login() {
     <section className={SignInStyle.main}>
       <form className={SignInStyle.form} onSubmit={loginHandler}>
         <h1 className="pb-6 text text_type_main-medium">Вход</h1>
-        <div className={`${SignInStyle.input} pb-6`}>
+        <div className={`${mainStyle.input} pb-6`}>
           <EmailInput name={"email"} value={value} onChange={onChange} />
         </div>
-        <div className={`${SignInStyle.input} pb-6`}>
+        <div className={`${mainStyle.input} pb-6`}>
           <PasswordInput
             onChange={onChangePassword}
             value={valuePassword}
@@ -90,7 +91,7 @@ function Login() {
         <div className="pb-20 text">
           <Button>Войти</Button>
         </div>
-        <div className={`pb-4 ${SignInStyle.wrap}`}>
+        <div className={`pb-4 ${mainStyle.content}`}>
           <p
             className={`text text_type_main-small text_color_inactive ${SignInStyle.text}`}
           >
@@ -98,12 +99,12 @@ function Login() {
           </p>
           <Link
             to="/register"
-            className={`text text_type_main-small ${SignInStyle.textLink}`}
+            className={`text text_type_main-small ${mainStyle.textLink}`}
           >
             Зарегистрироваться
           </Link>
         </div>
-        <div className={SignInStyle.wrap}>
+        <div className={mainStyle.content}>
           <p
             className={`text text_type_main-small text_color_inactive ${SignInStyle.text}`}
           >
@@ -111,7 +112,7 @@ function Login() {
           </p>
           <Link
             to="/forgot-password"
-            className={`text text_type_main-small ${SignInStyle.textLink}`}
+            className={`text text_type_main-small ${mainStyle.textLink}`}
           >
             Восстановить пароль
           </Link>

@@ -1,3 +1,13 @@
+.input>div>div {
+    width: 480px
+}
+
+.content {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
 .page {
     margin: 0 auto;
     max-width: 1920px;
@@ -16,8 +26,4 @@
     text-decoration: none;
     color: #4C4CFF;
     padding-left: 8px;
-}
-
-.input>div>div {
-    width: 480px;
 }

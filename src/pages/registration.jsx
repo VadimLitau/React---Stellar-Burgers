@@ -6,7 +6,7 @@ import {
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { Link } from "react-router-dom";
-import RegistrationStyle from "./registration.module.css";
+import mainStyle from "./main.module.css";
 import { userRegister } from "../services/actions/route";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -42,11 +42,11 @@ function Registration() {
     );
   }
   return (
-    <section className={RegistrationStyle.page}>
+    <section className={mainStyle.page}>
       <form onSubmit={onClickRegister}>
-        <div className={RegistrationStyle.wrap}>
+        <div className={mainStyle.wrap}>
           <p className="text text_type_main-medium">Регистрация</p>
-          <div className={`${RegistrationStyle.input} pb-6 pt-6`}>
+          <div className={`${mainStyle.input} pb-6 pt-6`}>
             <Input
               type="text"
               placeholder="Имя"
@@ -54,14 +54,14 @@ function Registration() {
               value={valueName}
             />
           </div>
-          <div className={`${RegistrationStyle.input} pb-6`}>
+          <div className={`${mainStyle.input} pb-6`}>
             <EmailInput
               onChange={onChangeEmail}
               value={valueEmail}
               name={"email"}
             />
           </div>
-          <div className={`${RegistrationStyle.input}`}>
+          <div className={`${mainStyle.input}`}>
             <PasswordInput
               onChange={onChangePassword}
               value={valuePassword}
@@ -75,7 +75,7 @@ function Registration() {
           </div>
           <p className="text text_type_main-small text_color_inactive">
             Уже зарегистрированы?
-            <Link to="/login" className={RegistrationStyle.textLink}>
+            <Link to="/login" className={mainStyle.textLink}>
               Войти
             </Link>
           </p>

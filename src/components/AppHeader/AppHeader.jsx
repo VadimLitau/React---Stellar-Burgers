@@ -10,16 +10,16 @@ import { Link } from "react-router-dom";
 export default function AppHeader() {
   const [linkState, setLinkState] = useState({
     burger: true,
-    feeds: false,
+    order: false,
     profile: false,
   });
 
   const onClick = (elem) => {
     elem === "burger"
-      ? setLinkState({ burger: true, feeds: false, profile: false })
-      : elem === "feeds"
-      ? setLinkState({ burger: false, feeds: true, profile: false })
-      : setLinkState({ burger: false, feeds: false, profile: true });
+      ? setLinkState({ burger: true, order: false, profile: false })
+      : elem === "order"
+      ? setLinkState({ burger: false, order: true, profile: false })
+      : setLinkState({ burger: false, order: false, profile: true });
   };
   return (
     <header className={mainStyle.header}>
@@ -43,13 +43,13 @@ export default function AppHeader() {
           <li className="l-5 pr-5 pb-4 pt-4 mr-2">
             <span className={mainStyle.listItem}>
               <Link
-                to="/feeds"
+                to="/order"
                 className={
-                  linkState.feeds ? mainStyle.link_active : mainStyle.link
+                  linkState.order ? mainStyle.link_active : mainStyle.link
                 }
-                onClick={() => onClick("feeds")}
+                onClick={() => onClick("order")}
               >
-                <ListIcon type={linkState.feeds ? "primary" : "secondary"} />
+                <ListIcon type={linkState.order ? "primary" : "secondary"} />
                 <p className="text text_type_main-default ml-2">
                   Лента заказов
                 </p>

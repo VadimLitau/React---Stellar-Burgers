@@ -20,11 +20,11 @@ import { getServOrder } from "../../services/actions/index";
 import ChangeItem from "./ChangeItem/ChangeItem";
 
 export default function BurgerConstructor() {
-  
   const state = useSelector((store) => store);
   const burgerConstructorItems = useSelector(
     (store) => store.item.burgerConstructorItems
   );
+  const authUser = useSelector((store) => store.route.userAuthorizationSuccess);
   const orderOverlay = state.item.overlay;
   const dispatch = useDispatch();
 
@@ -128,7 +128,11 @@ export default function BurgerConstructor() {
           type="primary"
           size="large"
           onClick={getOrder}
-          disabled={bun.price && burgerConstructorItems.length ? false : true}
+          disabled={
+            bun.price && burgerConstructorItems.length && authUser
+              ? false
+              : true
+          }
         >
           Оформить заказ
         </Button>

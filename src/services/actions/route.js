@@ -223,10 +223,10 @@ export function getUserDate(user) {
                             }
                         })
                         .catch(e => {
-                            //console.log(e.type);
+                            console.log(e.type);
                         })
                 }
-                //console.log(e.type);
+                console.log(e.type);
             })
     }
 }

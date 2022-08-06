@@ -142,10 +142,7 @@ export function getUserDate(user) {
         getUserRequest()
             .then(checkResponse)
             .then(data => {
-                //console.log(data)
                 if (data.success) {
-                    //console.log("data.success")
-                    //console.log(localStorage)
                     dispatch({
                         type: USER_AUTHORIZATION_SUCCESS,
                         payload: { password: localStorage.getItem('password'), ...data.user }
@@ -154,8 +151,7 @@ export function getUserDate(user) {
                 return data.success;
             })
             .catch(e => {
-                if (user) {
-                    //console.log(user)
+                if (user.name) {
                     const data = updateUserTokenRequest()
                         .then(checkResponse)
                         .then(data => {
@@ -170,10 +166,10 @@ export function getUserDate(user) {
                             }
                         })
                         .catch(e => {
-                            //console.log(e.type);
+                            console.log(e.type);
                         })
                 }
-                //console.log(e.type);
+                console.log(e.type);
             })
     }
 }

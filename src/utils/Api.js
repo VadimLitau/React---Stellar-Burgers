@@ -105,7 +105,7 @@ export const getUserRequest = async() => {
     });
 }
 
-export const apdateUserDataRequest = async(email, password, name) => {
+export const updateUserDataRequest = async(email, password, name) => {
     return await fetch(`${baseUrl}auth/user`, {
         method: 'PATCH',
         mode: 'cors',
@@ -125,7 +125,7 @@ export const apdateUserDataRequest = async(email, password, name) => {
     });
 }
 
-export const apdateTokenRequest = async() =>
+export const updateUserTokenRequest = async() =>
     await fetch(`${baseUrl}auth/token`, {
         method: 'POST',
         mode: 'cors',

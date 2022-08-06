@@ -1,7 +1,5 @@
 import React from "react";
 import {
-  EmailInput,
-  PasswordInput,
   Input,
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
@@ -12,8 +10,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { Redirect } from "react-router-dom";
 function Forgot() {
   const state = useSelector((store) => store);
-  // console.log(state.route);
-
   const dispatch = useDispatch();
 
   const [value, setValue] = React.useState("");
@@ -22,7 +18,7 @@ function Forgot() {
     setValue(value);
     dispatch(userForgotPass(value));
   };
-  //console.log(state.route.userAuthorizationSuccess)
+
   if (state.route.userAuthorizationSuccess) {
     return (
       <Redirect

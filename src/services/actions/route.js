@@ -1,4 +1,4 @@
-import { getResetPass, getUserRegister, getForgotPass, getUserAuthorization, getUserRequest, apdateTokenRequest, logoutRequest, apdateUserDataRequest } from '../../utils/Api';
+import { getResetPass, getUserRegister, getForgotPass, getUserAuthorization, getUserRequest, updateUserTokenRequest, logoutRequest, updateUserDataRequest } from '../../utils/Api';
 import { checkResponse } from '../../utils/constants';
 import { setCookie, deleteCookie } from '../../utils/utils'
 
@@ -156,7 +156,7 @@ export function getUserDate(user) {
             .catch(e => {
                 if (user) {
                     //console.log(user)
-                    const data = apdateTokenRequest()
+                    const data = updateUserTokenRequest()
                         .then(checkResponse)
                         .then(data => {
                             let authToken;
@@ -180,7 +180,7 @@ export function getUserDate(user) {
 
 export function updateUserProfile(email, password, name) {
     return function(dispatch) {
-        apdateUserDataRequest(email, password, name)
+        updateUserDataRequest(email, password, name)
             .then(checkResponse)
             .then((res) => {
                 if (res && res.success === true) {

@@ -23,9 +23,9 @@ export const itemReducer = (state = initialState, action) => {
         case ADD_ITEM:
             {
                 if (action.item.payload.type === 'bun') {
-                    console.log(action.item.payload)
                     if (action.item.payload.count < 1) {
-                        return {...state,
+                        return {
+                            ...state,
                             bun: action.item.payload,
                             burgerData: [...state.burgerData].map((item) => {
                                 if (item.type === 'bun' && item._id === action.item.payload.id) {
@@ -84,7 +84,7 @@ export const itemReducer = (state = initialState, action) => {
             }
         case DELETE_ITEM:
             {
-                console.log(action.item)
+
                 const deletetElement = state.burgerConstructorItems.find(item =>
                     item.index === action.item.index
                 )

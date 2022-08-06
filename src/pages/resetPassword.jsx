@@ -1,6 +1,5 @@
 import React from "react";
 import {
-  EmailInput,
   PasswordInput,
   Input,
   Button,
@@ -18,7 +17,6 @@ function Reset() {
   const onClickToken = () => {
     setValueToken(valueToken);
     dispatch(userResetPass(valueToken, valuePass));
-    //console.log(valueToken, valuePass);
   };
 
   if (state.route.userAuthorizationSuccess) {

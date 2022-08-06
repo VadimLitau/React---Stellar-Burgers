@@ -16,25 +16,18 @@ function Profile() {
   const userProfile = state.route.userAuthProfile;
   console.log(userProfile);
   //Input
-  const [valueInput, setValueInput] = useState(
-    "" //`${state.route.userAuthProfile.name}`
-  );
+  const [valueInput, setValueInput] = useState("");
   const inputRefInput = React.useRef(null);
   const onIconClickInput = () => {
     setTimeout(() => inputRefInput.current.focus(), 0);
-    //alert("Icon Click Callback");
   };
   //Email
-  const [valueEmail, setValueEmail] = useState(
-    "" //`${state.route.userAuthProfile.email}`
-  );
+  const [valueEmail, setValueEmail] = useState("");
   const onChangeEmail = (e) => {
     setValueEmail(e.target.value);
   };
   //Password
-  const [valuePassword, setValuePassword] = useState(
-    "" //`${state.route.userAuthProfile.password}`
-  );
+  const [valuePassword, setValuePassword] = useState("");
   const onChangePassword = (e) => {
     setValuePassword(e.target.value);
   };
@@ -42,7 +35,6 @@ function Profile() {
   const handleClickLogout = useCallback(
     (e) => {
       e.preventDefault();
-      //console.log(localStorage.getItem('token'))
       auth.signOut(localStorage.getItem("refreshToken"));
     },
     [auth]
@@ -62,7 +54,7 @@ function Profile() {
     setValueEmail(state.route.userAuthProfile.email);
     setValuePassword(state.route.userAuthProfile.password);
   }
-  // console.log(state.route.userAuthProfile);
+
   return (
     <section className={mainStyle.page}>
       <div className={ProfileStyle.wrap}>

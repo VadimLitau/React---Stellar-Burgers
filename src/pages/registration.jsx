@@ -10,11 +10,10 @@ import mainStyle from "./main.module.css";
 import { userRegister } from "../services/actions/route";
 import { useDispatch, useSelector } from "react-redux";
 
-import { Redirect, useHistory, useLocation } from "react-router-dom";
+import { Redirect } from "react-router-dom";
 
 function Registration() {
   const state = useSelector((store) => store);
-  //console.log(state.route);
   const dispatch = useDispatch();
   const [valueName, setValueName] = React.useState("");
   const [valuePassword, setValuePassword] = React.useState("");

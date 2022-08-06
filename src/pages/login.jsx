@@ -4,17 +4,13 @@ import {
   PasswordInput,
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import { Link, Redirect, useHistory, useLocation } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 import mainStyle from "./main.module.css";
 import SignInStyle from "./login.module.css";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { useAuth } from "../services/auth";
 
 function Login() {
-  //console.log(state.route.userAuthorizationSuccess);
-  //const location = useLocation();
-  const state = useSelector((store) => store);
-  //const stateLocation = location.state;
   const [value, setValue] = useState("");
   const onChange = (e) => {
     setValue(e.target.value);
@@ -23,30 +19,15 @@ function Login() {
   const onChangePassword = (e) => {
     setValuePassword(e.target.value);
   };
-  // const loginHandler = (evt) => {
-  //   evt.preventDefault();
-  //   auth.signIn(value, valuePassword);
-  // };
-  //console.log(stateLocation);
   const auth = useAuth();
   const loginHandler = useCallback(
     (e) => {
       e.preventDefault();
       auth.signIn(value, valuePassword);
-      //console.log(auth)
     },
     [auth, value, valuePassword]
   );
 
-  //console.log(auth.user);
-  // if (auth.user.name!='') {
-  //   return (
-  //     <Redirect
-  //       to={ stateLocation && stateLocation.from || '/' }
-  //     />
-  //   );
-  // }
-  //console.log(auth.user.name)
   if (auth.user.name) {
     return (
       <Redirect
@@ -56,24 +37,6 @@ function Login() {
       />
     );
   }
-  // else if (state.route.userAuthorizationSuccess) {
-  //   return (
-  //     <Redirect
-  //       to={{
-  //         pathname: '/login'
-  //       }}
-  //     />
-  //   );
-  // }
-  // else if (auth.user.name!='') {
-  //   return (
-  //     <Redirect
-  //       to={{
-  //         pathname: '/'
-  //       }}
-  //     />
-  //   );
-  // }
   return (
     <section className={SignInStyle.main}>
       <form className={SignInStyle.form} onSubmit={loginHandler}>

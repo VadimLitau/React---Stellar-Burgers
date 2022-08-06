@@ -1,4 +1,4 @@
-import { getResetPass, getUserRegister, getForgotPass, getUserAuthorization, getUserRequest, apdateTokenRequest, logoutRequest } from '../../utils/Api';
+import { getResetPass, getUserRegister, getForgotPass, getUserAuthorization, getUserRequest, apdateTokenRequest, logoutRequest, apdateUserDataRequest } from '../../utils/Api';
 import { checkResponse } from '../../utils/constants';
 import { setCookie, deleteCookie } from '../../utils/utils'
 
@@ -21,6 +21,8 @@ export const USER_AUTHORIZATION_FAILED = 'USER_AUTHORIZATION_FAILED';
 
 export const USER_LOGOUT = 'USER_LOGOUT';
 
+export const UPDATE_USER_PROFILE = 'UPDATE_USER_PROFILE';
+
 
 
 export function userRegister(userName, userEmail, userPassword) {
@@ -33,7 +35,6 @@ export function userRegister(userName, userEmail, userPassword) {
                 dispatch({
                     type: USER_REGISTER_SUCCESS,
                     data,
-
                 });
             })
             .catch((err) => {
@@ -102,7 +103,7 @@ export function userAuthorization(userEmail, usePass) {
                     //localStorage.setItem('token', `${authToken}`);
                 }
                 if (data.success) {
-                    // console.log(data);
+                    //console.log(data);
                     dispatch({
                         type: USER_AUTHORIZATION_SUCCESS,
                         payload: { userEmail, usePass, ...data.user }
@@ -116,60 +117,6 @@ export function userAuthorization(userEmail, usePass) {
             })
     }
 }
-// export function userAuthorization(userEmail, usePass) {
-//     return function(dispatch) {
-//         dispatch({
-//             type: USER_AUTHORIZATION_REQUEST
-//         });
-//         getUserAuthorization(userEmail, usePass).then(checkResponse)
-//             .then((data) => {
-//                 console.log(data)
-//                 let accessToken = data.accessToken.split('Bearer ')[1]
-//                 setCookie('accessToken', accessToken)
-//                 localStorage.setItem("refreshToken", data.refreshToken);
-//                 //console.log(accessToken)
-//                 dispatch({
-//                     type: USER_AUTHORIZATION_SUCCESS,
-//                     data
-//                 });
-//             })
-//             .catch((err) => {
-//                 dispatch({
-//                     type: USER_AUTHORIZATION_FAILED
-//                 });
-//             })
-//     }
-// }
-
-// export function userLogin(userEmail, userPassword) {
-//     return function(dispatch) {
-//         const data = userAuthorization(userEmail, userPassword)
-//             .then(res => {
-//                 let authToken;
-//                 res.headers.forEach(header => {
-//                     if (header.indexOf('Bearer') === 0) {
-//                         authToken = header.split('Bearer ')[1];
-//                     }
-//                 });
-//                 if (authToken) {
-//                     setCookie('token', authToken);
-//                 }
-
-//                 return res.json();
-//             })
-//             .then(data => data);
-
-//         if (data.success) {
-//             dispatch({
-//                 type: USER_AUTHORIZATION_SUCCESS,
-//                 data
-//             });
-
-//         }
-//     }
-
-
-// }
 
 export function signOutUser(token) {
 
@@ -223,10 +170,29 @@ export function getUserDate(user) {
                             }
                         })
                         .catch(e => {
-                            console.log(e.type);
+                            //console.log(e.type);
                         })
                 }
-                console.log(e.type);
+                //console.log(e.type);
             })
+    }
+}
+
+export function updateUserProfile(email, password, name) {
+    return function(dispatch) {
+        apdateUserDataRequest(email, password, name)
+            .then(checkResponse)
+            .then((res) => {
+                if (res && res.success === true) {
+                    dispatch({
+                        type: UPDATE_USER_PROFILE,
+                        payload: {...res.user, password: password },
+                    });
+                    localStorage.setItem("password", password);
+                }
+            })
+            .catch((e) => {
+                console.log(e.type);
+            });
     }
 }

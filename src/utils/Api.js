@@ -105,7 +105,7 @@ export const getUserRequest = async() => {
     });
 }
 
-export const apdateUserDataRequest = async(userEmail, userPassword) => {
+export const apdateUserDataRequest = async(email, password, name) => {
     return await fetch(`${baseUrl}auth/user`, {
         method: 'PATCH',
         mode: 'cors',
@@ -117,7 +117,11 @@ export const apdateUserDataRequest = async(userEmail, userPassword) => {
         },
         redirect: 'follow',
         referrerPolicy: 'no-referrer',
-        body: JSON.stringify(userEmail, userPassword)
+        body: JSON.stringify({
+            email: email,
+            password: password,
+            name: name
+        })
     });
 }
 

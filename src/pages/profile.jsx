@@ -7,15 +7,17 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import mainStyle from "./main.module.css";
 import ProfileStyle from "./profile.module.css";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useAuth } from "../services/auth";
-import { Redirect } from "react-router-dom";
+import { updateUserProfile } from "../services/actions/route";
 function Profile() {
+  const dispatch = useDispatch();
   const state = useSelector((store) => store);
-  //console.log(state.route.userAuthProfile)
+  const userProfile = state.route.userAuthProfile;
+  console.log(userProfile);
   //Input
   const [valueInput, setValueInput] = useState(
-    `${state.route.userAuthProfile.name}`
+    "" //`${state.route.userAuthProfile.name}`
   );
   const inputRefInput = React.useRef(null);
   const onIconClickInput = () => {
@@ -24,13 +26,15 @@ function Profile() {
   };
   //Email
   const [valueEmail, setValueEmail] = useState(
-    `${state.route.userAuthProfile.email}`
+    "" //`${state.route.userAuthProfile.email}`
   );
   const onChangeEmail = (e) => {
     setValueEmail(e.target.value);
   };
   //Password
-  const [valuePassword, setValuePassword] = useState("password");
+  const [valuePassword, setValuePassword] = useState(
+    "" //`${state.route.userAuthProfile.password}`
+  );
   const onChangePassword = (e) => {
     setValuePassword(e.target.value);
   };
@@ -43,18 +47,22 @@ function Profile() {
     },
     [auth]
   );
-  //
-  //console.log(auth);
-  // if (!state.route.userAuth) {
-  //   return (
-  //     <Redirect
-  //       to={{
-  //         pathname: '/login'
-  //       }}
-  //     />
-  //   );
-  // }
+  React.useEffect(() => {
+    setValueInput(userProfile.name);
+    setValueEmail(userProfile.email);
+    setValuePassword(userProfile.password);
+  }, [userProfile]);
 
+  function saveProfile(e) {
+    e.preventDefault();
+    dispatch(updateUserProfile(valueEmail, valuePassword, valueInput));
+  }
+  function resetProfile() {
+    setValueInput(state.route.userAuthProfile.name);
+    setValueEmail(state.route.userAuthProfile.email);
+    setValuePassword(state.route.userAuthProfile.password);
+  }
+  // console.log(state.route.userAuthProfile);
   return (
     <section className={mainStyle.page}>
       <div className={ProfileStyle.wrap}>
@@ -112,6 +120,10 @@ function Profile() {
                 value={valuePassword}
                 name={"password"}
               />
+            </div>
+            <div className={`${ProfileStyle.buttons} pt-10`}>
+              <Button onClick={saveProfile}>Сохранить</Button>
+              <Button onClick={resetProfile}>Отмена</Button>
             </div>
           </div>
         </div>

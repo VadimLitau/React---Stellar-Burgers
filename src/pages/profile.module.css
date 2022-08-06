@@ -18,3 +18,9 @@
 .navItem {
     height: 64px;
 }
+
+.buttons {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}

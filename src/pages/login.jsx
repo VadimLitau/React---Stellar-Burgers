@@ -4,13 +4,14 @@ import {
   PasswordInput,
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import { Link, Redirect } from "react-router-dom";
+import { Link, Redirect, useLocation } from "react-router-dom";
 import mainStyle from "./main.module.css";
 import SignInStyle from "./login.module.css";
 import { useSelector } from "react-redux";
 import { useAuth } from "../services/auth";
 
 function Login() {
+  const location = useLocation();
   const [value, setValue] = useState("");
   const onChange = (e) => {
     setValue(e.target.value);
@@ -29,13 +30,7 @@ function Login() {
   );
 
   if (auth.user.name) {
-    return (
-      <Redirect
-        to={{
-          pathname: "/profile",
-        }}
-      />
-    );
+    return <Redirect to={location?.state?.from || "/"} />;
   }
   return (
     <section className={SignInStyle.main}>

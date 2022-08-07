@@ -63,12 +63,12 @@ export default function Ingredient({
 }
 
 Ingredient.propTypes = {
-  // src: PropTypes.string.isRequired,
-  // name: PropTypes.string.isRequired,
-  // price: PropTypes.number.isRequired,
-  // //onCardClick: PropTypes.func.isRequired,
-  // count: PropTypes.number.isRequired,
-  // type: PropTypes.string.isRequired,
-  // id: PropTypes.string.isRequired,
-  // index: PropTypes.string,
+  src: PropTypes.string.isRequired,
+  name: PropTypes.string.isRequired,
+  price: PropTypes.number.isRequired,
+  onCardClick: PropTypes.func.isRequired,
+  count: PropTypes.number.isRequired,
+  type: PropTypes.string.isRequired,
+  id: PropTypes.string.isRequired,
+  index: PropTypes.string,
 };

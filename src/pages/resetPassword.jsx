@@ -14,7 +14,8 @@ function Reset() {
   const dispatch = useDispatch();
   const [valuePass, setValuePass] = React.useState("");
   const [valueToken, setValueToken] = React.useState("");
-  const onClickToken = () => {
+  const onClickToken = (e) => {
+    e.preventDefault();
     setValueToken(valueToken);
     dispatch(userResetPass(valueToken, valuePass));
   };
@@ -40,31 +41,33 @@ function Reset() {
   }
   return (
     <section className={mainStyle.page}>
-      <div className={mainStyle.wrap}>
-        <h1 className="text text_type_main-medium">Восстановление пароля</h1>
-        <div className={`${mainStyle.input} pb-6 pt-6`}>
-          <PasswordInput
-            value={valuePass}
-            onChange={(e) => setValuePass(e.target.value)}
-          />
+      <form onSubmit={onClickToken}>
+        <div className={mainStyle.wrap}>
+          <h1 className="text text_type_main-medium">Восстановление пароля</h1>
+          <div className={`${mainStyle.input} pb-6 pt-6`}>
+            <PasswordInput
+              value={valuePass}
+              onChange={(e) => setValuePass(e.target.value)}
+            />
+          </div>
+          <div className={`${mainStyle.input}`}>
+            <Input
+              placeholder="Введите код из письма"
+              value={valueToken}
+              onChange={(e) => setValueToken(e.target.value)}
+            />
+          </div>
+          <div className="pb-20 pt-6">
+            <Button>Сохранить</Button>
+          </div>
+          <p className="text text_type_main-small text_color_inactive">
+            Вспомнили пароль?
+            <Link to="/login" className={mainStyle.textLink}>
+              Войти
+            </Link>
+          </p>
         </div>
-        <div className={`${mainStyle.input}`}>
-          <Input
-            placeholder="Введите код из письма"
-            value={valueToken}
-            onChange={(e) => setValueToken(e.target.value)}
-          />
-        </div>
-        <div className="pb-20 pt-6">
-          <Button onClick={onClickToken}>Сохранить</Button>
-        </div>
-        <p className="text text_type_main-small text_color_inactive">
-          Вспомнили пароль?
-          <Link to="/login" className={mainStyle.textLink}>
-            Войти
-          </Link>
-        </p>
-      </div>
+      </form>
     </section>
   );
 }

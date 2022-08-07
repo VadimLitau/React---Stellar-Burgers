@@ -27,3 +27,19 @@
     color: #4C4CFF;
     padding-left: 8px;
 }
+
+
+/* Временные стили */
+
+.content_feeds {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.img {
+    width: 380px;
+    height: 540px;
+    margin: 0 auto;
+    padding-top: 50px;
+}

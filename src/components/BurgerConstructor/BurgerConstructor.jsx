@@ -18,8 +18,10 @@ import { useDrop } from "react-dnd";
 import { v4 as uuidv4 } from "uuid";
 import { getServOrder } from "../../services/actions/index";
 import ChangeItem from "./ChangeItem/ChangeItem";
+import { Redirect, useHistory } from "react-router-dom";
 
 export default function BurgerConstructor() {
+  const history = useHistory();
   const state = useSelector((store) => store);
   const burgerConstructorItems = useSelector(
     (store) => store.item.burgerConstructorItems
@@ -46,8 +48,13 @@ export default function BurgerConstructor() {
   };
 
   const getOrder = () => {
-    dispatch(getServOrder(orderId));
-    dispatch({ type: OPEN_ORDER_MODAL });
+    if (!authUser) {
+      console.log(!authUser);
+      return history.replace("/login");
+    } else {
+      dispatch(getServOrder(orderId));
+      dispatch({ type: OPEN_ORDER_MODAL });
+    }
   };
   const handleDrop = (itemId) => {
     dispatch({
@@ -127,11 +134,7 @@ export default function BurgerConstructor() {
           type="primary"
           size="large"
           onClick={getOrder}
-          disabled={
-            bun.price && burgerConstructorItems.length && authUser
-              ? false
-              : true
-          }
+          disabled={bun.price && burgerConstructorItems.length ? false : true}
         >
           Оформить заказ
         </Button>

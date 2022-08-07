@@ -33,7 +33,7 @@ export function ProtectedRoute({ children, ...rest }) {
   //   return <Redirect to="/login" />;
   // }
   // return <Route {...rest}>{children}</Route>;
-  //console.log(auth.user.name);
+  console.log(auth.user.name);
   return (
     <Route
       {...rest}

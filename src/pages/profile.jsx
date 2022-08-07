@@ -83,41 +83,43 @@ function Profile() {
               </li>
             </ul>
           </nav>
-          <div className={ProfileStyle.userProfile}>
-            <div className={mainStyle.input}>
-              <Input
-                type={"text"}
-                placeholder={"Имя"}
-                onChange={(e) => setValueInput(e.target.value)}
-                icon={"EditIcon"}
-                value={valueInput}
-                name={"name"}
-                error={false}
-                ref={inputRefInput}
-                onIconClick={onIconClickInput}
-                errorText={"Ошибка"}
-                size={"default"}
-              />
+          <form onSubmit={saveProfile}>
+            <div className={ProfileStyle.userProfile}>
+              <div className={mainStyle.input}>
+                <Input
+                  type={"text"}
+                  placeholder={"Имя"}
+                  onChange={(e) => setValueInput(e.target.value)}
+                  icon={"EditIcon"}
+                  value={valueInput ? valueInput : ""}
+                  name={"name"}
+                  error={false}
+                  ref={inputRefInput}
+                  onIconClick={onIconClickInput}
+                  errorText={"Ошибка"}
+                  size={"default"}
+                />
+              </div>
+              <div className={`${mainStyle.input} pt-6 pb-6`}>
+                <EmailInput
+                  onChange={onChangeEmail}
+                  value={valueEmail ? valueEmail : ""}
+                  name={"email"}
+                />
+              </div>
+              <div className={`${mainStyle.input}`}>
+                <PasswordInput
+                  onChange={onChangePassword}
+                  value={valuePassword ? valuePassword : ""}
+                  name={"password"}
+                />
+              </div>
+              <div className={`${ProfileStyle.buttons} pt-10`}>
+                <Button>Сохранить</Button>
+                <Button onClick={resetProfile}>Отмена</Button>
+              </div>
             </div>
-            <div className={`${mainStyle.input} pt-6 pb-6`}>
-              <EmailInput
-                onChange={onChangeEmail}
-                value={valueEmail}
-                name={"email"}
-              />
-            </div>
-            <div className={`${mainStyle.input}`}>
-              <PasswordInput
-                onChange={onChangePassword}
-                value={valuePassword}
-                name={"password"}
-              />
-            </div>
-            <div className={`${ProfileStyle.buttons} pt-10`}>
-              <Button onClick={saveProfile}>Сохранить</Button>
-              <Button onClick={resetProfile}>Отмена</Button>
-            </div>
-          </div>
+          </form>
         </div>
       </div>
     </section>

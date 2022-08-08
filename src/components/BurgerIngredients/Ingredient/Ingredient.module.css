@@ -1,20 +1,26 @@
 .priceWrap {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
 }
 
 .name {
-  max-width: 272px;
-  height: 48px; /*знаю что это не правильно и что это костыль, но без четко указанной высоты, имена ингридиентов немного плавают относительно друг друга*/
-  overflow: hidden;
-  text-align: center;
+    max-width: 272px;
+    height: 48px;
+    /*знаю что это не правильно и что это костыль, но без четко указанной высоты, имена ингридиентов немного плавают относительно друг друга*/
+    overflow: hidden;
+    text-align: center;
 }
 
 .head {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    position: relative;
+}
+
+.link {
+    text-decoration: none;
+    color: #FFF;
 }

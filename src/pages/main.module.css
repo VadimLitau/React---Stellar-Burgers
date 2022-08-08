@@ -1,0 +1,45 @@
+.input>div>div {
+    width: 480px
+}
+
+.content {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.page {
+    margin: 0 auto;
+    max-width: 1920px;
+}
+
+.wrap {
+    padding-top: 120px;
+    margin: 0 auto;
+    max-width: 1240px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.textLink {
+    text-decoration: none;
+    color: #4C4CFF;
+    padding-left: 8px;
+}
+
+
+/* Временные стили */
+
+.content_feeds {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.img {
+    width: 380px;
+    height: 540px;
+    margin: 0 auto;
+    padding-top: 50px;
+}

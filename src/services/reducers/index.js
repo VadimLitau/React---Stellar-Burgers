@@ -1,4 +1,5 @@
 import { combineReducers } from 'redux';
+import { routeReducer } from './route';
 import { OPEN_ORDER_MODAL, DELETE_ITEM, GET_API_ITEMS_SUCCESS, CLOSE_ORDER_MODAL, ADD_ITEM, ORDER_FAIL, GET_SERV_ORDER_REQUEST, GET_SERV_ORDER_SUCCESS, GET_SERV_ORDER_FAILED, CHANGE_ITEM } from '../actions/index.js'
 
 
@@ -23,11 +24,12 @@ export const itemReducer = (state = initialState, action) => {
             {
                 if (action.item.payload.type === 'bun') {
                     if (action.item.payload.count < 1) {
-                        return {...state,
+                        return {
+                            ...state,
                             bun: action.item.payload,
                             burgerData: [...state.burgerData].map((item) => {
                                 if (item.type === 'bun' && item._id === action.item.payload.id) {
-                                    return {...item, count: ++item.count }
+                                    return {...item, count: ++item.count + 1 }
                                 } else if (item.type === 'bun') {
                                     return {...item, count: 0 }
                                 } else {
@@ -37,11 +39,12 @@ export const itemReducer = (state = initialState, action) => {
                         }
                     } else if (action.item.payload.count >= 1) { return {...state } }
                 } else if (action.item.payload.type != 'bun') {
-                    console.log(state.burgerConstructorItems)
+                    //console.log(state.burgerConstructorItems)
                     return {
                         ...state,
                         burgerConstructorItems: [...state.burgerConstructorItems, action.item.payload],
                         burgerData: [...state.burgerData].map((item) => {
+                            //console.log(action.item)
                             if (item.type != 'bun' && item._id === action.item.payload.id) {
                                 return {...item, count: ++item.count }
                             } else {
@@ -81,6 +84,7 @@ export const itemReducer = (state = initialState, action) => {
             }
         case DELETE_ITEM:
             {
+
                 const deletetElement = state.burgerConstructorItems.find(item =>
                     item.index === action.item.index
                 )
@@ -145,4 +149,5 @@ export const itemReducer = (state = initialState, action) => {
 
 export const rootReducer = combineReducers({
     item: itemReducer,
+    route: routeReducer,
 })

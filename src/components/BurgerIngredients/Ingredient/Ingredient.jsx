@@ -6,6 +6,7 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import IngredientStyle from "./Ingredient.module.css";
 import { useDrag } from "react-dnd";
+import { useLocation, Link } from "react-router-dom";
 export default function Ingredient({
   src,
   name,
@@ -23,29 +24,41 @@ export default function Ingredient({
       isDrag: monitor.isDragging(),
     }),
   });
+  const location = useLocation();
+  // console.log(id);
   return (
-    <li className={`${IngredientStyle.head} mt-6 mb-8`} ref={dragRef}>
-      <img
-        src={src}
-        alt="ingridienImage"
-        className={`mb-1`}
-        onClick={onCardClick}
-      />
-      <div className={`${IngredientStyle.priceWrap} mb-1`}>
-        <p
-          className={`${IngredientStyle.price} mr-2 text text_type_digits-default`}
-        >
-          {price}
+    //<Link to={`/ingredients/${id}`} state={{ background: location }} key={id} className={IngredientStyle.link}>
+    <Link
+      to={{
+        pathname: `/ingredients/${id}`,
+        state: { background: location },
+      }}
+      key={id}
+      className={IngredientStyle.link}
+    >
+      <li className={`${IngredientStyle.head} mt-6 mb-8`} ref={dragRef}>
+        <img
+          src={src}
+          alt="ingridienImage"
+          className={`mb-1`}
+          onClick={onCardClick}
+        />
+        <div className={`${IngredientStyle.priceWrap} mb-1`}>
+          <p
+            className={`${IngredientStyle.price} mr-2 text text_type_digits-default`}
+          >
+            {price}
+          </p>
+          <CurrencyIcon type="primary" />
+        </div>
+        <p className={`${IngredientStyle.name} text text_type_main-default`}>
+          {name}
         </p>
-        <CurrencyIcon type="primary" />
-      </div>
-      <p className={`${IngredientStyle.name} text text_type_main-default`}>
-        {name}
-      </p>
-      <div>
-        <Counter count={count} size="default" />
-      </div>
-    </li>
+        <div>
+          <Counter count={count} size="default" />
+        </div>
+      </li>
+    </Link>
   );
 }
 

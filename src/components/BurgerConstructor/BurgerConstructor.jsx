@@ -18,12 +18,15 @@ import { useDrop } from "react-dnd";
 import { v4 as uuidv4 } from "uuid";
 import { getServOrder } from "../../services/actions/index";
 import ChangeItem from "./ChangeItem/ChangeItem";
+import { Redirect, useHistory } from "react-router-dom";
 
 export default function BurgerConstructor() {
+  const history = useHistory();
   const state = useSelector((store) => store);
   const burgerConstructorItems = useSelector(
     (store) => store.item.burgerConstructorItems
   );
+  const authUser = useSelector((store) => store.route.userAuthorizationSuccess);
   const orderOverlay = state.item.overlay;
   const dispatch = useDispatch();
 
@@ -45,11 +48,15 @@ export default function BurgerConstructor() {
   };
 
   const getOrder = () => {
-    dispatch(getServOrder(orderId));
-    dispatch({ type: OPEN_ORDER_MODAL });
+    if (!authUser) {
+      console.log(!authUser);
+      return history.replace("/login");
+    } else {
+      dispatch(getServOrder(orderId));
+      dispatch({ type: OPEN_ORDER_MODAL });
+    }
   };
   const handleDrop = (itemId) => {
-    //console.log(itemId);
     dispatch({
       type: ADD_ITEM,
       item: { ...itemId }, //теперь при каждой новой отрисовке ингридиентов конструктора их ключ, не меняется
@@ -58,6 +65,7 @@ export default function BurgerConstructor() {
   const [{ isHover }, dropTarget] = useDrop({
     accept: "item",
     drop(itemId) {
+      //console.log(itemId);
       handleDrop(addIngredient(itemId));
     },
     collect: (monitor) => ({

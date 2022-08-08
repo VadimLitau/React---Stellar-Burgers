@@ -1,0 +1,26 @@
+.main {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    padding-top: 120px;
+}
+
+.wrap {
+    margin: 0 auto;
+    max-width: 1240px;
+}
+
+.navList {
+    max-width: 320px;
+    list-style: none;
+}
+
+.navItem {
+    height: 64px;
+}
+
+.buttons {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}

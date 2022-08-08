@@ -43,7 +43,7 @@ export default function AppHeader() {
           <li className="l-5 pr-5 pb-4 pt-4 mr-2">
             <span className={mainStyle.listItem}>
               <Link
-                to="/feed"
+                to="/feeds"
                 className={
                   linkState.feed ? mainStyle.link_active : mainStyle.link
                 }

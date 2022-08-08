@@ -93,7 +93,6 @@ export default function IngredientDetails() {
           </ul>
         </div>
       )}
-      ;
     </>
   );
 }

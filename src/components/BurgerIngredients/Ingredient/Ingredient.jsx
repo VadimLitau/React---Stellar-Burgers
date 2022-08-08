@@ -27,11 +27,11 @@ export default function Ingredient({
   const location = useLocation();
   // console.log(id);
   return (
-    //<Link to={`/ingredients/${id}`} state={{ background: location }} key={id}>
+    //<Link to={`/ingredients/${id}`} state={{ background: location }} key={id} className={IngredientStyle.link}>
     <Link
       to={{
         pathname: `/ingredients/${id}`,
-        state: { background: location, id: id },
+        state: { background: location },
       }}
       key={id}
       className={IngredientStyle.link}

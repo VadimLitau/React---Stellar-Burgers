@@ -38,10 +38,8 @@ function App() {
   }, [dispatch, userAuth]);
 
   React.useEffect(() => {
-    if (burgerData.length === 0) {
-      document.title = "react burger";
-      dispatch(getApiBurgerData());
-    }
+    document.title = "react burger";
+    dispatch(getApiBurgerData());
   }, [dispatch]);
 
   const location = useLocation();
@@ -75,10 +73,10 @@ function App() {
         <Route path="/" exact={true}>
           <Constructor />
         </Route>
-        <Route>
-          <Feeds path="/feeds" />
+        <Route path="/feeds">
+          <Feeds />
         </Route>
-        <Route path={"/ingredients/:id"} exact>
+        <Route path="/ingredients/:id" exact={true}>
           <IngredientDetails />
         </Route>
         <Route>
@@ -86,7 +84,7 @@ function App() {
         </Route>
       </Switch>
       {background && (
-        <Route path={"/ingredients/:id"}>
+        <Route path="/ingredients/:id">
           <Modal closeModal={closeModals} title={"Детали Ингредиента"}>
             <IngredientDetails />
           </Modal>

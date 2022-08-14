@@ -1,0 +1,76 @@
+    .element {
+        width: 584px;
+        height: 214px;
+        display: flex;
+        flex-direction: column;
+        padding: 0 24px;
+        background: #1C1C21;
+        color: #F2F2F3;
+        box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.04), 0px 0px 2px rgba(0, 0, 0, 0.06), 0px 0px 1px rgba(0, 0, 0, 0.04);
+        border-radius: 40px;
+        box-sizing: border-box;
+    }
+    
+    .wrap {
+        display: flex;
+        flex-direction: row;
+        align-items: baseline;
+        justify-content: space-between;
+    }
+    
+    .wrapImage {
+        border: 1px solid red
+    }
+    
+    .price {
+        display: flex;
+        flex-direction: row;
+        align-items: baseline;
+    }
+    
+    .images {
+        display: flex;
+        flex-direction: row;
+        width: 436px;
+        height: 64px;
+        padding-left: 24px;
+    }
+    
+    .image {
+        width: 64px;
+        height: 64px;
+        border: 2px solid #801AB2;
+        background: #131316;
+        border-radius: 100px;
+        margin-left: -20px;
+    }
+    
+    .image1 {
+        z-index: 9;
+    }
+    
+    .image2 {
+        z-index: 8;
+    }
+    
+    .image3 {
+        z-index: 7;
+    }
+    
+    .image4 {
+        z-index: 6;
+    }
+    
+    .image5 {
+        z-index: 5;
+    }
+    
+    .image6 {
+        z-index: 4;
+        background: #1C1C21;
+        opacity: 0.6;
+    }
+    
+    .imageHead {
+        z-index: 10;
+    }

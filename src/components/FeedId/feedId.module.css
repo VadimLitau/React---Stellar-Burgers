@@ -1,0 +1,72 @@
+.page {
+    margin: 56px 0;
+    /*Так чуточку лучше визуальней =)*/
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.feedNum {
+    text-align: center;
+}
+
+.status {
+    font-family: 'JetBrains Mono';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 24px;
+    color: #00CCCC;
+}
+
+.list {
+    list-style: none;
+    overflow: auto;
+    max-height: 320px;
+}
+
+.listItem {
+    margin-left: -40px;
+}
+
+.image {
+    width: 64px;
+    height: 64px;
+    border: 2px solid #801AB2;
+    background: #131316;
+    border-radius: 100px;
+}
+
+.listItemWrap {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between
+}
+
+.itemWrap {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.list::-webkit-scrollbar {
+    width: 8px;
+    background-color: #2f2f37;
+}
+
+.list::-webkit-scrollbar-thumb {
+    width: 8px;
+    height: 194px;
+    background-color: #8585ad;
+}
+
+.price {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.priceWrap {
+    justify-content: space-between;
+}

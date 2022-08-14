@@ -1,0 +1,38 @@
+.head {
+    width: 600px;
+    max-width: 600px;
+    margin-right: 8px;
+}
+
+.content {
+    overflow: auto;
+    max-height: 870px;
+    position: relative;
+    list-style: none;
+    padding: 0;
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+.content::-webkit-scrollbar {
+    width: 8px;
+    background-color: #2f2f37;
+}
+
+.content::-webkit-scrollbar-thumb {
+    width: 8px;
+    height: 640px;
+    background-color: #8585ad;
+}
+
+.listItem {
+    padding: 8px 0;
+}
+
+.listItem:first-child {
+    padding-top: 0;
+}
+
+.listItem:last-child {
+    padding-bottom: 0;
+}

@@ -10,6 +10,7 @@ import PageNotFound from "../../pages/page404";
 import Modal from "../Modal/Modal";
 import IngredientDetails from "../Modal/IngridientDetails/IngridientDetails";
 import Feeds from "../../pages/feeds";
+import FeedId from "../FeedId/feedId";
 import {
   BrowserRouter as Router,
   Route,
@@ -75,6 +76,9 @@ function App() {
         </Route>
         <Route path="/feeds">
           <Feeds />
+        </Route>
+        <Route path="/feedzz">
+          <FeedId />
         </Route>
         <Route path="/ingredients/:id" exact={true}>
           <IngredientDetails />

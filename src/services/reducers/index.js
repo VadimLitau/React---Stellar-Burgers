@@ -1,5 +1,6 @@
 import { combineReducers } from 'redux';
 import { routeReducer } from './route';
+import { wsReducer } from './wsReducer';
 import { OPEN_ORDER_MODAL, DELETE_ITEM, GET_API_ITEMS_SUCCESS, CLOSE_ORDER_MODAL, ADD_ITEM, ORDER_FAIL, GET_SERV_ORDER_REQUEST, GET_SERV_ORDER_SUCCESS, GET_SERV_ORDER_FAILED, CHANGE_ITEM } from '../actions/index.js'
 
 
@@ -15,7 +16,7 @@ export const initialState = {
     setOrder: false,
     overlay: false,
     servOrderRequest: false,
-    servOrderFailed: false,
+    servOrderFailed: false
 }
 
 export const itemReducer = (state = initialState, action) => {
@@ -150,4 +151,5 @@ export const itemReducer = (state = initialState, action) => {
 export const rootReducer = combineReducers({
     item: itemReducer,
     route: routeReducer,
+    ws: wsReducer
 })

@@ -12,7 +12,7 @@ export const routeState = {
     userAuthorizationFailed: false,
     userAuth: false,
     userAuthProfile: { name: '', email: '', password: '' },
-    newUserProfile: null,
+    newUserProfile: null
 }
 
 export const routeReducer = (state = routeState, action) => {

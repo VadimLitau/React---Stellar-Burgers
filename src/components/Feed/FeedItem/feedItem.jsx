@@ -8,24 +8,6 @@ export function FeedItemImage() {
       <div className={`${feedItemStyle.imageHead} ${feedItemStyle.image}`}>
         <img src={testImage} alt="Фото ингридиента" />
       </div>
-      <div className={`${feedItemStyle.image1} ${feedItemStyle.image}`}>
-        <img src={testImage} alt="Фото ингридиента" />
-      </div>
-      <div className={`${feedItemStyle.image2} ${feedItemStyle.image}`}>
-        <img src={testImage} alt="Фото ингридиента" />
-      </div>
-      <div className={`${feedItemStyle.image3} ${feedItemStyle.image}`}>
-        <img src={testImage} alt="Фото ингридиента" />
-      </div>
-      <div className={`${feedItemStyle.image4} ${feedItemStyle.image}`}>
-        <img src={testImage} alt="Фото ингридиента" />
-      </div>
-      <div className={`${feedItemStyle.image5} ${feedItemStyle.image}`}>
-        <img src={testImage} alt="Фото ингридиента" />
-      </div>
-      <div className={`${feedItemStyle.image6} ${feedItemStyle.image}`}>
-        <img src={testImage} alt="Фото ингридиента" />
-      </div>
     </div>
   );
 }

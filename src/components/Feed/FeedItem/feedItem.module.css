@@ -30,7 +30,8 @@
     
     .images {
         display: flex;
-        flex-direction: row;
+        flex-direction: row-reverse;
+        justify-content: flex-end;
         width: 436px;
         height: 64px;
         padding-left: 24px;
@@ -43,34 +44,4 @@
         background: #131316;
         border-radius: 100px;
         margin-left: -20px;
-    }
-    
-    .image1 {
-        z-index: 9;
-    }
-    
-    .image2 {
-        z-index: 8;
-    }
-    
-    .image3 {
-        z-index: 7;
-    }
-    
-    .image4 {
-        z-index: 6;
-    }
-    
-    .image5 {
-        z-index: 5;
-    }
-    
-    .image6 {
-        z-index: 4;
-        background: #1C1C21;
-        opacity: 0.6;
-    }
-    
-    .imageHead {
-        z-index: 10;
     }

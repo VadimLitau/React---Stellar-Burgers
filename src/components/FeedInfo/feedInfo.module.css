@@ -18,17 +18,24 @@
     margin: 0;
 }
 
-.listDone {
+.listDone,
+.listWork {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
     list-style: none;
-    color: #00CCCC
+    color: #00CCCC;
+    max-height: 322px;
+    height: 322px;
 }
 
 .listWork {
+    color: #F2F2F3;
     list-style: none;
 }
 
 .listItem {
-    margin-left: -38px;
+    padding-right: 4px;
 }
 
 .num {

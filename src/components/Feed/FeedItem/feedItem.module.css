@@ -18,23 +18,32 @@
         justify-content: space-between;
     }
     
-    .wrapImage {
-        border: 1px solid red
+    .wrapPrice {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        padding-left: 34px;
+        justify-content: space-between
     }
     
     .price {
         display: flex;
-        flex-direction: row;
+        flex-direction: row-reverse;
         align-items: baseline;
+        justify-content: flex-end
+    }
+    
+    .images:first-child {
+        height: 64px;
+        padding-left: 34px;
     }
     
     .images {
-        display: flex;
-        flex-direction: row-reverse;
-        justify-content: flex-end;
-        width: 436px;
-        height: 64px;
-        padding-left: 24px;
+        padding-left: 34px;
+    }
+    
+    .imagesTest {
+        display: none;
     }
     
     .image {
@@ -43,5 +52,55 @@
         border: 2px solid #801AB2;
         background: #131316;
         border-radius: 100px;
-        margin-left: -20px;
+        margin-left: -60px;
+    }
+    
+    .imageTest {
+        width: 64px;
+        height: 64px;
+        border: 2px solid #801AB2;
+        background: #131316;
+        border-radius: 100px;
+        margin-left: -60px;
+    }
+    /* .imageTest:first-child {
+        width: 64px;
+        height: 64px;
+        border: 2px solid #801AB2;
+        background: #131316;
+        border-radius: 100px;
+        margin-left: -60px;
+    } */
+    
+    .imageMobile {
+        width: 64px;
+        height: 64px;
+        object-fit: cover;
+    }
+    
+    .listItem {
+        padding: 8px 0;
+    }
+    
+    .name {
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+    }
+    
+    .countWrap {
+        display: flex;
+        flex-direction: column;
+        text-align: center;
+        margin-top: -66px;
+        margin-left: -55px;
+        width: 62px;
+        height: 62px;
+    }
+    
+    .count {
+        width: 62px;
+        height: 62px;
+        background-color: rgba(0, 0, 0, 0.6);
+        border-radius: 100px;
     }

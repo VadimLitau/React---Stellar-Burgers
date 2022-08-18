@@ -25,10 +25,6 @@
     background-color: #8585ad;
 }
 
-.listItem {
-    padding: 8px 0;
-}
-
 .listItem:first-child {
     padding-top: 0;
 }

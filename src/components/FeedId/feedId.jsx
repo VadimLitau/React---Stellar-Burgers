@@ -2,26 +2,14 @@ import React, { useEffect } from "react";
 import feedIdStyle from "./feedId.module.css";
 import { useDispatch, useSelector } from "react-redux";
 import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
-import testImage from "../../images/test/salad.png";
 import { useParams } from "react-router-dom";
 import {
   WS_CONNECTION_START,
   WS_CONNECTION_CLOSED,
 } from "../../services/action-types/wsActionTypes";
-import { getCookie } from "../../utils/utils";
-import { useLocation } from "react-router-dom";
 import { v4 as uuidv4 } from "uuid";
 export default function FeedId() {
-  // const location = useLocation();
-  // const token = "?token=" + getCookie("token");
-  // let wsPayload = "/all";
-  // if (feed === "true") {
-  //   wsPayload = "/all";
-  // } else if (profile === "true") {
-  //   wsPayload = token;
-  // }
   const { id } = useParams();
-  //console.log(id);
   const dispatch = useDispatch();
   const burgerData = useSelector((store) => store.item.burgerData);
   useEffect(() => {
@@ -33,91 +21,87 @@ export default function FeedId() {
     };
   }, [burgerData]);
   const dataFeed = useSelector((store) => store.ws.messages);
-  let data = null;
-  let ingredientForModal = null;
-  let ingredientForModalStatus = null;
-  let ingredientForModalCreatedAt = "";
-  let ingredientForModalIngredients = [];
-
+  const info = {
+    data: null,
+    ingredientForModal: null,
+    ingredientForModalStatus: null,
+    ingredientForModalCreatedAt: "",
+    ingredientForModalIngredients: [],
+    itemDay: "",
+    now: new Date(),
+    ingrArr: [],
+  };
+  let price = 0;
   if (dataFeed.length > 0) {
-    data = dataFeed[`${dataFeed.length - 1}`].orders;
-    ingredientForModal = data.find((ingr) => ingr._id === id);
-    ingredientForModalStatus = ingredientForModal.status;
-    ingredientForModalCreatedAt = ingredientForModal.createdAt;
-    ingredientForModalIngredients = ingredientForModal.ingredients;
+    info.data = dataFeed[`${dataFeed.length - 1}`].orders;
+    info.ingredientForModal = info.data.find((ingr) => ingr._id === id);
+    info.ingredientForModalStatus = info.ingredientForModal.status;
+    info.ingredientForModalCreatedAt = info.ingredientForModal.createdAt;
+    info.ingredientForModalIngredients = info.ingredientForModal.ingredients;
   }
 
-  //console.log(ingredientForModalIngredients);
-  // console.log(ingredientForModal.ingredients);
   let color = {
     color: "#00CCCC",
     name: "",
   };
-  if (ingredientForModalStatus === "done") {
+  if (info.ingredientForModalStatus === "done") {
     color.color = "#00CCCC";
     color.name = "Выполнен";
-  } else if (ingredientForModalStatus === "pending") {
+  } else if (info.ingredientForModalStatus === "pending") {
     color.color = "#B22222";
     color.name = "Отменен";
   } else {
     color.color = "#F2F2F3";
     color.name = "Готовится";
   }
-  // console.log(ingredientForModal.ingredients);
 
-  let itemDay = "";
-  let time = ingredientForModalCreatedAt;
-  // console.log(time);
-  let now = new Date();
-  let nowDay = now.getDate();
-  let findT = time.indexOf("T");
-  let findDay = time.slice(findT - 2, findT);
-  let findTime = time.slice(findT + 1, findT + 6);
-  //let id = item.item._id;
-  if (nowDay.toString() === findDay) {
-    itemDay = "Cегодня";
-  } else if (Number(nowDay) - Number(findDay) === 1) {
-    itemDay = "Вчера";
-  } else if (Number(nowDay) - Number(findDay) === 2) {
-    itemDay = "2 дня назад";
-  } else {
-    itemDay = "Архивный заказ";
-  }
-  //console.log(findDay);
-  // console.log(ingredients);
-  let test = [];
+  const time = info.ingredientForModalCreatedAt;
+  const nowDay = info.now.getDate();
+  const findT = time.indexOf("T");
+  const findDay = time.slice(findT - 2, findT);
+  const findTime = time.slice(findT + 1, findT + 6);
+
+  nowDay.toString() === findDay
+    ? (info.itemDay = "Cегодня")
+    : Number(nowDay) - Number(findDay) === 1
+    ? (info.itemDay = "Вчера")
+    : Number(nowDay) - Number(findDay) === 2
+    ? (info.itemDay = "2 дня назад")
+    : (info.itemDay = "Архивный заказ");
+
   const sum = burgerData.map((el) => {
-    const data = ingredientForModalIngredients.find((item) => el._id === item);
+    const data = info.ingredientForModalIngredients.find(
+      (item) => el._id === item
+    );
     if (data) {
-      test.push(el);
+      info.ingrArr.push(el);
     }
   }, 0);
-  let price = 0;
-  test.forEach((item) => {
+
+  info.ingrArr.forEach((item) => {
     price += item.price;
   });
-  //console.log(test);
   return (
     <>
-      {!ingredientForModal && (
+      {!info.ingredientForModal && (
         <div className={feedIdStyle.loadingWrap}>
           <h1 className={`${feedIdStyle.loading} text text_type_main-large`}>
             Загрузка
           </h1>
         </div>
       )}
-      {ingredientForModal && (
+      {info.ingredientForModal && (
         <section className={feedIdStyle.page}>
           <div className="pl-8 pr-8">
             <h1
               className={`${feedIdStyle.feedNum} text text_type_digits-default mb-10`}
             >
-              {`#${ingredientForModal.number}`}
+              {`#${info.ingredientForModal.number}`}
             </h1>
             <p
               className={`${feedIdStyle.name} text text_type_main-medium mb-3`}
             >
-              {ingredientForModal.name}
+              {info.ingredientForModal.name}
             </p>
             <p className={`text text_type_main-default mb-15`} style={color}>
               {color.name}
@@ -125,7 +109,7 @@ export default function FeedId() {
             <p className="text text_type_main-medium mb-6">Состав:</p>
             <div>
               <ul className={`${feedIdStyle.list} pr-6 mb-10`}>
-                {test.map((item) => {
+                {info.ingrArr.map((item) => {
                   //console.log(item);
                   return (
                     <li
@@ -157,7 +141,7 @@ export default function FeedId() {
             </div>
             <div className={`${feedIdStyle.price} ${feedIdStyle.priceWrap}`}>
               <p className="text text_type_main-default text_color_inactive">
-                {itemDay + " "}
+                {info.itemDay + " "}
                 {findTime + " i-GMT+3"}
               </p>
               <div className={`${feedIdStyle.price}`}>

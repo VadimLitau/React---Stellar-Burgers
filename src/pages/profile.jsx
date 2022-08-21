@@ -18,7 +18,7 @@ function Profile() {
   const dispatch = useDispatch();
   const state = useSelector((store) => store);
   const userProfile = state.route.userAuthProfile;
-  // console.log(userProfile);
+
   //Input
   const [valueInput, setValueInput] = useState("");
   const inputRefInput = React.useRef(null);

@@ -56,7 +56,7 @@ export default function FeedItem(item) {
   const burgerData = useSelector((store) => store.item.burgerData);
   const ingredients = item.item.ingredients;
   const info = {
-    test: [],
+    ingrArr: [],
     itemDay: "",
     time: item.item.createdAt,
     now: new Date(),
@@ -77,7 +77,7 @@ export default function FeedItem(item) {
     burgerData.map((el) => {
       const data = ingredients.find((item) => el._id === item);
       if (data) {
-        info.test.push(el);
+        info.ingrArr.push(el);
       }
     }, 0);
   }, [burgerData]);
@@ -123,9 +123,9 @@ export default function FeedItem(item) {
           </p>
           <div className={feedItemStyle.wrapPrice}>
             <div className={feedItemStyle.price}>
-              {info.test.reverse().map((item) => {
+              {info.ingrArr.reverse().map((item) => {
                 price += item.price;
-                if (info.test.length <= 6) {
+                if (info.ingrArr.length <= 6) {
                   return <FeedItemImage data={item} key={item._id} />;
                 } else {
                   return (
@@ -133,7 +133,7 @@ export default function FeedItem(item) {
                       data={item}
                       key={item._id}
                       number={(countImage += 1)}
-                      lengthArr={info.test.length}
+                      lengthArr={info.ingrArr.length}
                     />
                   );
                 }

@@ -8,17 +8,11 @@ import {
   WS_CONNECTION_START,
   WS_CONNECTION_CLOSED,
 } from "../../services/action-types";
-import { useLocation } from "react-router-dom";
 export default function FeedProfile() {
-  //console.log(profile);
   const dispatch = useDispatch();
   const state = useSelector((store) => store);
   const userProfile = state.route.userAuthProfile;
-  // const token = "?token=" + getCookie("token");
-  //console.log(userProfile.name);
-
-  //console.log(profile);
-
+  let data = null;
   useEffect(() => {
     const token = "?token=" + getCookie("token");
     if (userProfile) {
@@ -30,17 +24,15 @@ export default function FeedProfile() {
     };
   }, [userProfile]);
   const dataFeed = useSelector((store) => store.ws.messages);
-  let data = null;
 
   if (dataFeed.length > 0) {
     data = dataFeed[`${dataFeed.length - 1}`].orders;
   }
-  // console.log(dataFeed);
   return (
     <section className={feedStyle.head}>
       <ul className={feedStyle.content}>
         {data != null &&
-          data.map((item) => {
+          data.reverse().map((item) => {
             return <FeedItem item={item} key={uuidv4()} profile="true" />;
           })}
       </ul>

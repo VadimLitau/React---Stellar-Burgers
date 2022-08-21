@@ -8,27 +8,34 @@ export default function FeedIdModal() {
   const { id } = useParams();
   const burgerData = useSelector((store) => store.item.burgerData);
   const dataFeed = useSelector((store) => store.ws.messages);
-  let data = null;
-  let ingredientForModal = null;
-  let ingredientForModalStatus = null;
-  let ingredientForModalCreatedAt = "";
-  let ingredientForModalIngredients = [];
-
-  if (dataFeed.length > 0) {
-    data = dataFeed[`${dataFeed.length - 1}`].orders;
-    ingredientForModal = data.find((ingr) => ingr._id === id);
-    ingredientForModalStatus = ingredientForModal.status;
-    ingredientForModalCreatedAt = ingredientForModal.createdAt;
-    ingredientForModalIngredients = ingredientForModal.ingredients;
-  }
+  let price = 0;
+  const info = {
+    data: null,
+    ingredientForModal: null,
+    ingredientForModalStatus: null,
+    ingredientForModalCreatedAt: "",
+    ingredientForModalIngredients: [],
+    itemDay: "",
+    now: new Date(),
+    ingrArr: [],
+  };
   let color = {
     color: "#00CCCC",
     name: "",
   };
-  if (ingredientForModalStatus === "done") {
+
+  if (dataFeed.length > 0) {
+    info.data = dataFeed[`${dataFeed.length - 1}`].orders;
+    info.ingredientForModal = info.data.find((ingr) => ingr._id === id);
+    info.ingredientForModalStatus = info.ingredientForModal.status;
+    info.ingredientForModalCreatedAt = info.ingredientForModal.createdAt;
+    info.ingredientForModalIngredients = info.ingredientForModal.ingredients;
+  }
+
+  if (info.ingredientForModalStatus === "done") {
     color.color = "#00CCCC";
     color.name = "Выполнен";
-  } else if (ingredientForModalStatus === "pending") {
+  } else if (info.ingredientForModalStatus === "pending") {
     color.color = "#B22222";
     color.name = "Отменен";
   } else {
@@ -36,54 +43,54 @@ export default function FeedIdModal() {
     color.name = "Готовится";
   }
 
-  let itemDay = "";
-  let time = ingredientForModalCreatedAt;
-  let now = new Date();
-  let nowDay = now.getDate();
-  let findT = time.indexOf("T");
-  let findDay = time.slice(findT - 2, findT);
-  let findTime = time.slice(findT + 1, findT + 6);
-  if (nowDay.toString() === findDay) {
-    itemDay = "Cегодня";
-  } else if (Number(nowDay) - Number(findDay) === 1) {
-    itemDay = "Вчера";
-  } else if (Number(nowDay) - Number(findDay) === 2) {
-    itemDay = "2 дня назад";
-  } else {
-    itemDay = "Архивный заказ";
-  }
-  let test = [];
   const sum = burgerData.map((el) => {
-    const data = ingredientForModalIngredients.find((item) => el._id === item);
+    const data = info.ingredientForModalIngredients.find(
+      (item) => el._id === item
+    );
     if (data) {
-      test.push(el);
+      info.ingrArr.push(el);
     }
   }, 0);
-  let price = 0;
-  test.forEach((item) => {
+
+  info.ingrArr.forEach((item) => {
     price += item.price;
   });
+
+  const time = info.ingredientForModalCreatedAt;
+  const nowDay = info.now.getDate();
+  const findT = time.indexOf("T");
+  const findDay = time.slice(findT - 2, findT);
+  const findTime = time.slice(findT + 1, findT + 6);
+
+  nowDay.toString() === findDay
+    ? (info.itemDay = "Cегодня")
+    : Number(nowDay) - Number(findDay) === 1
+    ? (info.itemDay = "Вчера")
+    : Number(nowDay) - Number(findDay) === 2
+    ? (info.itemDay = "2 дня назад")
+    : (info.itemDay = "Архивный заказ");
+
   return (
     <>
-      {!ingredientForModal && (
+      {!info.ingredientForModal && (
         <div className={feedIdStyle.loadingWrap}>
           <h1 className={`${feedIdStyle.loading} text text_type_main-large`}>
             Загрузка
           </h1>
         </div>
       )}
-      {ingredientForModal && (
+      {info.ingredientForModal && (
         <section className={feedIdStyle.page}>
           <div className="pl-8 pr-8">
             <h1
               className={`${feedIdStyle.feedNum} text text_type_digits-default mb-10`}
             >
-              {`#${ingredientForModal.number}`}
+              {`#${info.ingredientForModal.number}`}
             </h1>
             <p
               className={`${feedIdStyle.name} text text_type_main-medium mb-3`}
             >
-              {ingredientForModal.name}
+              {info.ingredientForModal.name}
             </p>
             <p className={`text text_type_main-default mb-15`} style={color}>
               {color.name}
@@ -91,7 +98,7 @@ export default function FeedIdModal() {
             <p className="text text_type_main-medium mb-6">Состав:</p>
             <div>
               <ul className={`${feedIdStyle.list} pr-6 mb-10`}>
-                {test.map((item) => {
+                {info.ingrArr.map((item) => {
                   return (
                     <li
                       className={`${feedIdStyle.listItem} pb-4`}
@@ -122,7 +129,7 @@ export default function FeedIdModal() {
             </div>
             <div className={`${feedIdStyle.price} ${feedIdStyle.priceWrap}`}>
               <p className="text text_type_main-default text_color_inactive">
-                {itemDay + " "}
+                {info.itemDay + " "}
                 {findTime + " i-GMT+3"}
               </p>
               <div className={`${feedIdStyle.price}`}>

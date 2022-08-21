@@ -4,8 +4,12 @@ import { getCookie } from './utils'
 export const getServOrderRequest = async(orderId) => {
     return await fetch(`${baseUrl}orders`, {
         method: 'POST',
+        mode: 'cors',
+        cache: 'no-cache',
+        credentials: 'same-origin',
         headers: {
             'Content-Type': 'application/json;charset=utf-8',
+            Authorization: 'Bearer ' + getCookie('token')
         },
         body: JSON.stringify({ ingredients: orderId })
     })
@@ -35,7 +39,7 @@ export const getResetPass = async(resetToken, resetPass) => {
         headers: {
             'Content-Type': 'application/json;charset=utf-8',
         },
-        body: JSON.stringify({ 'password': resetToken, 'token': resetPass })
+        body: JSON.stringify({ 'password': resetPass, 'token': resetToken })
     })
 }
 
@@ -91,6 +95,7 @@ export const logoutRequest = async(token) => {
 };
 
 export const getUserRequest = async() => {
+    console.log(getCookie('accessToken'));
     return await fetch(`${baseUrl}auth/user`, {
         method: 'GET',
         mode: 'cors',

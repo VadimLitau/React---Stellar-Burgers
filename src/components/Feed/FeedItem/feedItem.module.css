@@ -82,6 +82,11 @@
         padding: 8px 0;
     }
     
+    .link {
+        text-decoration: none;
+        color: #FFF;
+    }
+    
     .name {
         overflow: hidden;
         white-space: nowrap;

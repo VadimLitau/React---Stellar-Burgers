@@ -9,21 +9,30 @@ import {
   WS_CONNECTION_CLOSED,
 } from "../services/action-types/wsActionTypes";
 import { getMessages, getUser, getWsConnected } from "../services/selectors";
+import {
+  BrowserRouter as Router,
+  Route,
+  Switch,
+  useLocation,
+  useHistory,
+} from "react-router-dom";
 export default function Feeds() {
-  const messages = useSelector(getMessages);
-  const user = useSelector(getUser);
-  const isConnected = useSelector(getWsConnected);
-  const feedMessages = useSelector((store) => store.ws);
+  // const location = useLocation();
+  // // const messages = useSelector(getMessages);
+  // // const user = useSelector(getUser);
+  // const isConnected = useSelector(getWsConnected);
+  //console.log(location.pathname.includes("feeds"));\
+
+  const feedMessages = useSelector((store) => store.ws.messages);
   const items = useSelector((store) => store.item.burgerData);
   const dispatch = useDispatch();
   useEffect(() => {
-    if (items.length) {
-      dispatch({ type: WS_CONNECTION_START, payload: "/all" });
-    }
+    dispatch({ type: WS_CONNECTION_START, payload: "/all" });
+
     return () => {
       dispatch({ type: WS_CONNECTION_CLOSED, payload: "" });
     };
-  }, [items]);
+  }, []);
 
   const orders = feedMessages;
 
@@ -34,7 +43,7 @@ export default function Feeds() {
     <section className={feedsStyle.page}>
       <div>
         <h1 className="text text_type_main-large mt-10 mb-5">Лента Заказов</h1>
-        <Feed />
+        <Feed data={feedMessages} />
       </div>
       <FeedInfo />
     </section>

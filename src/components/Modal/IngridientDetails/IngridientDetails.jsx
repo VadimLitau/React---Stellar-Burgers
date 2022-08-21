@@ -15,8 +15,8 @@ export default function IngredientDetails() {
   });
   const ingredientForModal = data.find((ingr) => ingr._id === id);
 
-  console.log(data);
-  console.log(id);
+  // console.log(data);
+  // console.log(id);
   // console.log(ingredientForModal);
   // console.log(location);
   //const id = location.state.id;

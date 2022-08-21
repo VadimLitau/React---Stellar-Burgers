@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import feedItemStyle from "./feedItem.module.css";
+import { useLocation, Link } from "react-router-dom";
 export function FeedItemImage({ data, number, length }) {
   // console.log(test);
   let test = length - number;
@@ -48,9 +49,12 @@ export function FeedItemImage({ data, number, length }) {
     </>
   );
 }
-export default function FeedItem(item, key) {
+export default function FeedItem(item, key, profile) {
+  //console.log(item.profile);
+  const location = useLocation();
   const burgerData = useSelector((store) => store.item.burgerData);
   const ingredients = item.item.ingredients;
+
   let test = [];
   const sum = burgerData.map((el) => {
     const data = ingredients.find((item) => el._id === item);
@@ -65,7 +69,7 @@ export default function FeedItem(item, key) {
   let findT = time.indexOf("T");
   let findDay = time.slice(findT - 2, findT);
   let findTime = time.slice(findT + 1, findT + 6);
-
+  let id = item.item._id;
   if (nowDay.toString() === findDay) {
     itemDay = "Cегодня";
   } else if (Number(nowDay) - Number(findDay) === 1) {
@@ -78,50 +82,64 @@ export default function FeedItem(item, key) {
 
   let price = 0;
   let countImage = 0;
+
+  let ttt = item.profile;
+  let url = "";
+  ttt === "true" ? (url = `/profile/order/${id}`) : (url = `/feed/${id}`);
+  // console.log(ttt);
   return (
-    <li className={feedItemStyle.listItem} key={key}>
-      <div className={feedItemStyle.element}>
-        <div className={feedItemStyle.wrap}>
-          <p className="pt-6 text text_type_digits-default">
-            #{item.item.number}
-          </p>
-          <p
-            className={`${feedItemStyle.date} text text_type_main-default text_color_inactive`}
-          >
-            {itemDay + " "}
-            {findTime + " i-GMT+3"}
-          </p>
-        </div>
-        <p
-          className={`${feedItemStyle.name} pt-6 pb-6 text text_type_main-medium`}
-        >
-          {item.item.name}
-        </p>
-        <div className={feedItemStyle.wrapPrice}>
-          <div className={feedItemStyle.price}>
-            {test.reverse().map((item) => {
-              price += item.price;
-              //return <FeedItemImage data={item} key={item._id} />;
-              if (test.length <= 6) {
-                return <FeedItemImage data={item} key={item._id} />;
-              } else {
-                return (
-                  <FeedItemImage
-                    data={item}
-                    key={item._id}
-                    number={(countImage += 1)}
-                    length={test.length}
-                  />
-                );
-              }
-            })}
-          </div>
+    <Link
+      to={{
+        pathname: url,
+        state: { background: location },
+      }}
+      key={id}
+      className={feedItemStyle.link}
+    >
+      <li className={feedItemStyle.listItem} key={key}>
+        <div className={feedItemStyle.element}>
           <div className={feedItemStyle.wrap}>
-            <p className="text text_type_digits-default pr-2">{price}</p>
-            <CurrencyIcon />
+            <p className="pt-6 text text_type_digits-default">
+              #{item.item.number}
+            </p>
+            <p
+              className={`${feedItemStyle.date} text text_type_main-default text_color_inactive`}
+            >
+              {itemDay + " "}
+              {findTime + " i-GMT+3"}
+            </p>
+          </div>
+          <p
+            className={`${feedItemStyle.name} pt-6 pb-6 text text_type_main-medium`}
+          >
+            {item.item.name}
+          </p>
+          <div className={feedItemStyle.wrapPrice}>
+            <div className={feedItemStyle.price}>
+              {test.reverse().map((item) => {
+                price += item.price;
+                //return <FeedItemImage data={item} key={item._id} />;
+                if (test.length <= 6) {
+                  return <FeedItemImage data={item} key={item._id} />;
+                } else {
+                  return (
+                    <FeedItemImage
+                      data={item}
+                      key={item._id}
+                      number={(countImage += 1)}
+                      length={test.length}
+                    />
+                  );
+                }
+              })}
+            </div>
+            <div className={feedItemStyle.wrapPrice}>
+              <p className="text text_type_digits-default pr-2">{price}</p>
+              <CurrencyIcon />
+            </div>
           </div>
         </div>
-      </div>
-    </li>
+      </li>
+    </Link>
   );
 }

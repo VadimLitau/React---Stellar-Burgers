@@ -11,7 +11,7 @@ import {
 import { getCookie } from "../../utils/utils";
 import { useLocation } from "react-router-dom";
 import { v4 as uuidv4 } from "uuid";
-export default function FeedId(feed, profile) {
+export default function FeedIdModal(feed, profile) {
   // const location = useLocation();
   // const token = "?token=" + getCookie("token");
   // let wsPayload = "/all";
@@ -24,14 +24,14 @@ export default function FeedId(feed, profile) {
   console.log(id);
   const dispatch = useDispatch();
   const burgerData = useSelector((store) => store.item.burgerData);
-  useEffect(() => {
-    if (burgerData.length) {
-      dispatch({ type: WS_CONNECTION_START, payload: "/all" });
-    }
-    return () => {
-      dispatch({ type: WS_CONNECTION_CLOSED, payload: "" });
-    };
-  }, [burgerData]);
+  // useEffect(() => {
+  //   if (burgerData.length) {
+  //     dispatch({ type: WS_CONNECTION_START, payload: "/all" });
+  //   }
+  //   return () => {
+  //     dispatch({ type: WS_CONNECTION_CLOSED, payload: "" });
+  //   };
+  // }, [burgerData]);
   const dataFeed = useSelector((store) => store.ws.messages);
   let data = null;
   let ingredientForModal = null;

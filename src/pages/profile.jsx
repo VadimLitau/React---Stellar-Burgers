@@ -10,8 +10,11 @@ import ProfileStyle from "./profile.module.css";
 import { useDispatch, useSelector } from "react-redux";
 import { useAuth } from "../services/auth";
 import { updateUserProfile } from "../services/actions/route";
-import Feed from "../components/Feed/feed";
+import FeedProfile from "../components/FeedProfile/feedProfile";
+import { useHistory } from "react-router-dom";
+import { ProtectedRoute } from "../components/ProtectedRoute/ProtectedRoute";
 function Profile() {
+  const history = useHistory();
   const dispatch = useDispatch();
   const state = useSelector((store) => store);
   const userProfile = state.route.userAuthProfile;
@@ -61,9 +64,13 @@ function Profile() {
   });
 
   const onClick = (elem) => {
-    elem === "order"
-      ? setLinkState({ profile: false, order: true })
-      : setLinkState({ profile: true, order: false });
+    if (elem === "order") {
+      setLinkState({ profile: false, order: true });
+      history.push("/profile/orders");
+    } else {
+      setLinkState({ profile: true, order: false });
+      history.push("/profile");
+    }
   };
 
   return (
@@ -155,7 +162,10 @@ function Profile() {
               </div>
             </form>
           )}
-          {linkState.order && <Feed />}
+          {/* <ProtectedRoute path="/profile/orders" exact={true}>
+            <FeedProfile profile="true" />
+          </ProtectedRoute> */}
+          {linkState.order && <FeedProfile profile="true" />}
         </div>
       </div>
     </section>

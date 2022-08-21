@@ -1,37 +1,12 @@
 import React, { useEffect } from "react";
 import feedIdStyle from "./feedId.module.css";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
-import testImage from "../../images/test/salad.png";
 import { useParams } from "react-router-dom";
-import {
-  WS_CONNECTION_START,
-  WS_CONNECTION_CLOSED,
-} from "../../services/action-types/wsActionTypes";
-import { getCookie } from "../../utils/utils";
-import { useLocation } from "react-router-dom";
 import { v4 as uuidv4 } from "uuid";
-export default function FeedIdModal(feed, profile) {
-  // const location = useLocation();
-  // const token = "?token=" + getCookie("token");
-  // let wsPayload = "/all";
-  // if (feed === "true") {
-  //   wsPayload = "/all";
-  // } else if (profile === "true") {
-  //   wsPayload = token;
-  // }
+export default function FeedIdModal() {
   const { id } = useParams();
-  console.log(id);
-  const dispatch = useDispatch();
   const burgerData = useSelector((store) => store.item.burgerData);
-  // useEffect(() => {
-  //   if (burgerData.length) {
-  //     dispatch({ type: WS_CONNECTION_START, payload: "/all" });
-  //   }
-  //   return () => {
-  //     dispatch({ type: WS_CONNECTION_CLOSED, payload: "" });
-  //   };
-  // }, [burgerData]);
   const dataFeed = useSelector((store) => store.ws.messages);
   let data = null;
   let ingredientForModal = null;
@@ -46,9 +21,6 @@ export default function FeedIdModal(feed, profile) {
     ingredientForModalCreatedAt = ingredientForModal.createdAt;
     ingredientForModalIngredients = ingredientForModal.ingredients;
   }
-
-  //console.log(ingredientForModalIngredients);
-  // console.log(ingredientForModal.ingredients);
   let color = {
     color: "#00CCCC",
     name: "",
@@ -63,17 +35,14 @@ export default function FeedIdModal(feed, profile) {
     color.color = "#F2F2F3";
     color.name = "Готовится";
   }
-  // console.log(ingredientForModal.ingredients);
 
   let itemDay = "";
   let time = ingredientForModalCreatedAt;
-  console.log(time);
   let now = new Date();
   let nowDay = now.getDate();
   let findT = time.indexOf("T");
   let findDay = time.slice(findT - 2, findT);
   let findTime = time.slice(findT + 1, findT + 6);
-  //let id = item.item._id;
   if (nowDay.toString() === findDay) {
     itemDay = "Cегодня";
   } else if (Number(nowDay) - Number(findDay) === 1) {
@@ -83,8 +52,6 @@ export default function FeedIdModal(feed, profile) {
   } else {
     itemDay = "Архивный заказ";
   }
-  //console.log(findDay);
-  // console.log(ingredients);
   let test = [];
   const sum = burgerData.map((el) => {
     const data = ingredientForModalIngredients.find((item) => el._id === item);
@@ -96,7 +63,6 @@ export default function FeedIdModal(feed, profile) {
   test.forEach((item) => {
     price += item.price;
   });
-  //console.log(test);
   return (
     <>
       {!ingredientForModal && (
@@ -126,7 +92,6 @@ export default function FeedIdModal(feed, profile) {
             <div>
               <ul className={`${feedIdStyle.list} pr-6 mb-10`}>
                 {test.map((item) => {
-                  console.log(item);
                   return (
                     <li
                       className={`${feedIdStyle.listItem} pb-4`}

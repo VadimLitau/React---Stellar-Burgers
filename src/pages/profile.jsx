@@ -162,10 +162,10 @@ function Profile() {
               </div>
             </form>
           )}
-          {/* <ProtectedRoute path="/profile/orders" exact={true}>
-            <FeedProfile profile="true" />
-          </ProtectedRoute> */}
-          {linkState.order && <FeedProfile profile="true" />}
+          <ProtectedRoute path="/profile/orders" exact={true}>
+            <FeedProfile />
+          </ProtectedRoute>
+          {/* {linkState.order && <FeedProfile profile="true" />} */}
         </div>
       </div>
     </section>

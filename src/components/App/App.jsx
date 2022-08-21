@@ -86,7 +86,7 @@ function App() {
           <Profile />
         </ProtectedRoute>
         <ProtectedRoute path="/profile/order/:id" exact={true}>
-          <FeedId feed="false" profile="true" />
+          <FeedId />
         </ProtectedRoute>
         <Route path="/register" exact={true}>
           <Registration />

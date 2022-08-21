@@ -95,7 +95,6 @@ export const logoutRequest = async(token) => {
 };
 
 export const getUserRequest = async() => {
-    console.log(getCookie('accessToken'));
     return await fetch(`${baseUrl}auth/user`, {
         method: 'GET',
         mode: 'cors',

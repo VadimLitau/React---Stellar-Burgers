@@ -9,7 +9,7 @@ import {
   WS_CONNECTION_CLOSED,
 } from "../../services/action-types";
 import { useLocation } from "react-router-dom";
-export default function FeedProfile({ profile }) {
+export default function FeedProfile() {
   //console.log(profile);
   const dispatch = useDispatch();
   const state = useSelector((store) => store);
@@ -41,7 +41,7 @@ export default function FeedProfile({ profile }) {
       <ul className={feedStyle.content}>
         {data != null &&
           data.map((item) => {
-            return <FeedItem item={item} key={uuidv4()} profile={profile} />;
+            return <FeedItem item={item} key={uuidv4()} profile="true" />;
           })}
       </ul>
     </section>

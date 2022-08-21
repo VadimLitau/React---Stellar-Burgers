@@ -3,20 +3,22 @@ import { useSelector } from "react-redux";
 import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import feedItemStyle from "./feedItem.module.css";
 import { useLocation, Link } from "react-router-dom";
-export function FeedItemImage({ data, number, length }) {
-  // console.log(test);
-  let test = length - number;
-  //console.log(test);
+import { v4 as uuidv4 } from "uuid";
+import PropTypes from "prop-types";
+export function FeedItemImage({ data, number, lengthArr }) {
+  let count = lengthArr - number;
   return (
     <>
       {number && (
         <div
           className={
-            test <= 5 ? feedItemStyle.images : feedItemStyle.imagesTest
+            count <= 5 ? feedItemStyle.images : feedItemStyle.imagesTest
           }
         >
           <div
-            className={test < 5 ? feedItemStyle.image : feedItemStyle.imageTest}
+            className={
+              count < 5 ? feedItemStyle.image : feedItemStyle.imageTest
+            }
           >
             <img
               src={data.image_mobile}
@@ -24,12 +26,12 @@ export function FeedItemImage({ data, number, length }) {
               className={feedItemStyle.imageMobile}
             />
           </div>
-          {test === 5 && (
+          {count === 5 && (
             <div className={feedItemStyle.countWrap}>
               <div
                 className={`${feedItemStyle.count} text text_type_main-default`}
               >
-                <p className="pl-1">{`+${length - 6}`}</p>
+                <p className="pl-1">{`+${lengthArr - 6}`}</p>
               </div>
             </div>
           )}
@@ -49,54 +51,59 @@ export function FeedItemImage({ data, number, length }) {
     </>
   );
 }
-export default function FeedItem(item, key, profile) {
-  //console.log(item.profile);
+export default function FeedItem(item) {
   const location = useLocation();
   const burgerData = useSelector((store) => store.item.burgerData);
   const ingredients = item.item.ingredients;
-
-  let test = [];
-  const sum = burgerData.map((el) => {
-    const data = ingredients.find((item) => el._id === item);
-    if (data) {
-      test.push(el);
-    }
-  }, 0);
-  let itemDay = "";
-  let time = item.item.createdAt;
-  let now = new Date();
-  let nowDay = now.getDate();
-  let findT = time.indexOf("T");
-  let findDay = time.slice(findT - 2, findT);
-  let findTime = time.slice(findT + 1, findT + 6);
-  let id = item.item._id;
-  if (nowDay.toString() === findDay) {
-    itemDay = "Cегодня";
-  } else if (Number(nowDay) - Number(findDay) === 1) {
-    itemDay = "Вчера";
-  } else if (Number(nowDay) - Number(findDay) === 2) {
-    itemDay = "2 дня назад";
-  } else {
-    itemDay = "Архивный заказ";
-  }
+  const info = {
+    test: [],
+    itemDay: "",
+    time: item.item.createdAt,
+    now: new Date(),
+    id: item.item._id,
+    profileUrl: item.profile,
+    url: "",
+  };
 
   let price = 0;
   let countImage = 0;
 
-  let ttt = item.profile;
-  let url = "";
-  ttt === "true" ? (url = `/profile/order/${id}`) : (url = `/feed/${id}`);
-  // console.log(ttt);
+  const nowDay = info.now.getDate();
+  const findT = info.time.indexOf("T");
+  const findDay = info.time.slice(findT - 2, findT);
+  const findTime = info.time.slice(findT + 1, findT + 6);
+
+  const sum = React.useMemo(() => {
+    burgerData.map((el) => {
+      const data = ingredients.find((item) => el._id === item);
+      if (data) {
+        info.test.push(el);
+      }
+    }, 0);
+  }, [burgerData]);
+
+  nowDay.toString() === findDay
+    ? (info.itemDay = "Cегодня")
+    : Number(nowDay) - Number(findDay) === 1
+    ? (info.itemDay = "Вчера")
+    : Number(nowDay) - Number(findDay) === 2
+    ? (info.itemDay = "2 дня назад")
+    : (info.itemDay = "Архивный заказ");
+
+  info.profileUrl === "true"
+    ? (info.url = `/profile/order/${info.id}`)
+    : (info.url = `/feed/${info.id}`);
+
   return (
     <Link
       to={{
-        pathname: url,
+        pathname: info.url,
         state: { background: location },
       }}
-      key={id}
+      key={info.id}
       className={feedItemStyle.link}
     >
-      <li className={feedItemStyle.listItem} key={key}>
+      <li className={feedItemStyle.listItem} key={uuidv4()}>
         <div className={feedItemStyle.element}>
           <div className={feedItemStyle.wrap}>
             <p className="pt-6 text text_type_digits-default">
@@ -105,7 +112,7 @@ export default function FeedItem(item, key, profile) {
             <p
               className={`${feedItemStyle.date} text text_type_main-default text_color_inactive`}
             >
-              {itemDay + " "}
+              {info.itemDay + " "}
               {findTime + " i-GMT+3"}
             </p>
           </div>
@@ -116,10 +123,9 @@ export default function FeedItem(item, key, profile) {
           </p>
           <div className={feedItemStyle.wrapPrice}>
             <div className={feedItemStyle.price}>
-              {test.reverse().map((item) => {
+              {info.test.reverse().map((item) => {
                 price += item.price;
-                //return <FeedItemImage data={item} key={item._id} />;
-                if (test.length <= 6) {
+                if (info.test.length <= 6) {
                   return <FeedItemImage data={item} key={item._id} />;
                 } else {
                   return (
@@ -127,7 +133,7 @@ export default function FeedItem(item, key, profile) {
                       data={item}
                       key={item._id}
                       number={(countImage += 1)}
-                      length={test.length}
+                      lengthArr={info.test.length}
                     />
                   );
                 }
@@ -143,3 +149,13 @@ export default function FeedItem(item, key, profile) {
     </Link>
   );
 }
+
+FeedItem.propTypes = {
+  item: PropTypes.object.isRequired,
+};
+
+FeedItemImage.propTypes = {
+  data: PropTypes.object.isRequired,
+  number: PropTypes.number,
+  lengthArr: PropTypes.number,
+};

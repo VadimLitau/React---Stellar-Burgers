@@ -18,7 +18,7 @@ export const socketMiddleware = (wsUrl, wsActions) => {
 
             if (socket) {
                 socket.onopen = event => {
-                    console.log('открылся');
+                    //console.log('открылся');
                     dispatch({ type: onOpen, payload: event });
                 };
 
@@ -32,7 +32,7 @@ export const socketMiddleware = (wsUrl, wsActions) => {
                 };
 
                 socket.onclose = event => {
-                    console.log("закрылся");
+                    //console.log("закрылся");
                     dispatch({ type: onClose, payload: event });
                 };
 

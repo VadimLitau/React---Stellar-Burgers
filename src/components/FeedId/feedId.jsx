@@ -11,7 +11,7 @@ import {
 import { getCookie } from "../../utils/utils";
 import { useLocation } from "react-router-dom";
 import { v4 as uuidv4 } from "uuid";
-export default function FeedId(feed, profile) {
+export default function FeedId() {
   // const location = useLocation();
   // const token = "?token=" + getCookie("token");
   // let wsPayload = "/all";
@@ -21,7 +21,7 @@ export default function FeedId(feed, profile) {
   //   wsPayload = token;
   // }
   const { id } = useParams();
-  console.log(id);
+  //console.log(id);
   const dispatch = useDispatch();
   const burgerData = useSelector((store) => store.item.burgerData);
   useEffect(() => {
@@ -67,7 +67,7 @@ export default function FeedId(feed, profile) {
 
   let itemDay = "";
   let time = ingredientForModalCreatedAt;
-  console.log(time);
+  // console.log(time);
   let now = new Date();
   let nowDay = now.getDate();
   let findT = time.indexOf("T");
@@ -126,7 +126,7 @@ export default function FeedId(feed, profile) {
             <div>
               <ul className={`${feedIdStyle.list} pr-6 mb-10`}>
                 {test.map((item) => {
-                  console.log(item);
+                  //console.log(item);
                   return (
                     <li
                       className={`${feedIdStyle.listItem} pb-4`}

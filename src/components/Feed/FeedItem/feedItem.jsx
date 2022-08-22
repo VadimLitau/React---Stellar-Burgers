@@ -73,14 +73,12 @@ export default function FeedItem(item) {
   const findDay = info.time.slice(findT - 2, findT);
   const findTime = info.time.slice(findT + 1, findT + 6);
 
-  const sum = React.useMemo(() => {
-    burgerData.map((el) => {
-      const data = ingredients.find((item) => el._id === item);
-      if (data) {
-        info.ingrArr.push(el);
-      }
-    }, 0);
-  }, [burgerData]);
+  const sum = burgerData.map((el) => {
+    const data = ingredients.find((item) => el._id === item);
+    if (data) {
+      info.ingrArr.push(el);
+    }
+  }, 0);
 
   nowDay.toString() === findDay
     ? (info.itemDay = "Cегодня")
@@ -103,7 +101,7 @@ export default function FeedItem(item) {
       key={info.id}
       className={feedItemStyle.link}
     >
-      <li className={feedItemStyle.listItem} key={uuidv4()}>
+      <li className={feedItemStyle.listItem} key={info.id}>
         <div className={feedItemStyle.element}>
           <div className={feedItemStyle.wrap}>
             <p className="pt-6 text text_type_digits-default">

@@ -102,7 +102,7 @@ export default function FeedIdModal() {
                   return (
                     <li
                       className={`${feedIdStyle.listItem} pb-4`}
-                      key={uuidv4()}
+                      key={item._id}
                     >
                       <div className={feedIdStyle.listItemWrap}>
                         <div className={feedIdStyle.listItemWrap}>

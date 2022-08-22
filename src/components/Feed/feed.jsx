@@ -17,7 +17,8 @@ export default function Feed() {
       <ul className={feedStyle.content}>
         {data != null &&
           data.map((item) => {
-            return <FeedItem item={item} key={uuidv4()} />;
+            console.log(item);
+            return <FeedItem item={item} key={item._id} />;
           })}
       </ul>
     </section>

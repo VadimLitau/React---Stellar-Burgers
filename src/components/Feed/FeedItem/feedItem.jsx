@@ -7,6 +7,7 @@ import { v4 as uuidv4 } from "uuid";
 import PropTypes from "prop-types";
 export function FeedItemImage({ data, number, lengthArr }) {
   let count = lengthArr - number;
+
   return (
     <>
       {number && (
@@ -55,6 +56,8 @@ export default function FeedItem(item) {
   const location = useLocation();
   const burgerData = useSelector((store) => store.item.burgerData);
   const ingredients = item.item.ingredients;
+  //console.log(ingredients);
+
   const info = {
     ingrArr: [],
     itemDay: "",
@@ -63,10 +66,12 @@ export default function FeedItem(item) {
     id: item.item._id,
     profileUrl: item.profile,
     url: "",
+    acc: [],
   };
 
   let price = 0;
   let countImage = 0;
+  let test = [];
 
   const nowDay = info.now.getDate();
   const findT = info.time.indexOf("T");
@@ -74,12 +79,26 @@ export default function FeedItem(item) {
   const findTime = info.time.slice(findT + 1, findT + 6);
 
   const sum = burgerData.map((el) => {
+    //console.log(el);
+    // const data = ingredients.forEach((item) => {
+    //   if (el._id === item) {
+    //     info.ingrArr.push(el);
+    //   }
+    // });
     const data = ingredients.find((item) => el._id === item);
+    test = ingredients.reduce(function (acc, data) {
+      //console.log(data);
+      acc[data] = (acc[data] || 0) + 1;
+      return acc;
+    }, []);
+
     if (data) {
       info.ingrArr.push(el);
     }
   }, 0);
 
+  console.log(test);
+  //console.log(info.ingrArr);
   nowDay.toString() === findDay
     ? (info.itemDay = "Cегодня")
     : Number(nowDay) - Number(findDay) === 1
@@ -122,7 +141,7 @@ export default function FeedItem(item) {
           <div className={feedItemStyle.wrapPrice}>
             <div className={feedItemStyle.price}>
               {info.ingrArr.reverse().map((item) => {
-                price += item.price;
+                price += test[item._id] * item.price;
                 if (info.ingrArr.length <= 6) {
                   return <FeedItemImage data={item} key={item._id} />;
                 } else {

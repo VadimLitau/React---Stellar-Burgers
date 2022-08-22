@@ -31,7 +31,6 @@ export default function FeedIdModal() {
     info.ingredientForModalCreatedAt = info.ingredientForModal.createdAt;
     info.ingredientForModalIngredients = info.ingredientForModal.ingredients;
   }
-
   if (info.ingredientForModalStatus === "done") {
     color.color = "#00CCCC";
     color.name = "Выполнен";
@@ -42,18 +41,25 @@ export default function FeedIdModal() {
     color.color = "#F2F2F3";
     color.name = "Готовится";
   }
+  //Цыганская магия
+  const test = info.ingredientForModalIngredients.reduce(function (acc, el) {
+    console.log(el);
+    acc[el] = (acc[el] || 0) + 1;
+    return acc;
+  }, []);
 
   const sum = burgerData.map((el) => {
     const data = info.ingredientForModalIngredients.find(
       (item) => el._id === item
     );
+
     if (data) {
       info.ingrArr.push(el);
     }
   }, 0);
 
   info.ingrArr.forEach((item) => {
-    price += item.price;
+    price += test[item._id] * item.price;
   });
 
   const time = info.ingredientForModalCreatedAt;
@@ -99,6 +105,7 @@ export default function FeedIdModal() {
             <div>
               <ul className={`${feedIdStyle.list} pr-6 mb-10`}>
                 {info.ingrArr.map((item) => {
+                  //console.log(item._id);
                   return (
                     <li
                       className={`${feedIdStyle.listItem} pb-4`}
@@ -117,7 +124,7 @@ export default function FeedIdModal() {
                         </div>
                         <div className={feedIdStyle.listItemWrap}>
                           <p className="text text_type_digits-default pl-4">
-                            1&nbsp;x&nbsp;{item.price}
+                            {test[item._id]}&nbsp;x&nbsp;{item.price}
                           </p>
                           <CurrencyIcon />
                         </div>

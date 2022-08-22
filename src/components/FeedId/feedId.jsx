@@ -21,6 +21,7 @@ export default function FeedId() {
     };
   }, [burgerData]);
   const dataFeed = useSelector((store) => store.ws.messages);
+
   const info = {
     data: null,
     ingredientForModal: null,
@@ -69,6 +70,11 @@ export default function FeedId() {
     ? (info.itemDay = "2 дня назад")
     : (info.itemDay = "Архивный заказ");
 
+  const test = info.ingredientForModalIngredients.reduce(function (acc, el) {
+    acc[el] = (acc[el] || 0) + 1;
+    return acc;
+  }, []);
+
   const sum = burgerData.map((el) => {
     const data = info.ingredientForModalIngredients.find(
       (item) => el._id === item
@@ -79,7 +85,7 @@ export default function FeedId() {
   }, 0);
 
   info.ingrArr.forEach((item) => {
-    price += item.price;
+    price += test[item._id] * item.price;
   });
   return (
     <>
@@ -90,7 +96,8 @@ export default function FeedId() {
           </h1>
         </div>
       )}
-      {info.ingredientForModal && (
+
+      {info.ingredientForModalStatus && (
         <section className={feedIdStyle.page}>
           <div className="pl-8 pr-8">
             <h1
@@ -129,7 +136,7 @@ export default function FeedId() {
                         </div>
                         <div className={feedIdStyle.listItemWrap}>
                           <p className="text text_type_digits-default pl-4">
-                            1&nbsp;x&nbsp;{item.price}
+                            {test[item._id]}&nbsp;x&nbsp;{item.price}
                           </p>
                           <CurrencyIcon />
                         </div>

@@ -32,7 +32,7 @@ export default function FeedProfile() {
     <section className={feedStyle.head}>
       <ul className={feedStyle.content}>
         {data != null &&
-          data.reverse().map((item) => {
+          [...data].reverse().map((item) => {
             return <FeedItem item={item} key={item._id} profile="true" />;
           })}
       </ul>

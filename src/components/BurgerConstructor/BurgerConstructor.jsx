@@ -20,6 +20,31 @@ import { getServOrder } from "../../services/actions/index";
 import ChangeItem from "./ChangeItem/ChangeItem";
 import { Redirect, useHistory } from "react-router-dom";
 
+export function ModalLoading({ load, error }) {
+  return (
+    <>
+      {load && (
+        <div className={ConstructorStyle.loadingWrap}>
+          <h1
+            className={`${ConstructorStyle.loading} text text_type_main-large`}
+          >
+            Загрузка
+          </h1>
+        </div>
+      )}
+      {error && (
+        <div className={ConstructorStyle.loadingWrap}>
+          <h1
+            className={`${ConstructorStyle.loading} text text_type_main-large`}
+          >
+            Произошла ошибка
+          </h1>
+        </div>
+      )}
+    </>
+  );
+}
+
 export default function BurgerConstructor() {
   const history = useHistory();
   const state = useSelector((store) => store);
@@ -123,8 +148,8 @@ export default function BurgerConstructor() {
         </div>
         {orderOverlay && (
           <Modal closeModal={closeModal} title={""}>
-            {state.item.servOrderRequest && "Загрузка..."}
-            {state.item.servOrderFailed && "Произошла ошибка"}
+            {state.item.servOrderRequest && <ModalLoading load={true} />}
+            {state.item.servOrderFailed && <ModalLoading error={true} />}
             {!state.item.servOrderRequest && !state.item.servOrderFailed && (
               <OrderDetails orderNumber={state.item.servOrder} />
             )}
@@ -142,4 +167,3 @@ export default function BurgerConstructor() {
     </section>
   );
 }
-//

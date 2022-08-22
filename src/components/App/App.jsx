@@ -48,16 +48,8 @@ function App() {
 
   const background = location.state?.background;
   // console.log(background);
-  function closeModals(item) {
-    if (item === "home") {
-      history.push("/");
-    } else if (item === "feeds") {
-      history.push("/feeds");
-    } else if (item === "order") {
-      history.push("/profile/orders");
-    } else {
-      history.push("/");
-    }
+  function closeModals() {
+    history.goBack();
   }
 
   const dataFeed = useSelector((store) => store.ws.messages);
@@ -118,7 +110,7 @@ function App() {
           <Route path="/ingredients/:id">
             <Modal
               closeModal={() => {
-                closeModals("home");
+                closeModals();
               }}
               title={"Детали Ингредиента"}
             >
@@ -128,7 +120,7 @@ function App() {
           <Route path="/feed/:id">
             <Modal
               closeModal={() => {
-                closeModals("feeds");
+                closeModals();
               }}
               title={"Детали Заказа"}
             >
@@ -138,7 +130,7 @@ function App() {
           <Route path="/profile/order/:id" exact={true}>
             <Modal
               closeModal={() => {
-                closeModals("order");
+                closeModals();
               }}
               title={"Детали Заказа"}
             >

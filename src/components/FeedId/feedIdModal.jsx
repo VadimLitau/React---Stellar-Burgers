@@ -1,13 +1,28 @@
 import React, { useEffect } from "react";
 import feedIdStyle from "./feedId.module.css";
-import { useSelector } from "react-redux";
 import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useParams } from "react-router-dom";
 import { v4 as uuidv4 } from "uuid";
+import {
+  WS_CONNECTION_START,
+  WS_CONNECTION_CLOSED,
+} from "../../services/action-types/wsActionTypes";
+import { useDispatch, useSelector } from "react-redux";
 export default function FeedIdModal() {
   const { id } = useParams();
+  console.log(id);
+  const dispatch = useDispatch();
   const burgerData = useSelector((store) => store.item.burgerData);
+  // useEffect(() => {
+  //   if (burgerData.length) {
+  //     dispatch({ type: WS_CONNECTION_START, payload: "/all" });
+  //   }
+  //   return () => {
+  //     dispatch({ type: WS_CONNECTION_CLOSED, payload: "" });
+  //   };
+  // }, [burgerData]);
   const dataFeed = useSelector((store) => store.ws.messages);
+  console.log(dataFeed);
   let price = 0;
   const info = {
     data: null,
@@ -43,7 +58,7 @@ export default function FeedIdModal() {
   }
   //Цыганская магия
   const test = info.ingredientForModalIngredients.reduce(function (acc, el) {
-    console.log(el);
+    //console.log(el);
     acc[el] = (acc[el] || 0) + 1;
     return acc;
   }, []);
@@ -75,7 +90,7 @@ export default function FeedIdModal() {
     : Number(nowDay) - Number(findDay) === 2
     ? (info.itemDay = "2 дня назад")
     : (info.itemDay = "Архивный заказ");
-
+  console.log(info.ingredientForModal);
   return (
     <>
       {!info.ingredientForModal && (

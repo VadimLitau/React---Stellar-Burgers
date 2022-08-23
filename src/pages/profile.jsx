@@ -11,14 +11,28 @@ import { useDispatch, useSelector } from "react-redux";
 import { useAuth } from "../services/auth";
 import { updateUserProfile } from "../services/actions/route";
 import FeedProfile from "../components/FeedProfile/feedProfile";
-import { useHistory } from "react-router-dom";
+import { useHistory, Switch } from "react-router-dom";
 import { ProtectedRoute } from "../components/ProtectedRoute/ProtectedRoute";
-function Profile() {
-  const history = useHistory();
-  const dispatch = useDispatch();
-  const state = useSelector((store) => store);
-  const userProfile = state.route.userAuthProfile;
 
+function ProfileForm() {
+  const state = useSelector((store) => store);
+  const dispatch = useDispatch();
+  const userProfile = state.route.userAuthProfile;
+  React.useEffect(() => {
+    setValueInput(userProfile.name);
+    setValueEmail(userProfile.email);
+    setValuePassword(userProfile.password);
+  }, [userProfile]);
+
+  function saveProfile(e) {
+    e.preventDefault();
+    dispatch(updateUserProfile(valueEmail, valuePassword, valueInput));
+  }
+  function resetProfile() {
+    setValueInput(state.route.userAuthProfile.name);
+    setValueEmail(state.route.userAuthProfile.email);
+    setValuePassword(state.route.userAuthProfile.password);
+  }
   //Input
   const [valueInput, setValueInput] = useState("");
   const inputRefInput = React.useRef(null);
@@ -35,6 +49,50 @@ function Profile() {
   const onChangePassword = (e) => {
     setValuePassword(e.target.value);
   };
+  return (
+    <form onSubmit={saveProfile}>
+      <div className={ProfileStyle.userProfile}>
+        <div className={mainStyle.input}>
+          <Input
+            type={"text"}
+            placeholder={"Имя"}
+            onChange={(e) => setValueInput(e.target.value)}
+            icon={"EditIcon"}
+            value={valueInput ? valueInput : ""}
+            name={"name"}
+            error={false}
+            ref={inputRefInput}
+            onIconClick={onIconClickInput}
+            errorText={"Ошибка"}
+            size={"default"}
+          />
+        </div>
+        <div className={`${mainStyle.input} pt-6 pb-6`}>
+          <EmailInput
+            onChange={onChangeEmail}
+            value={valueEmail ? valueEmail : ""}
+            name={"email"}
+          />
+        </div>
+        <div className={`${mainStyle.input}`}>
+          <PasswordInput
+            onChange={onChangePassword}
+            value={valuePassword ? valuePassword : ""}
+            name={"password"}
+          />
+        </div>
+        <div className={`${ProfileStyle.buttons} pt-10`}>
+          <Button>Сохранить</Button>
+          <Button onClick={resetProfile}>Отмена</Button>
+        </div>
+      </div>
+    </form>
+  );
+}
+
+function Profile() {
+  const history = useHistory();
+
   const auth = useAuth();
   const handleClickLogout = useCallback(
     (e) => {
@@ -43,21 +101,7 @@ function Profile() {
     },
     [auth]
   );
-  React.useEffect(() => {
-    setValueInput(userProfile.name);
-    setValueEmail(userProfile.email);
-    setValuePassword(userProfile.password);
-  }, [userProfile]);
 
-  function saveProfile(e) {
-    e.preventDefault();
-    dispatch(updateUserProfile(valueEmail, valuePassword, valueInput));
-  }
-  function resetProfile() {
-    setValueInput(state.route.userAuthProfile.name);
-    setValueEmail(state.route.userAuthProfile.email);
-    setValuePassword(state.route.userAuthProfile.password);
-  }
   const [linkState, setLinkState] = useState({
     profile: true,
     order: false,
@@ -123,49 +167,16 @@ function Profile() {
               </li>
             </ul>
           </nav>
-          {linkState.profile && (
-            <form onSubmit={saveProfile}>
-              <div className={ProfileStyle.userProfile}>
-                <div className={mainStyle.input}>
-                  <Input
-                    type={"text"}
-                    placeholder={"Имя"}
-                    onChange={(e) => setValueInput(e.target.value)}
-                    icon={"EditIcon"}
-                    value={valueInput ? valueInput : ""}
-                    name={"name"}
-                    error={false}
-                    ref={inputRefInput}
-                    onIconClick={onIconClickInput}
-                    errorText={"Ошибка"}
-                    size={"default"}
-                  />
-                </div>
-                <div className={`${mainStyle.input} pt-6 pb-6`}>
-                  <EmailInput
-                    onChange={onChangeEmail}
-                    value={valueEmail ? valueEmail : ""}
-                    name={"email"}
-                  />
-                </div>
-                <div className={`${mainStyle.input}`}>
-                  <PasswordInput
-                    onChange={onChangePassword}
-                    value={valuePassword ? valuePassword : ""}
-                    name={"password"}
-                  />
-                </div>
-                <div className={`${ProfileStyle.buttons} pt-10`}>
-                  <Button>Сохранить</Button>
-                  <Button onClick={resetProfile}>Отмена</Button>
-                </div>
-              </div>
-            </form>
-          )}
-          {/* <ProtectedRoute path="/profile/orders" exact={true}>
-            <FeedProfile />
-          </ProtectedRoute> */}
-          {linkState.order && <FeedProfile profile="true" />}
+
+          <Switch>
+            <ProtectedRoute path="/profile" exact={true}>
+              <ProfileForm />
+            </ProtectedRoute>
+            <ProtectedRoute path="/profile/orders" exact={true}>
+              <FeedProfile />
+            </ProtectedRoute>
+          </Switch>
+          {/* {linkState.order && <FeedProfile profile="true" />} */}
         </div>
       </div>
     </section>

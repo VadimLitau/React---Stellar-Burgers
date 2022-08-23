@@ -12,6 +12,7 @@ import IngredientDetails from "../Modal/IngridientDetails/IngridientDetails";
 import Feeds from "../../pages/feeds";
 import FeedId from "../FeedId/feedId";
 import FeedIdModal from "../FeedId/feedIdModal";
+import FeedProfile from "../FeedProfile/feedProfile";
 import {
   BrowserRouter as Router,
   Route,
@@ -47,7 +48,7 @@ function App() {
   const location = useLocation();
 
   const background = location.state?.background;
-  // console.log(background);
+  console.log(background);
   function closeModals() {
     history.goBack();
   }

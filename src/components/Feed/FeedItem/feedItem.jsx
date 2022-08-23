@@ -53,6 +53,7 @@ export function FeedItemImage({ data, number, lengthArr }) {
   );
 }
 export default function FeedItem(item) {
+  //console.log(item);
   const location = useLocation();
   const burgerData = useSelector((store) => store.item.burgerData);
   const ingredients = item.item.ingredients;
@@ -97,7 +98,7 @@ export default function FeedItem(item) {
     }
   }, 0);
 
-  console.log(test);
+  //console.log(test);
   //console.log(info.ingrArr);
   nowDay.toString() === findDay
     ? (info.itemDay = "Cегодня")

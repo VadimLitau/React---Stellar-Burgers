@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from "react";
+import React, { useState, useCallback, useEffect } from "react";
 import {
   EmailInput,
   PasswordInput,
@@ -13,10 +13,15 @@ import { updateUserProfile } from "../services/actions/route";
 import FeedProfile from "../components/FeedProfile/feedProfile";
 import { useHistory, Switch } from "react-router-dom";
 import { ProtectedRoute } from "../components/ProtectedRoute/ProtectedRoute";
+import {
+  WS_CONNECTION_START,
+  WS_CONNECTION_CLOSED,
+} from "../services/action-types";
 
+import { getCookie } from "../utils/utils";
 function ProfileForm() {
-  const state = useSelector((store) => store);
   const dispatch = useDispatch();
+  const state = useSelector((store) => store);
   const userProfile = state.route.userAuthProfile;
   React.useEffect(() => {
     setValueInput(userProfile.name);
@@ -91,6 +96,8 @@ function ProfileForm() {
 }
 
 function Profile() {
+  const dispatch = useDispatch();
+  const state = useSelector((store) => store);
   const history = useHistory();
 
   const auth = useAuth();
@@ -117,6 +124,26 @@ function Profile() {
     }
   };
 
+  const userProfile = state.route.userAuthProfile;
+  let data = null;
+  useEffect(() => {
+    const token = "?token=" + getCookie("token");
+    // console.log(userProfile);
+    if (userProfile) {
+      dispatch({ type: WS_CONNECTION_START, payload: token });
+    }
+
+    return () => {
+      dispatch({ type: WS_CONNECTION_CLOSED, payload: "" });
+    };
+  }, [userProfile]);
+  const dataFeed = useSelector((store) => store.ws.messages);
+
+  if (dataFeed.length > 0) {
+    //console.log(dataFeed);
+    data = dataFeed[`${dataFeed.length - 1}`].orders;
+  }
+  //console.log(data);
   return (
     <section className={mainStyle.page}>
       <div className={ProfileStyle.wrap}>
@@ -173,7 +200,7 @@ function Profile() {
               <ProfileForm />
             </ProtectedRoute>
             <ProtectedRoute path="/profile/orders" exact={true}>
-              <FeedProfile />
+              <FeedProfile data={data} />
             </ProtectedRoute>
           </Switch>
           {/* {linkState.order && <FeedProfile profile="true" />} */}

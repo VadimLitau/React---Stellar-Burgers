@@ -13,16 +13,16 @@ export default function FeedIdModal() {
   console.log(id);
   const dispatch = useDispatch();
   const burgerData = useSelector((store) => store.item.burgerData);
-  // useEffect(() => {
-  //   if (burgerData.length) {
-  //     dispatch({ type: WS_CONNECTION_START, payload: "/all" });
-  //   }
-  //   return () => {
-  //     dispatch({ type: WS_CONNECTION_CLOSED, payload: "" });
-  //   };
-  // }, [burgerData]);
+  useEffect(() => {
+    if (burgerData.length) {
+      dispatch({ type: WS_CONNECTION_START, payload: "/all" });
+    }
+    return () => {
+      dispatch({ type: WS_CONNECTION_CLOSED, payload: "" });
+    };
+  }, [burgerData]);
   const dataFeed = useSelector((store) => store.ws.messages);
-  console.log(dataFeed);
+  console.log(burgerData);
   let price = 0;
   const info = {
     data: null,
@@ -90,7 +90,7 @@ export default function FeedIdModal() {
     : Number(nowDay) - Number(findDay) === 2
     ? (info.itemDay = "2 дня назад")
     : (info.itemDay = "Архивный заказ");
-  console.log(info.ingredientForModal);
+  //console.log(info.ingredientForModal);
   return (
     <>
       {!info.ingredientForModal && (

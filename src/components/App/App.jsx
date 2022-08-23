@@ -48,7 +48,7 @@ function App() {
   const location = useLocation();
 
   const background = location.state?.background;
-  console.log(background);
+  //console.log(background);
   function closeModals() {
     history.goBack();
   }

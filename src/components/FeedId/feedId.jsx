@@ -76,7 +76,7 @@ export default function FeedId() {
     acc[el] = (acc[el] || 0) + 1;
     return acc;
   }, []);
-  console.log(test);
+  //console.log(test);
   const sum = burgerData.map((el) => {
     const data = info.ingredientForModalIngredients.find(
       (item) => el._id === item

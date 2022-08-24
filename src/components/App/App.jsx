@@ -12,7 +12,6 @@ import IngredientDetails from "../Modal/IngridientDetails/IngridientDetails";
 import Feeds from "../../pages/feeds";
 import FeedId from "../FeedId/feedId";
 import FeedIdModal from "../FeedId/feedIdModal";
-import ModalOrder from "../Modal/ModalOrder";
 import {
   BrowserRouter as Router,
   Route,

@@ -15,27 +15,6 @@ export default function IngredientDetails() {
   });
   const ingredientForModal = data.find((ingr) => ingr._id === id);
 
-  // console.log(data);
-  // console.log(id);
-  // console.log(ingredientForModal);
-  // console.log(location);
-  //const id = location.state.id;
-  // console.log(ingredient);
-  //console.log(ingredientForModal);
-
-  // const dispatch = useDispatch();
-  // useEffect(() => {
-  //   document.title = "react burger";
-  //   dispatch(getApiBurgerData());
-  // }, [id]);
-  // function getApiBurgerDatas() {
-  //   fetch(`https://norma.nomoreparties.space/api/ingredients`)
-  //     .then(checkResponse)
-  //     .then((data) => {
-  //       console.log(data);
-  //     });
-  // }
-
   return (
     <>
       {ingredientForModal && (

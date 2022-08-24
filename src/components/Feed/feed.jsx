@@ -6,6 +6,7 @@ import { v4 as uuidv4 } from "uuid";
 export default function Feed() {
   //console.log(profile);
   const dataFeed = useSelector((store) => store.ws.messages);
+  //console.log(dataFeed[`${dataFeed.length - 1}`].orders);
   let data = null;
 
   if (dataFeed.length > 0) {

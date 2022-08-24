@@ -28,7 +28,7 @@ function Login() {
     },
     [auth, value, valuePassword]
   );
-
+  console.log(auth.user.name);
   if (auth.user.name) {
     return <Redirect to={location?.state?.from || "/"} />;
   }

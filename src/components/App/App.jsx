@@ -12,7 +12,7 @@ import IngredientDetails from "../Modal/IngridientDetails/IngridientDetails";
 import Feeds from "../../pages/feeds";
 import FeedId from "../FeedId/feedId";
 import FeedIdModal from "../FeedId/feedIdModal";
-import FeedProfile from "../FeedProfile/feedProfile";
+import ModalOrder from "../Modal/ModalOrder";
 import {
   BrowserRouter as Router,
   Route,
@@ -66,7 +66,7 @@ function App() {
 
   //console.log(burgerData.length);
   return (
-    <ProvideAuth>
+    <>
       <AppHeader />
       <Switch location={background || location}>
         <Route path="/login" exact={true}>
@@ -140,7 +140,7 @@ function App() {
           </Route>
         </Switch>
       )}
-    </ProvideAuth>
+    </>
   );
 }
 

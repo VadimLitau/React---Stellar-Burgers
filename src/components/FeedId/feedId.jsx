@@ -12,6 +12,7 @@ export default function FeedId() {
   const { id } = useParams();
   const dispatch = useDispatch();
   const burgerData = useSelector((store) => store.item.burgerData);
+  //console.log(id);
   useEffect(() => {
     if (burgerData.length) {
       dispatch({ type: WS_CONNECTION_START, payload: "/all" });
@@ -36,6 +37,7 @@ export default function FeedId() {
   if (dataFeed.length > 0) {
     info.data = dataFeed[`${dataFeed.length - 1}`].orders;
     info.ingredientForModal = info.data.find((ingr) => ingr._id === id);
+    // console.log(info.data);
     info.ingredientForModalStatus = info.ingredientForModal.status;
     info.ingredientForModalCreatedAt = info.ingredientForModal.createdAt;
     info.ingredientForModalIngredients = info.ingredientForModal.ingredients;
@@ -74,7 +76,7 @@ export default function FeedId() {
     acc[el] = (acc[el] || 0) + 1;
     return acc;
   }, []);
-
+  console.log(test);
   const sum = burgerData.map((el) => {
     const data = info.ingredientForModalIngredients.find(
       (item) => el._id === item

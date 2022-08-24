@@ -111,7 +111,7 @@ export default function FeedItem(item) {
   info.profileUrl === "true"
     ? (info.url = `/profile/order/${info.id}`)
     : (info.url = `/feed/${info.id}`);
-
+  // console.log(location);
   return (
     <Link
       to={{

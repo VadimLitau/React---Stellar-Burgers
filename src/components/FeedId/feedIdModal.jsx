@@ -8,21 +8,23 @@ import {
   WS_CONNECTION_CLOSED,
 } from "../../services/action-types/wsActionTypes";
 import { useDispatch, useSelector } from "react-redux";
+import { getCookie } from "../../utils/utils";
 export default function FeedIdModal() {
   const { id } = useParams();
   console.log(id);
   const dispatch = useDispatch();
   const burgerData = useSelector((store) => store.item.burgerData);
-  useEffect(() => {
-    if (burgerData.length) {
-      dispatch({ type: WS_CONNECTION_START, payload: "/all" });
-    }
-    return () => {
-      dispatch({ type: WS_CONNECTION_CLOSED, payload: "" });
-    };
-  }, [burgerData]);
-  const dataFeed = useSelector((store) => store.ws.messages);
   console.log(burgerData);
+  // useEffect(() => {
+  //   if (burgerData.length) {
+  //     dispatch({ type: WS_CONNECTION_START, payload: "/all" });
+  //   }
+  //   return () => {
+  //     dispatch({ type: WS_CONNECTION_CLOSED, payload: "" });
+  //   };
+  // }, [burgerData]);
+  const dataFeed = useSelector((store) => store.ws.messages);
+  console.log(dataFeed);
   let price = 0;
   const info = {
     data: null,

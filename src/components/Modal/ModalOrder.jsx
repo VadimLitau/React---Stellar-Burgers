@@ -5,9 +5,28 @@ import { useEffect } from "react";
 import { CloseIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import { createPortal } from "react-dom";
 import ModalOverlay from "./ModalOverlay/ModalOverlay";
-import { useParams } from "react-router-dom";
+import { useParams, useLocation } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { ProtectedRoute } from "../ProtectedRoute/ProtectedRoute";
 
-export default function Modal({ children, title, closeModal }) {
+export default function ModalOrder({ children, title, closeModal }) {
+  // const location = useLocation();
+  // console.log(location.state.background);
+  // const { id } = useParams();
+  // const dataFeed = useSelector((store) => store.ws.messages);
+  // let data;
+  // let order;
+  // if (dataFeed.length > 0) {
+  //   //console.log(dataFeed);
+  //   data = dataFeed[`${dataFeed.length - 1}`].orders;
+  // }
+
+  // if (data) {
+  //   order = data.find((el) => el._id === id);
+  // }
+  // console.log(order);
+  //const dataFeed = useSelector((store) => store.route.userAuthProfile);
+  // console.log(dataFeed);
   const modalRoot = document.getElementById("react-modals");
 
   useEffect(() => {
@@ -40,7 +59,7 @@ export default function Modal({ children, title, closeModal }) {
   );
 }
 //Хм, интерсно, спасибо, надо будет попробовать)))
-Modal.propTypes = {
+ModalOrder.propTypes = {
   children: PropTypes.oneOfType([
     PropTypes.object.isRequired,
     PropTypes.array.isRequired,

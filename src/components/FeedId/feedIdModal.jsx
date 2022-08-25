@@ -1,28 +1,31 @@
 import React, { useEffect } from "react";
 import feedIdStyle from "./feedId.module.css";
-import { useDispatch, useSelector } from "react-redux";
 import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useParams } from "react-router-dom";
+import { v4 as uuidv4 } from "uuid";
 import {
   WS_CONNECTION_START,
   WS_CONNECTION_CLOSED,
 } from "../../services/action-types/wsActionTypes";
-import { v4 as uuidv4 } from "uuid";
-export default function FeedId() {
+import { useDispatch, useSelector } from "react-redux";
+import { getCookie } from "../../utils/utils";
+export default function FeedIdModal() {
   const { id } = useParams();
+  console.log(id);
   const dispatch = useDispatch();
   const burgerData = useSelector((store) => store.item.burgerData);
-  //console.log(id);
-  useEffect(() => {
-    if (burgerData.length) {
-      dispatch({ type: WS_CONNECTION_START, payload: "/all" });
-    }
-    return () => {
-      dispatch({ type: WS_CONNECTION_CLOSED, payload: "" });
-    };
-  }, [burgerData]);
+  console.log(burgerData);
+  // useEffect(() => {
+  //   if (burgerData.length) {
+  //     dispatch({ type: WS_CONNECTION_START, payload: "/all" });
+  //   }
+  //   return () => {
+  //     dispatch({ type: WS_CONNECTION_CLOSED, payload: "" });
+  //   };
+  // }, [burgerData]);
   const dataFeed = useSelector((store) => store.ws.messages);
-
+  console.log(dataFeed);
+  let price = 0;
   const info = {
     data: null,
     ingredientForModal: null,
@@ -33,20 +36,18 @@ export default function FeedId() {
     now: new Date(),
     ingrArr: [],
   };
-  let price = 0;
-  if (dataFeed.length > 0) {
-    info.data = dataFeed[`${dataFeed.length - 1}`].orders;
-    info.ingredientForModal = info.data.find((ingr) => ingr._id === id);
-    // console.log(info.data);
-    info.ingredientForModalStatus = info.ingredientForModal.status;
-    info.ingredientForModalCreatedAt = info.ingredientForModal.createdAt;
-    info.ingredientForModalIngredients = info.ingredientForModal.ingredients;
-  }
-
   let color = {
     color: "#00CCCC",
     name: "",
   };
+
+  if (dataFeed.length > 0) {
+    info.data = dataFeed[`${dataFeed.length - 1}`].orders;
+    info.ingredientForModal = info.data.find((ingr) => ingr._id === id);
+    info.ingredientForModalStatus = info.ingredientForModal.status;
+    info.ingredientForModalCreatedAt = info.ingredientForModal.createdAt;
+    info.ingredientForModalIngredients = info.ingredientForModal.ingredients;
+  }
   if (info.ingredientForModalStatus === "done") {
     color.color = "#00CCCC";
     color.name = "Выполнен";
@@ -57,6 +58,26 @@ export default function FeedId() {
     color.color = "#F2F2F3";
     color.name = "Готовится";
   }
+  //Цыганская магия
+  const test = info.ingredientForModalIngredients.reduce(function (acc, el) {
+    //console.log(el);
+    acc[el] = (acc[el] || 0) + 1;
+    return acc;
+  }, []);
+
+  const sum = burgerData.map((el) => {
+    const data = info.ingredientForModalIngredients.find(
+      (item) => el._id === item
+    );
+
+    if (data) {
+      info.ingrArr.push(el);
+    }
+  }, 0);
+
+  info.ingrArr.forEach((item) => {
+    price += test[item._id] * item.price;
+  });
 
   const time = info.ingredientForModalCreatedAt;
   const nowDay = info.now.getDate();
@@ -71,24 +92,7 @@ export default function FeedId() {
     : Number(nowDay) - Number(findDay) === 2
     ? (info.itemDay = "2 дня назад")
     : (info.itemDay = "Архивный заказ");
-
-  const test = info.ingredientForModalIngredients.reduce(function (acc, el) {
-    acc[el] = (acc[el] || 0) + 1;
-    return acc;
-  }, []);
-  //console.log(test);
-  const sum = burgerData.map((el) => {
-    const data = info.ingredientForModalIngredients.find(
-      (item) => el._id === item
-    );
-    if (data) {
-      info.ingrArr.push(el);
-    }
-  }, 0);
-
-  info.ingrArr.forEach((item) => {
-    price += test[item._id] * item.price;
-  });
+  //console.log(info.ingredientForModal);
   return (
     <>
       {!info.ingredientForModal && (
@@ -98,8 +102,7 @@ export default function FeedId() {
           </h1>
         </div>
       )}
-
-      {info.ingredientForModalStatus && (
+      {info.ingredientForModal && (
         <section className={feedIdStyle.page}>
           <div className="pl-8 pr-8">
             <h1
@@ -119,7 +122,7 @@ export default function FeedId() {
             <div>
               <ul className={`${feedIdStyle.list} pr-6 mb-10`}>
                 {info.ingrArr.map((item) => {
-                  //console.log(item);
+                  //console.log(item._id);
                   return (
                     <li
                       className={`${feedIdStyle.listItem} pb-4`}

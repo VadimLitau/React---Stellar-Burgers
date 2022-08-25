@@ -19,6 +19,14 @@
     height: 64px;
 }
 
+.navItem_active {
+    color: #F2F2F3;
+}
+
+.navItem_inActive {
+    color: #8585AD;
+}
+
 .buttons {
     display: flex;
     flex-direction: row;

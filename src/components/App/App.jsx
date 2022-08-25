@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Constructor from "../../pages/constructor";
 import Login from "../../pages/login";
@@ -11,6 +11,7 @@ import Modal from "../Modal/Modal";
 import IngredientDetails from "../Modal/IngridientDetails/IngridientDetails";
 import Feeds from "../../pages/feeds";
 import FeedId from "../FeedId/feedId";
+import FeedIdModal from "../FeedId/feedIdModal";
 import {
   BrowserRouter as Router,
   Route,
@@ -46,14 +47,25 @@ function App() {
   const location = useLocation();
 
   const background = location.state?.background;
-  // console.log(location);
-  // console.log(background);
+  //console.log(background);
   function closeModals() {
-    history.push("/");
+    history.goBack();
   }
+
+  const dataFeed = useSelector((store) => store.ws.messages);
+  const [data, setData] = useState();
+
+  useEffect(() => {
+    if (dataFeed.length > 0) {
+      setData(dataFeed[`${dataFeed.length - 1}`].orders);
+    }
+  }, [dataFeed]);
+
+  //console.log(data);
+
   //console.log(burgerData.length);
   return (
-    <ProvideAuth>
+    <>
       <AppHeader />
       <Switch location={background || location}>
         <Route path="/login" exact={true}>
@@ -61,6 +73,12 @@ function App() {
         </Route>
         <ProtectedRoute path="/profile" exact={true}>
           <Profile />
+        </ProtectedRoute>
+        <ProtectedRoute path="/profile/orders" exact={true}>
+          <Profile />
+        </ProtectedRoute>
+        <ProtectedRoute path="/profile/order/:id" exact={true}>
+          <FeedId />
         </ProtectedRoute>
         <Route path="/register" exact={true}>
           <Registration />
@@ -77,7 +95,7 @@ function App() {
         <Route path="/feeds">
           <Feeds />
         </Route>
-        <Route path="/feedzz">
+        <Route path="/feed/:id" exact={true}>
           <FeedId />
         </Route>
         <Route path="/ingredients/:id" exact={true}>
@@ -88,13 +106,40 @@ function App() {
         </Route>
       </Switch>
       {background && (
-        <Route path="/ingredients/:id">
-          <Modal closeModal={closeModals} title={"Детали Ингредиента"}>
-            <IngredientDetails />
-          </Modal>
-        </Route>
+        <Switch>
+          <Route path="/ingredients/:id">
+            <Modal
+              closeModal={() => {
+                closeModals();
+              }}
+              title={"Детали Ингредиента"}
+            >
+              <IngredientDetails />
+            </Modal>
+          </Route>
+          <Route path="/feed/:id">
+            <Modal
+              closeModal={() => {
+                closeModals();
+              }}
+              title={"Детали Заказа"}
+            >
+              <FeedIdModal />
+            </Modal>
+          </Route>
+          <Route path="/profile/order/:id" exact={true}>
+            <Modal
+              closeModal={() => {
+                closeModals();
+              }}
+              title={"Детали Заказа"}
+            >
+              <FeedIdModal />
+            </Modal>
+          </Route>
+        </Switch>
       )}
-    </ProvideAuth>
+    </>
   );
 }
 

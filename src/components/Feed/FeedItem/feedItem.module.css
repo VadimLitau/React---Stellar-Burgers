@@ -18,22 +18,32 @@
         justify-content: space-between;
     }
     
-    .wrapImage {
-        border: 1px solid red
+    .wrapPrice {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        padding-left: 34px;
+        justify-content: space-between
     }
     
     .price {
         display: flex;
-        flex-direction: row;
+        flex-direction: row-reverse;
         align-items: baseline;
+        justify-content: flex-end
+    }
+    
+    .images:first-child {
+        height: 64px;
+        padding-left: 34px;
     }
     
     .images {
-        display: flex;
-        flex-direction: row;
-        width: 436px;
-        height: 64px;
-        padding-left: 24px;
+        padding-left: 34px;
+    }
+    
+    .imagesTest {
+        display: none;
     }
     
     .image {
@@ -42,35 +52,60 @@
         border: 2px solid #801AB2;
         background: #131316;
         border-radius: 100px;
-        margin-left: -20px;
+        margin-left: -60px;
     }
     
-    .image1 {
-        z-index: 9;
+    .imageTest {
+        width: 64px;
+        height: 64px;
+        border: 2px solid #801AB2;
+        background: #131316;
+        border-radius: 100px;
+        margin-left: -60px;
+    }
+    /* .imageTest:first-child {
+        width: 64px;
+        height: 64px;
+        border: 2px solid #801AB2;
+        background: #131316;
+        border-radius: 100px;
+        margin-left: -60px;
+    } */
+    
+    .imageMobile {
+        width: 64px;
+        height: 64px;
+        object-fit: cover;
     }
     
-    .image2 {
-        z-index: 8;
+    .listItem {
+        padding: 8px 0;
     }
     
-    .image3 {
-        z-index: 7;
+    .link {
+        text-decoration: none;
+        color: #FFF;
     }
     
-    .image4 {
-        z-index: 6;
+    .name {
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
     }
     
-    .image5 {
-        z-index: 5;
+    .countWrap {
+        display: flex;
+        flex-direction: column;
+        text-align: center;
+        margin-top: -66px;
+        margin-left: -55px;
+        width: 62px;
+        height: 62px;
     }
     
-    .image6 {
-        z-index: 4;
-        background: #1C1C21;
-        opacity: 0.6;
-    }
-    
-    .imageHead {
-        z-index: 10;
+    .count {
+        width: 62px;
+        height: 62px;
+        background-color: rgba(0, 0, 0, 0.6);
+        border-radius: 100px;
     }

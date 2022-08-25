@@ -19,8 +19,6 @@ function BurgerIngredients() {
   };
   const data = useSelector((store) => store.item.burgerData);
 
-  //console.log(data);
-
   // const bun = data.filter((element) => element.type === "bun");
   // const main = data.filter((element) => element.type === "main");
   // const sauce = data.filter((element) => element.type === "sauce");

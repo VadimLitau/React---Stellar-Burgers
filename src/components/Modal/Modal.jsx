@@ -5,6 +5,7 @@ import { useEffect } from "react";
 import { CloseIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import { createPortal } from "react-dom";
 import ModalOverlay from "./ModalOverlay/ModalOverlay";
+import { useParams } from "react-router-dom";
 
 export default function Modal({ children, title, closeModal }) {
   const modalRoot = document.getElementById("react-modals");

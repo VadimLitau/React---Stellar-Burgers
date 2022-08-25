@@ -1,6 +1,33 @@
 import React from "react";
+import { useSelector, useDispatch } from "react-redux";
 import feedInfoStyle from "./feedInfo.module.css";
 export default function FeedInfo() {
+  const dataFeed = useSelector((store) => store.ws.messages);
+  let data;
+  let total = 0;
+  let totalDay = 0;
+  let feedDone = [];
+  let feedWork = [];
+  let textSizeDone = "default";
+  let textSizeWork = "default";
+  if (dataFeed.length > 0) {
+    data = dataFeed[`${dataFeed.length - 1}`].orders;
+    total = dataFeed[`${dataFeed.length - 1}`].total;
+    totalDay = dataFeed[`${dataFeed.length - 1}`].totalToday;
+    data.forEach((item) => {
+      if (item.status === "done") {
+        feedDone.push(item.number);
+      } else {
+        feedWork.push(item.number);
+      }
+    });
+  }
+
+  feedDone.length > 45 ? (textSizeDone = "small") : (textSizeDone = "default");
+
+  feedWork.length > 45 ? (textSizeWork = "small") : (textSizeWork = "default");
+
+  //console.log(data);
   return (
     <section className={`${feedInfoStyle.main} ml-15`}>
       <div className={feedInfoStyle.wrap}>
@@ -10,33 +37,18 @@ export default function FeedInfo() {
           >
             Готовы:
           </h2>
-          <ul className={`${feedInfoStyle.listDone}`}>
-            <li
-              className={`${feedInfoStyle.listItem} text text_type_digits-default text text_type_digits-default pt-1 pb-1`}
-            >
-              034533
-            </li>
-            <li
-              className={`${feedInfoStyle.listItem} text text_type_digits-default text text_type_digits-default pt-1 pb-1`}
-            >
-              034532
-            </li>
-            <li
-              className={`${feedInfoStyle.listItem} text text_type_digits-default text text_type_digits-default pt-1 pb-1`}
-            >
-              034530
-            </li>
-            <li
-              className={`${feedInfoStyle.listItem} text text_type_digits-default text text_type_digits-default pt-1 pb-1`}
-            >
-              034527
-            </li>
-            <li
-              className={`${feedInfoStyle.listItem} text text_type_digits-default text text_type_digits-default pt-1 pb-1`}
-            >
-              034525
-            </li>
-          </ul>
+          <div className={`${feedInfoStyle.listDone}`}>
+            {feedDone.map((item) => {
+              return (
+                <p
+                  className={`${feedInfoStyle.listItem} text text text_type_digits-${textSizeDone} pt-1 pb-1`}
+                  key={item}
+                >
+                  {item}
+                </p>
+              );
+            })}
+          </div>
         </div>
         <div className={`${feedInfoStyle.wrapList} ml-9`}>
           <h2
@@ -44,36 +56,31 @@ export default function FeedInfo() {
           >
             В работе:
           </h2>
-          <ul className={`${feedInfoStyle.listWork}`}>
-            <li
-              className={`${feedInfoStyle.listItem} text text_type_digits-default text text_type_digits-default pt-1 pb-1`}
-            >
-              034538
-            </li>
-            <li
-              className={`${feedInfoStyle.listItem} text text_type_digits-default text text_type_digits-default pt-1 pb-1`}
-            >
-              034541
-            </li>
-            <li
-              className={`${feedInfoStyle.listItem} text text_type_digits-default text text_type_digits-default pt-1 pb-1`}
-            >
-              034542
-            </li>
-          </ul>
+          <div className={`${feedInfoStyle.listWork}`}>
+            {feedWork.map((item) => {
+              return (
+                <p
+                  className={`${feedInfoStyle.listItem} text text_type_digits-${textSizeWork} pt-1 pb-1`}
+                  key={item}
+                >
+                  {item}
+                </p>
+              );
+            })}
+          </div>
         </div>
       </div>
       <div className="mt-15">
         <h2 className={`${feedInfoStyle.listName} text text_type_main-medium`}>
           Выполнено за все время:
         </h2>
-        <p className={`${feedInfoStyle.num}`}>28 752</p>
+        <p className={`${feedInfoStyle.num}`}>{total}</p>
       </div>
       <div className="mt-15">
         <h2 className={`${feedInfoStyle.listName} text text_type_main-medium`}>
           Выполнено за сегодня:
         </h2>
-        <p className={`${feedInfoStyle.num}`}>138</p>
+        <p className={`${feedInfoStyle.num}`}>{totalDay}</p>
       </div>
     </section>
   );

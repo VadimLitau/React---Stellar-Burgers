@@ -1,32 +1,26 @@
-import React from "react";
+import React, { useEffect } from "react";
 import feedStyle from "./feed.module.css";
 import FeedItem from "./FeedItem/feedItem";
+import { useDispatch, useSelector } from "react-redux";
+import { v4 as uuidv4 } from "uuid";
 export default function Feed() {
+  //console.log(profile);
+  const dataFeed = useSelector((store) => store.ws.messages);
+  //console.log(dataFeed[`${dataFeed.length - 1}`].orders);
+  let data = null;
+
+  if (dataFeed.length > 0) {
+    data = dataFeed[`${dataFeed.length - 1}`].orders;
+  }
+
   return (
     <section className={feedStyle.head}>
-      <h1 className="text text_type_main-large mt-10 mb-5">Лента Заказов</h1>
       <ul className={feedStyle.content}>
-        <li className={feedStyle.listItem}>
-          <FeedItem />
-        </li>
-        <li className={feedStyle.listItem}>
-          <FeedItem />
-        </li>
-        <li className={feedStyle.listItem}>
-          <FeedItem />
-        </li>
-        <li className={feedStyle.listItem}>
-          <FeedItem />
-        </li>
-        <li className={feedStyle.listItem}>
-          <FeedItem />
-        </li>
-        <li className={feedStyle.listItem}>
-          <FeedItem />
-        </li>
-        <li className={feedStyle.listItem}>
-          <FeedItem />
-        </li>
+        {data != null &&
+          data.map((item) => {
+            //console.log(item);
+            return <FeedItem item={item} key={item._id} />;
+          })}
       </ul>
     </section>
   );

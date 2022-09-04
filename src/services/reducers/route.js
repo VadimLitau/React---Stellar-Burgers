@@ -1,4 +1,4 @@
-import { USER_REGISTER_SUCCESS, USER_REGISTER_REQUEST, USER_REGISTER_FAILED, USER_FORGOT_SUCCESS, USER_FORGOT_REQUEST, USER_FORGOT_FAILED, USER_AUTHORIZATION_SUCCESS, USER_AUTHORIZATION_REQUEST, USER_AUTHORIZATION_FAILED, USER_LOGOUT, UPDATE_USER_PROFILE } from '../actions/route';
+import { USER_REGISTER_SUCCESS, USER_REGISTER_REQUEST, USER_REGISTER_FAILED, USER_FORGOT_SUCCESS, USER_FORGOT_REQUEST, USER_FORGOT_FAILED, USER_AUTHORIZATION_SUCCESS, USER_AUTHORIZATION_REQUEST, USER_AUTHORIZATION_FAILED, USER_LOGOUT, UPDATE_USER_PROFILE, USER_RESETPASSWORD_REQUEST, USER_RESETPASSWORD_SUCCESS, USER_RESETPASSWORD_FAILED } from '../constants/route';
 
 export const routeState = {
     userRegistrationSuccess: false,
@@ -10,6 +10,9 @@ export const routeState = {
     userAuthorizationRequest: false,
     userAuthorizationSuccess: false,
     userAuthorizationFailed: false,
+    userResetPasswordRequest: false,
+    userResetPasswordSucces: false,
+    userResetPasswordFailed: false,
     userAuth: false,
     userAuthProfile: { name: '', email: '', password: '' },
     newUserProfile: null
@@ -95,6 +98,29 @@ export const routeReducer = (state = routeState, action) => {
                     userAuthorizationRequest: false,
                     userAuthorizationFailed: true,
                     userAuth: false
+                }
+            }
+        case USER_RESETPASSWORD_REQUEST:
+            {
+                return {
+                    ...state,
+                    userResetPasswordRequest: true
+                }
+            }
+        case USER_RESETPASSWORD_SUCCESS:
+            {
+                return {
+                    ...state,
+                    userResetPasswordRequest: false,
+                    userResetPasswordSucces: true,
+                }
+            }
+        case USER_RESETPASSWORD_FAILED:
+            {
+                return {
+                    ...state,
+                    userResetPasswordRequest: false,
+                    userResetPasswordFailed: true
                 }
             }
         case USER_LOGOUT:

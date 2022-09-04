@@ -29,7 +29,6 @@ import AppHeader from "../AppHeader/AppHeader";
 function App() {
   const history = useHistory();
   const userAuth = useSelector((store) => store.route.userAuthorizationSuccess);
-  const burgerData = useSelector((store) => store.item.burgerData);
   const auth = useAuth();
   const dispatch = useDispatch();
   React.useEffect(() => {

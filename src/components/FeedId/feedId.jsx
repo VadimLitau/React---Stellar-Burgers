@@ -6,8 +6,8 @@ import { useParams } from "react-router-dom";
 import {
   WS_CONNECTION_START,
   WS_CONNECTION_CLOSED,
-} from "../../services/action-types/wsActionTypes";
-import { v4 as uuidv4 } from "uuid";
+} from "../../services/constants/wsActions";
+
 export default function FeedId() {
   const { id } = useParams();
   const dispatch = useDispatch();

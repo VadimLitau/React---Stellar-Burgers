@@ -8,7 +8,7 @@ import {
     WS_CONNECTION_SUCCESS,
     WS_GET_MESSAGE,
     WS_SEND_MESSAGE
-} from './action-types';
+} from './constants/wsActions';
 import thunk from "redux-thunk";
 
 const wsUrl = 'wss://norma.nomoreparties.space/orders';

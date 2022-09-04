@@ -8,17 +8,16 @@ import Modal from "../Modal/Modal";
 import OrderDetails from "../Modal/OrderDetails/OrderDetails";
 import { ConstructorElement } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useDispatch, useSelector } from "react-redux";
+import { addIngredient } from "../../services/actions";
 import {
   OPEN_ORDER_MODAL,
   CLOSE_ORDER_MODAL,
   ADD_ITEM,
-  addIngredient,
-} from "../../services/actions";
+} from "../../services/constants/index";
 import { useDrop } from "react-dnd";
-import { v4 as uuidv4 } from "uuid";
 import { getServOrder } from "../../services/actions/index";
 import ChangeItem from "./ChangeItem/ChangeItem";
-import { Redirect, useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 
 export function ModalLoading({ load, error }) {
   return (

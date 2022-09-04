@@ -8,13 +8,18 @@ import {
 import logo from "../../images/headerLogo.svg";
 import { Link } from "react-router-dom";
 export default function AppHeader() {
-  const [linkState, setLinkState] = useState({
+  interface IProfileLink {
+    burger: boolean;
+    feed: boolean;
+    profile: boolean;
+}
+  const [linkState, setLinkState] = useState<IProfileLink>({
     burger: true,
     feed: false,
     profile: false,
   });
 
-  const onClick = (elem) => {
+  const onClick = (elem:string) => {
     elem === "burger"
       ? setLinkState({ burger: true, feed: false, profile: false })
       : elem === "feed"
@@ -65,7 +70,7 @@ export default function AppHeader() {
         <Link
           to="/profile"
           className={linkState.profile ? mainStyle.link_active : mainStyle.link}
-          onClick={() => onClick()}
+          onClick={() => onClick('')}
         >
           <ProfileIcon type={linkState.profile ? "primary" : "secondary"} />
           <p className="text text_type_main-default ml-2">Личный Кабинет</p>

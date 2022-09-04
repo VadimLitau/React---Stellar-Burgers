@@ -1,10 +1,9 @@
 import {
-    WS_USER_NAME_UPDATE,
     WS_CONNECTION_SUCCESS,
     WS_CONNECTION_ERROR,
     WS_CONNECTION_CLOSED,
     WS_GET_MESSAGE
-} from '../action-types';
+} from '../constants/wsActions';
 
 
 const initialState = {

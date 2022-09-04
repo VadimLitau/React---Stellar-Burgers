@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import { useDrop, useDrag } from "react-dnd";
 import { useDispatch } from "react-redux";
-import { DELETE_ITEM, CHANGE_ITEM } from "../../../services/actions/index";
+import { DELETE_ITEM, CHANGE_ITEM } from "../../../services/constants/index";
 import ChangeStyle from "./ChangeItem.module.css";
 import {
   ConstructorElement,
@@ -34,13 +34,11 @@ export default function ChangeItem({ item, index }) {
     drop(item) {
       changeItem(index, item);
     },
-  }
-  );
+  });
 
   drag(drop(ref));
 
   const changeItem = (hoverIndex, item) => {
-    console.log(item);
     dispatch({
       type: CHANGE_ITEM,
       dragItem: item.item,

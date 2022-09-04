@@ -12,12 +12,11 @@ import { useAuth } from "../services/auth";
 import { updateUserProfile } from "../services/actions/route";
 import FeedProfile from "../components/FeedProfile/feedProfile";
 import { useHistory, Switch, Route } from "react-router-dom";
-import { ProtectedRoute } from "../components/ProtectedRoute/ProtectedRoute";
 import {
   WS_CONNECTION_START,
   WS_CONNECTION_CLOSED,
-} from "../services/action-types";
-import { Link, Redirect, useLocation } from "react-router-dom";
+} from "../services/constants/wsActions";
+import { useLocation } from "react-router-dom";
 
 import { getCookie } from "../utils/utils";
 function ProfileForm() {

@@ -80,12 +80,6 @@ export default function FeedItem(item) {
   const findTime = info.time.slice(findT + 1, findT + 6);
 
   const sum = burgerData.map((el) => {
-    //console.log(el);
-    // const data = ingredients.forEach((item) => {
-    //   if (el._id === item) {
-    //     info.ingrArr.push(el);
-    //   }
-    // });
     const data = ingredients.find((item) => el._id === item);
     test = ingredients.reduce(function (acc, data) {
       //console.log(data);

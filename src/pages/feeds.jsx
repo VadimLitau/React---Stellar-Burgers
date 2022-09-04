@@ -6,7 +6,7 @@ import FeedInfo from "../components/FeedInfo/feedInfo";
 import {
   WS_CONNECTION_START,
   WS_CONNECTION_CLOSED,
-} from "../services/action-types/wsActionTypes";
+} from "../services/constants/wsActions";
 export default function Feeds() {
   const dispatch = useDispatch();
   useEffect(() => {

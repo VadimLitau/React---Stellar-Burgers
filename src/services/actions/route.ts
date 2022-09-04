@@ -26,6 +26,7 @@ import {
   USER_LOGOUT,
   UPDATE_USER_PROFILE,
 } from "../constants/route";
+import { AppDispatch, AppThunk } from "../types";
 
 export interface IUserRegisterSucces {
   readonly type: typeof USER_REGISTER_SUCCESS;
@@ -138,8 +139,12 @@ export const UpdateUserProfile = (): IUpdateUserProfile => ({
   type: UPDATE_USER_PROFILE,
 });
 
-export function userRegister(userName: any, userEmail: any, userPassword: any) {
-  return function (dispatch: any) {
+export const userRegister: AppThunk = (
+  userName: string,
+  userEmail: string,
+  userPassword: string
+) => {
+  return function (dispatch: AppDispatch) {
     dispatch({
       type: USER_REGISTER_REQUEST,
     });
@@ -158,10 +163,10 @@ export function userRegister(userName: any, userEmail: any, userPassword: any) {
         });
       });
   };
-}
+};
 
-export function userForgotPass(userEmail: any) {
-  return function (dispatch: any) {
+export const userForgotPass: AppThunk = (userEmail: string) => {
+  return function (dispatch: AppDispatch) {
     dispatch({
       type: USER_FORGOT_REQUEST,
     });
@@ -179,10 +184,13 @@ export function userForgotPass(userEmail: any) {
         });
       });
   };
-}
+};
 
-export function userResetPass(resetToken: any, resetPass: any) {
-  return function (dispatch: any) {
+export const userResetPass: AppThunk = (
+  resetToken: string,
+  resetPass: string
+) => {
+  return function (dispatch: AppDispatch) {
     dispatch({
       type: USER_RESETPASSWORD_REQUEST,
     });
@@ -200,9 +208,12 @@ export function userResetPass(resetToken: any, resetPass: any) {
         });
       });
   };
-}
-export function userAuthorization(userEmail: any, usePass: any) {
-  return function (dispatch: any) {
+};
+export const userAuthorization: AppThunk = (
+  userEmail: string,
+  usePass: string
+) => {
+  return function (dispatch: AppDispatch) {
     dispatch({
       type: USER_AUTHORIZATION_REQUEST,
     });
@@ -232,10 +243,10 @@ export function userAuthorization(userEmail: any, usePass: any) {
         console.log(e.type);
       });
   };
-}
+};
 
-export function signOutUser(token: any) {
-  return function (dispatch: any) {
+export const signOutUser: AppThunk = (token: string) => {
+  return function (dispatch: AppDispatch) {
     //console.log(token)
     logoutRequest(token)
       .then(checkResponse)
@@ -250,10 +261,10 @@ export function signOutUser(token: any) {
     localStorage.removeItem("refreshToken");
     localStorage.removeItem("password");
   };
-}
+};
 
-export function getUserDate(user: any) {
-  return function (dispatch: any) {
+export const getUserDate: AppThunk = (user: any) => {
+  return function (dispatch: AppDispatch) {
     getUserRequest()
       .then(checkResponse)
       .then((data) => {
@@ -293,10 +304,14 @@ export function getUserDate(user: any) {
         console.log(e.type);
       });
   };
-}
+};
 
-export function updateUserProfile(email: any, password: any, name: any) {
-  return function (dispatch: any) {
+export const updateUserProfile: AppThunk = (
+  email: string,
+  password: string,
+  name: string
+) => {
+  return function (dispatch: AppDispatch) {
     updateUserDataRequest(email, password, name)
       .then(checkResponse)
       .then((res) => {
@@ -312,4 +327,4 @@ export function updateUserProfile(email: any, password: any, name: any) {
         console.log(e.type);
       });
   };
-}
+};

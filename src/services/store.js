@@ -1,5 +1,5 @@
 import { createStore, applyMiddleware, compose } from "redux";
-import { rootReducer } from "./reducers/index.js";
+import { rootReducer } from "./reducers/index.ts";
 import { socketMiddleware } from './middleware';
 import {
     WS_CONNECTION_CLOSED,

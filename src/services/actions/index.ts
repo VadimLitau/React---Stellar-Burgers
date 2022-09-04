@@ -13,6 +13,7 @@ import {
   CHANGE_ITEM,
 } from "../constants/index";
 import { IIngr, IDeleteIngr, IChangeElem, IAddElem } from "../types/data";
+import { AppThunk, AppDispatch } from "../types";
 
 export interface IOpenOrderModal {
   readonly type: typeof OPEN_ORDER_MODAL;
@@ -110,8 +111,8 @@ export const addIngredient = (item: ReadonlyArray<IAddElem>) => {
 };
 
 //Все что вы указали как "можно лучше" я обязуюсь доделать. Сейчас сдам работу как есть, т.к в любой момент могут вызвать на работу и я боюсь не успеть до дедлайна
-export function getServOrder(orderId: number) {
-  return function (dispatch: any) {
+export const getServOrder: AppThunk = (orderId: number) => {
+  return function (dispatch: AppDispatch) {
     dispatch({
       type: GET_SERV_ORDER_REQUEST,
     });
@@ -130,10 +131,10 @@ export function getServOrder(orderId: number) {
         });
       });
   };
-}
+};
 
-export function getApiBurgerData() {
-  return function (dispatch: any) {
+export const getApiBurgerData: AppThunk = () => {
+  return (dispatch: AppDispatch) => {
     getBurgerDataRequest()
       .then(checkResponse)
       .then((data) => {
@@ -146,4 +147,4 @@ export function getApiBurgerData() {
         console.log(err);
       });
   };
-}
+};

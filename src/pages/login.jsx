@@ -7,27 +7,19 @@ import {
 import { Link, Redirect, useLocation } from "react-router-dom";
 import mainStyle from "./main.module.css";
 import SignInStyle from "./login.module.css";
-import { useSelector } from "react-redux";
 import { useAuth } from "../services/auth";
+import useForm from "../hooks/useForm";
 
 function Login() {
   const location = useLocation();
-  const [value, setValue] = useState("");
-  const onChange = (e) => {
-    setValue(e.target.value);
-  };
-  const [valuePassword, setValuePassword] = useState("");
-  const onChangePassword = (e) => {
-    setValuePassword(e.target.value);
-  };
   const auth = useAuth();
-  const loginHandler = useCallback(
-    (e) => {
-      e.preventDefault();
-      auth.signIn(value, valuePassword);
-    },
-    [auth, value, valuePassword]
-  );
+  const [values, handleChange] = useForm();
+
+  const loginHandler = (e) => {
+    e.preventDefault();
+    auth.signIn(values.email, values.password);
+  };
+
   // console.log(auth.user.name);
   if (auth.user.name) {
     return <Redirect to={location?.state?.from || "/"} />;
@@ -37,12 +29,16 @@ function Login() {
       <form className={SignInStyle.form} onSubmit={loginHandler}>
         <h1 className="pb-6 text text_type_main-medium">Вход</h1>
         <div className={`${mainStyle.input} pb-6`}>
-          <EmailInput name={"email"} value={value} onChange={onChange} />
+          <EmailInput
+            name={"email"}
+            value={values.email || ""}
+            onChange={handleChange}
+          />
         </div>
         <div className={`${mainStyle.input} pb-6`}>
           <PasswordInput
-            onChange={onChangePassword}
-            value={valuePassword}
+            onChange={handleChange}
+            value={values.password || ""}
             name={"password"}
           />
         </div>

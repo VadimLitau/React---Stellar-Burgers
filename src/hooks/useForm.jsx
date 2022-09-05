@@ -1,13 +1,13 @@
-import React, { useCallback, useState } from "react";
+import React, { useState } from "react";
 
-export function useForm(inputValues) {
-  const [values, setValues] = useState(inputValues);
+const useForm = () => {
+  const [state, setState] = useState({});
 
-  const handleChange = (event) => {
-    const { value, name } = event.target;
-    setValues({ ...values, [name]: value });
+  const handleChange = (e) => {
+    e.persist();
+    setState((state) => ({ ...state, [e.target.name]: e.target.value }));
   };
-  return { values, handleChange, setValues };
-}
-
+  return [state, handleChange];
+};
+export default useForm;
 //с формами я обязательно разберусь =)

@@ -8,15 +8,16 @@ import { Link } from "react-router-dom";
 import { userForgotPass } from "../services/actions/route";
 import { useDispatch, useSelector } from "react-redux";
 import { Redirect } from "react-router-dom";
+import useForm from "../hooks/useForm";
 function Forgot() {
   const state = useSelector((store) => store);
   const dispatch = useDispatch();
+  const [values, handleChange] = useForm();
 
-  const [value, setValue] = React.useState("");
   const forgotHandler = (e) => {
     e.preventDefault();
-    setValue(value);
-    dispatch(userForgotPass(value));
+    //console.log(values.email);
+    dispatch(userForgotPass(values.email));
   };
 
   if (state.route.userAuthorizationSuccess) {
@@ -46,8 +47,9 @@ function Forgot() {
             <Input
               type="email"
               placeholder="Укажите e-mail"
-              value={value}
-              onChange={(e) => setValue(e.target.value)}
+              value={values.email || ""}
+              name="email"
+              onChange={handleChange}
             />
           </div>
           <div className="pb-20">

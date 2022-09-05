@@ -9,26 +9,17 @@ import { Link } from "react-router-dom";
 import mainStyle from "./main.module.css";
 import { userRegister } from "../services/actions/route";
 import { useDispatch, useSelector } from "react-redux";
-
 import { Redirect } from "react-router-dom";
+import useForm from "../hooks/useForm";
 
 function Registration() {
   const state = useSelector((store) => store);
   const dispatch = useDispatch();
-  const [valueName, setValueName] = React.useState("");
-  const [valuePassword, setValuePassword] = React.useState("");
-  const onChangePassword = (e) => {
-    setValuePassword(e.target.value);
-  };
-
-  const [valueEmail, setValueEmail] = React.useState("");
-  const onChangeEmail = (e) => {
-    setValueEmail(e.target.value);
-  };
+  const [values, handleChange] = useForm();
 
   const onClickRegister = (e) => {
     e.preventDefault();
-    dispatch(userRegister(valueName, valueEmail, valuePassword));
+    dispatch(userRegister(values.name, values.email, values.password));
   };
 
   if (state.route.userAuthorizationSuccess) {
@@ -49,21 +40,22 @@ function Registration() {
             <Input
               type="text"
               placeholder="Имя"
-              onChange={(e) => setValueName(e.target.value)}
-              value={valueName}
+              name="name"
+              onChange={handleChange}
+              value={values.name || ""}
             />
           </div>
           <div className={`${mainStyle.input} pb-6`}>
             <EmailInput
-              onChange={onChangeEmail}
-              value={valueEmail}
+              onChange={handleChange}
+              value={values.email || ""}
               name={"email"}
             />
           </div>
           <div className={`${mainStyle.input}`}>
             <PasswordInput
-              onChange={onChangePassword}
-              value={valuePassword}
+              onChange={handleChange}
+              value={values.password || ""}
               name={"password"}
             />
           </div>

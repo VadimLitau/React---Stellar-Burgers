@@ -20,7 +20,6 @@ import {
   useHistory,
 } from "react-router-dom";
 import { ProtectedRoute } from "../ProtectedRoute/ProtectedRoute";
-import { ProvideAuth } from "../../services/auth";
 import { useAuth } from "../../services/auth";
 import { getUserDate } from "../../services/actions/route";
 import { getApiBurgerData } from "../../services/actions";

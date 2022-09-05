@@ -8,16 +8,15 @@ import mainStyle from "./main.module.css";
 import { userResetPass } from "../services/actions/route";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, Redirect } from "react-router-dom";
+import useForm from "../hooks/useForm";
 
 function Reset() {
   const state = useSelector((store) => store);
+  const [values, handleChange] = useForm();
   const dispatch = useDispatch();
-  const [valuePass, setValuePass] = React.useState("");
-  const [valueToken, setValueToken] = React.useState("");
   const onClickToken = (e) => {
     e.preventDefault();
-    setValueToken(valueToken);
-    dispatch(userResetPass(valueToken, valuePass));
+    dispatch(userResetPass(values.token, values.password));
   };
 
   if (state.route.userAuthorizationSuccess) {
@@ -46,15 +45,17 @@ function Reset() {
           <h1 className="text text_type_main-medium">Восстановление пароля</h1>
           <div className={`${mainStyle.input} pb-6 pt-6`}>
             <PasswordInput
-              value={valuePass}
-              onChange={(e) => setValuePass(e.target.value)}
+              name="password"
+              value={values.password || ""}
+              onChange={handleChange}
             />
           </div>
           <div className={`${mainStyle.input}`}>
             <Input
               placeholder="Введите код из письма"
-              value={valueToken}
-              onChange={(e) => setValueToken(e.target.value)}
+              name="token"
+              value={values.token || ""}
+              onChange={handleChange}
             />
           </div>
           <div className="pb-20 pt-6">

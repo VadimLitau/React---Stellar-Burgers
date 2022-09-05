@@ -16,43 +16,32 @@ import {
   WS_CONNECTION_START,
   WS_CONNECTION_CLOSED,
 } from "../services/constants/wsActions";
-import { useLocation } from "react-router-dom";
+import useForm from "../hooks/useForm";
 
 import { getCookie } from "../utils/utils";
 function ProfileForm() {
   const dispatch = useDispatch();
   const state = useSelector((store) => store);
   const userProfile = state.route.userAuthProfile;
+  const inputRefInput = React.useRef(null);
+  const [values, handleChange] = useForm();
   React.useEffect(() => {
-    setValueInput(userProfile.name);
-    setValueEmail(userProfile.email);
-    setValuePassword(userProfile.password);
+    values.name = userProfile.name;
+    values.email = userProfile.email;
+    values.password = userProfile.password;
   }, [userProfile]);
 
   function saveProfile(e) {
     e.preventDefault();
-    dispatch(updateUserProfile(valueEmail, valuePassword, valueInput));
+    dispatch(updateUserProfile(values.email, values.password, values.name));
   }
   function resetProfile() {
-    setValueInput(state.route.userAuthProfile.name);
-    setValueEmail(state.route.userAuthProfile.email);
-    setValuePassword(state.route.userAuthProfile.password);
+    values.name = userProfile.name;
+    values.email = userProfile.email;
+    values.password = userProfile.password;
   }
-  //Input
-  const [valueInput, setValueInput] = useState("");
-  const inputRefInput = React.useRef(null);
   const onIconClickInput = () => {
     setTimeout(() => inputRefInput.current.focus(), 0);
-  };
-  //Email
-  const [valueEmail, setValueEmail] = useState("");
-  const onChangeEmail = (e) => {
-    setValueEmail(e.target.value);
-  };
-  //Password
-  const [valuePassword, setValuePassword] = useState("");
-  const onChangePassword = (e) => {
-    setValuePassword(e.target.value);
   };
   return (
     <form onSubmit={saveProfile}>
@@ -61,9 +50,9 @@ function ProfileForm() {
           <Input
             type={"text"}
             placeholder={"Имя"}
-            onChange={(e) => setValueInput(e.target.value)}
+            onChange={handleChange}
             icon={"EditIcon"}
-            value={valueInput ? valueInput : ""}
+            value={values.name || userProfile.name || ""}
             name={"name"}
             error={false}
             ref={inputRefInput}
@@ -74,15 +63,15 @@ function ProfileForm() {
         </div>
         <div className={`${mainStyle.input} pt-6 pb-6`}>
           <EmailInput
-            onChange={onChangeEmail}
-            value={valueEmail ? valueEmail : ""}
+            onChange={handleChange}
+            value={values.email || userProfile.email || ""}
             name={"email"}
           />
         </div>
         <div className={`${mainStyle.input}`}>
           <PasswordInput
-            onChange={onChangePassword}
-            value={valuePassword ? valuePassword : ""}
+            onChange={handleChange}
+            value={values.password || userProfile.password || ""}
             name={"password"}
           />
         </div>
@@ -99,7 +88,6 @@ function Profile() {
   const dispatch = useDispatch();
   const state = useSelector((store) => store);
   const history = useHistory();
-  const location = useLocation();
   const auth = useAuth();
   const handleClickLogout = useCallback(
     (e) => {
@@ -143,7 +131,6 @@ function Profile() {
     //console.log(dataFeed);
     data = dataFeed[`${dataFeed.length - 1}`].orders;
   }
-  //console.log(location);
 
   return (
     <section className={mainStyle.page}>

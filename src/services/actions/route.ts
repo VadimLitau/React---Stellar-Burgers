@@ -30,6 +30,7 @@ import { AppDispatch, AppThunk } from "../types";
 
 export interface IUserRegisterSucces {
   readonly type: typeof USER_REGISTER_SUCCESS;
+  readonly data: any;
 }
 export interface IUserRegisterRequest {
   readonly type: typeof USER_REGISTER_REQUEST;
@@ -39,6 +40,7 @@ export interface IUserRegisterFailed {
 }
 export interface IUserForgotSucces {
   readonly type: typeof USER_FORGOT_SUCCESS;
+  readonly data: any;
 }
 export interface IUserForgotRequest {
   readonly type: typeof USER_FORGOT_REQUEST;
@@ -51,15 +53,13 @@ export interface IUserResetPasswordRequest {
 }
 export interface IUserResetPasswordSucces {
   readonly type: typeof USER_RESETPASSWORD_SUCCESS;
+  readonly data: any;
 }
 export interface IUserResetPasswordFailed {
   readonly type: typeof USER_RESETPASSWORD_FAILED;
 }
 export interface IUserAuthorizationSucces {
   readonly type: typeof USER_AUTHORIZATION_SUCCESS;
-  readonly email: string;
-  readonly name: string;
-  readonly password: string;
 }
 export interface IUserAuthorizationRequest {
   readonly type: typeof USER_AUTHORIZATION_REQUEST;
@@ -89,8 +89,9 @@ export type TRouteActions =
   | IUserLogout
   | IUpdateUserProfile;
 
-export const UserRegisterSucces = (): IUserRegisterSucces => ({
+export const UserRegisterSucces = (data: any): IUserRegisterSucces => ({
   type: USER_REGISTER_SUCCESS,
+  data,
 });
 export const UserRegisterRequest = (): IUserRegisterRequest => ({
   type: USER_REGISTER_REQUEST,
@@ -98,8 +99,9 @@ export const UserRegisterRequest = (): IUserRegisterRequest => ({
 export const UserRegisterFailed = (): IUserRegisterFailed => ({
   type: USER_REGISTER_FAILED,
 });
-export const UserForgotSucces = (): IUserForgotSucces => ({
+export const UserForgotSucces = (data: any): IUserForgotSucces => ({
   type: USER_FORGOT_SUCCESS,
+  data,
 });
 export const UserForgotRequest = (): IUserForgotRequest => ({
   type: USER_FORGOT_REQUEST,
@@ -110,21 +112,17 @@ export const UserForgotRFailed = (): IUserForgotRFailed => ({
 export const UserResetPasswordRequest = (): IUserResetPasswordRequest => ({
   type: USER_RESETPASSWORD_REQUEST,
 });
-export const UserResetPasswordSucces = (): IUserResetPasswordSucces => ({
+export const UserResetPasswordSucces = (
+  data: any
+): IUserResetPasswordSucces => ({
   type: USER_RESETPASSWORD_SUCCESS,
+  data,
 });
 export const UserResetPasswordFailed = (): IUserResetPasswordFailed => ({
   type: USER_RESETPASSWORD_FAILED,
 });
-export const UserAuthorizationSucces = (
-  email: string,
-  name: string,
-  password: string
-): IUserAuthorizationSucces => ({
+export const UserAuthorizationSucces = (): IUserAuthorizationSucces => ({
   type: USER_AUTHORIZATION_SUCCESS,
-  email,
-  name,
-  password,
 });
 export const UserAuthorizationRequest = (): IUserAuthorizationRequest => ({
   type: USER_AUTHORIZATION_REQUEST,
@@ -145,38 +143,26 @@ export const userRegister: AppThunk = (
   userPassword: string
 ) => {
   return function (dispatch: AppDispatch) {
-    dispatch({
-      type: USER_REGISTER_REQUEST,
-    });
+    dispatch(UserRegisterRequest());
     getUserRegister(userName, userEmail, userPassword)
       .then(checkResponse)
       .then((data) => {
-        dispatch({
-          type: USER_REGISTER_SUCCESS,
-          data,
-        });
+        dispatch(UserRegisterSucces(data));
       })
       .catch((err) => {
         console.log(err);
-        dispatch({
-          type: USER_REGISTER_FAILED,
-        });
+        dispatch(UserRegisterFailed());
       });
   };
 };
 
 export const userForgotPass: AppThunk = (userEmail: string) => {
   return function (dispatch: AppDispatch) {
-    dispatch({
-      type: USER_FORGOT_REQUEST,
-    });
+    dispatch(UserForgotRequest());
     getForgotPass(userEmail)
       .then(checkResponse)
       .then((data) => {
-        dispatch({
-          type: USER_FORGOT_SUCCESS,
-          data,
-        });
+        dispatch(UserForgotSucces(data));
       })
       .catch((err) => {
         dispatch({
@@ -191,21 +177,14 @@ export const userResetPass: AppThunk = (
   resetPass: string
 ) => {
   return function (dispatch: AppDispatch) {
-    dispatch({
-      type: USER_RESETPASSWORD_REQUEST,
-    });
+    dispatch(UserResetPasswordRequest());
     getResetPass(resetToken, resetPass)
       .then(checkResponse)
       .then((data) => {
-        dispatch({
-          type: USER_RESETPASSWORD_SUCCESS,
-          data,
-        });
+        dispatch(UserResetPasswordSucces(data));
       })
       .catch((err) => {
-        dispatch({
-          type: USER_RESETPASSWORD_FAILED,
-        });
+        dispatch(UserResetPasswordFailed());
       });
   };
 };
@@ -214,9 +193,7 @@ export const userAuthorization: AppThunk = (
   usePass: string
 ) => {
   return function (dispatch: AppDispatch) {
-    dispatch({
-      type: USER_AUTHORIZATION_REQUEST,
-    });
+    dispatch(UserAuthorizationRequest());
     getUserAuthorization(userEmail, usePass)
       .then(checkResponse)
       .then((data) => {
@@ -231,7 +208,7 @@ export const userAuthorization: AppThunk = (
           //localStorage.setItem('token', `${authToken}`);
         }
         if (data.success) {
-          //console.log(data);
+          // //console.log(data);
           dispatch({
             type: USER_AUTHORIZATION_SUCCESS,
             payload: { userEmail, usePass, ...data.user },

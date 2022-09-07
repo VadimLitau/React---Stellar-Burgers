@@ -23,12 +23,12 @@ export interface ICloseOrderModal {
 }
 export interface IAddItem {
   readonly type: typeof ADD_ITEM;
-  readonly item: ReadonlyArray<IAddElem>;
+  readonly item: any;
 }
 
 export interface IDeleteItem {
   readonly type: typeof DELETE_ITEM;
-  readonly item: ReadonlyArray<IDeleteIngr>;
+  readonly item: any;
 }
 export interface IGetApiItemsSucces {
   readonly type: typeof GET_API_ITEMS_SUCCESS;
@@ -46,9 +46,9 @@ export interface IGetServOrderFailed {
 }
 export interface IChangeItem {
   readonly type: typeof CHANGE_ITEM;
-  readonly dragItem: ReadonlyArray<IChangeElem>;
-  readonly dragIndex: string;
-  readonly hoverIndex: string;
+  readonly dragItem: any;
+  readonly dragIndex: any;
+  readonly hoverIndex: any;
 }
 export type TIndexActions =
   | IOpenOrderModal
@@ -90,20 +90,20 @@ export const GetServOrderFailed = (): IGetServOrderFailed => ({
   type: GET_SERV_ORDER_FAILED,
 });
 export const ChangeItem = (
-  dragItem: ReadonlyArray<IChangeElem>,
-  dragIndex: string,
-  hoverIndex: string
+  dragItem: any,
+  dragIndex: any,
+  hoverIndex: any
 ): IChangeItem => ({
   type: CHANGE_ITEM,
   dragItem,
   dragIndex,
   hoverIndex,
 });
-export const AddItem = (item: ReadonlyArray<IAddElem>): IAddItem => ({
+export const AddItem = (item: any): IAddItem => ({
   type: ADD_ITEM,
   item,
 });
-export const addIngredient = (item: ReadonlyArray<IAddElem>) => {
+export const addIngredient = (item: any) => {
   const uuids = uuid();
   return {
     payload: { ...item, key: uuids },
@@ -113,22 +113,15 @@ export const addIngredient = (item: ReadonlyArray<IAddElem>) => {
 //Все что вы указали как "можно лучше" я обязуюсь доделать. Сейчас сдам работу как есть, т.к в любой момент могут вызвать на работу и я боюсь не успеть до дедлайна
 export const getServOrder: AppThunk = (orderId: number) => {
   return function (dispatch: AppDispatch) {
-    dispatch({
-      type: GET_SERV_ORDER_REQUEST,
-    });
+    dispatch(GetServOrderRequest());
     getServOrderRequest(orderId)
       .then(checkResponse)
       .then((data) => {
-        dispatch({
-          type: GET_SERV_ORDER_SUCCESS,
-          servOrder: data.order.number,
-        });
+        dispatch(GetServOrderSuccess(data.order.number));
       })
       .catch((err) => {
         console.log(err);
-        dispatch({
-          type: GET_SERV_ORDER_FAILED,
-        });
+        dispatch(GetServOrderFailed());
       });
   };
 };
@@ -138,10 +131,7 @@ export const getApiBurgerData: AppThunk = () => {
     getBurgerDataRequest()
       .then(checkResponse)
       .then((data) => {
-        dispatch({
-          type: GET_API_ITEMS_SUCCESS,
-          burgerData: data.data,
-        });
+        dispatch(GetApiItemsSucces(data.data));
       })
       .catch((err) => {
         console.log(err);

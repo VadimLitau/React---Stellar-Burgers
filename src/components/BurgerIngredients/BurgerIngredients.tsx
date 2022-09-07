@@ -1,31 +1,23 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import mainStyle from "./BurgerIngredients.module.css";
 import tabStyle from "./Tab/Tab.module.css";
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useSelector } from "react-redux";
 import Ingredient from "./Ingredient/Ingredient";
-import Modal from "../Modal/Modal";
-import IngredientDetails from "../Modal/IngridientDetails/IngridientDetails";
 import { v4 as uuidv4 } from "uuid";
-import { useDispatch } from "react-redux";
-import { getApiBurgerData } from "../../services/actions";
-import { useLocation, Link } from "react-router-dom";
+import { RootState } from "../../services/types";
+import { INewElem } from "../../services/types/data";
 
 function BurgerIngredients() {
   // console.log(BurgerIngredients)
   const [current, setCurrent] = useState("bun");
-  const handleClick = (evt) => {
+  const handleClick = (evt: string) => {
     setCurrent(evt);
   };
-  const data = useSelector((store) => store.item.burgerData);
+  const data = useSelector((store: RootState) => store.item.burgerData);
 
-  // const bun = data.filter((element) => element.type === "bun");
-  // const main = data.filter((element) => element.type === "main");
-  // const sauce = data.filter((element) => element.type === "sauce");
-  const [state, setState] = useState({ overlay: false });
-  const closeModals = () => {
-    setState({ ...state, overlay: false });
-  };
+  const [state, setState] = useState({ overlay: false, ingredient: {} });
+
   const resultBun = React.useMemo(
     () => data.filter((element) => element.type === "bun"),
     [data]
@@ -39,17 +31,11 @@ function BurgerIngredients() {
     [data]
   );
 
-  // const dispatch = useDispatch();
-  // useEffect(() => {
-  //   document.title = "react burger";
-  //   dispatch(getApiBurgerData());
-  // }, [dispatch]);
-
-  const openModal = (item) => {
+  const openModal = (item: INewElem) => {
     setState({ ...state, overlay: true, ingredient: item });
   };
 
-  const ingridietScroll = (evt) => {
+  const ingridietScroll = (evt: any) => {
     const scroll = evt.target.scrollTop;
     scroll <= 260
       ? setCurrent("bun")
@@ -69,12 +55,7 @@ function BurgerIngredients() {
           <Tab value="bun" active={current === "bun"} onClick={handleClick}>
             Булки
           </Tab>
-          <Tab
-            value="main"
-            active={current === "main"}
-            onClick={handleClick}
-            to="normal"
-          >
+          <Tab value="main" active={current === "main"} onClick={handleClick}>
             Соусы
           </Tab>
           <Tab value="sauce" active={current === "sauce"} onClick={handleClick}>
@@ -85,13 +66,7 @@ function BurgerIngredients() {
           <section className={mainStyle.headIngridient}>
             <p className={`text text_type_main-medium mt-10`}>Булки</p>
             <ul className={`${mainStyle.itemIngridient} ml-4 mr-4`}>
-              {resultBun.map((item) => (
-                //   <Link to={{
-                //     pathname: `/ingredients/${item._id}`,
-                //     state: {background: location}
-                // }}
-                // >
-
+              {resultBun.map((item: INewElem) => (
                 <Ingredient
                   type={item.type}
                   count={item.count}
@@ -108,7 +83,7 @@ function BurgerIngredients() {
           <section className={mainStyle.headIngridient}>
             <p className={`text text_type_main-medium mt-10`}>Начинки</p>
             <ul className={`${mainStyle.itemIngridient} ml-4 mr-4`}>
-              {resultMain.map((item) => (
+              {resultMain.map((item: INewElem) => (
                 <Ingredient
                   index={uuidv4()}
                   type={item.type}
@@ -126,7 +101,7 @@ function BurgerIngredients() {
           <section className={mainStyle.headIngridient}>
             <p className={`text text_type_main-medium mt-10`}>Соусы</p>
             <ul className={`${mainStyle.itemIngridient} ml-4 mr-4`}>
-              {resultSauce.map((item) => (
+              {resultSauce.map((item: INewElem) => (
                 <Ingredient
                   index={uuidv4()}
                   type={item.type}
@@ -140,11 +115,6 @@ function BurgerIngredients() {
                 />
               ))}
             </ul>
-            {/* {state.overlay && (
-              <Modal closeModal={closeModals} title={"Детали заказа"}>
-                <IngredientDetails ingredient={state.ingredient} />
-              </Modal>
-            )} */}
           </section>
         </div>
       </section>

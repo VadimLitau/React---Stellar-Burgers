@@ -5,6 +5,8 @@ import {
   WS_GET_MESSAGE,
 } from "../constants/wsActions";
 
+import { TWsActions } from "../actions/wsActions";
+
 type TWsInitialState = {
   wsConnected: boolean;
   wsError: undefined | string;

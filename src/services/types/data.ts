@@ -12,6 +12,7 @@ export interface IIngr {
   __v: number;
   _id: string;
   count: number;
+  id: string;
 }
 export interface IDeleteIngr {
   count: number;
@@ -32,7 +33,6 @@ export interface IAddElem {
   price: number;
   src: string;
   type: string;
-  payload: any;
 }
 
 export interface IChangeElem {
@@ -44,4 +44,23 @@ export interface IChangeElem {
   price: number;
   src: string;
   type: string;
+}
+
+export interface INewElem {
+  type: string;
+  count: number;
+  _id: string;
+  name: string;
+  image: string;
+  price: number;
+}
+
+export interface IFeedItem {
+  createAd: string;
+  ingredients: ReadonlyArray<string>;
+  name: string;
+  number: number;
+  status: string;
+  updateAt: string;
+  _id: string;
 }

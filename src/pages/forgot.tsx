@@ -1,4 +1,4 @@
-import React from "react";
+import React, { ChangeEvent, FormEventHandler, FormEvent } from "react";
 import {
   Input,
   Button,
@@ -9,12 +9,13 @@ import { userForgotPass } from "../services/actions/route";
 import { useDispatch, useSelector } from "react-redux";
 import { Redirect } from "react-router-dom";
 import useForm from "../hooks/useForm";
+import { RootState } from "../services/types";
 function Forgot() {
-  const state = useSelector((store) => store);
+  const state = useSelector((store: RootState) => store);
   const dispatch = useDispatch();
   const [values, handleChange] = useForm();
 
-  const forgotHandler = (e) => {
+  const forgotHandler = (e: FormEvent) => {
     e.preventDefault();
     //console.log(values.email);
     dispatch(userForgotPass(values.email));

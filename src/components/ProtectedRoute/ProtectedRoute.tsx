@@ -5,6 +5,8 @@ import { getCookie } from "../../utils/utils";
 import { useSelector } from "react-redux";
 interface IProtectedRoute {
   children: ReactNode;
+  path: string;
+  exact: boolean;
 }
 export const ProtectedRoute: FC<IProtectedRoute> = ({ children, ...rest }) => {
   const location = useLocation();

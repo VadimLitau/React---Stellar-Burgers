@@ -1,4 +1,4 @@
-import React from "react";
+import React, { FC } from "react";
 import PropTypes from "prop-types";
 import { useDrop, useDrag } from "react-dnd";
 import { useDispatch } from "react-redux";
@@ -8,8 +8,14 @@ import {
   ConstructorElement,
   DragIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
+import { IChangeItem } from "../../../services/types/data";
 
-export default function ChangeItem({ item, index }) {
+interface IChangeItems {
+  item: any;
+  index: number;
+}
+
+const ChangeItem: FC<IChangeItems> = ({ item, index }) => {
   const ref = React.useRef(null);
 
   const dispatch = useDispatch();
@@ -22,7 +28,7 @@ export default function ChangeItem({ item, index }) {
     }),
   });
 
-  const deleteElement = () => {
+  const deleteElement = (item: IChangeItem) => {
     dispatch({
       type: DELETE_ITEM,
       item,
@@ -31,14 +37,14 @@ export default function ChangeItem({ item, index }) {
 
   const [, drop] = useDrop({
     accept: "ingredient",
-    drop(item) {
+    drop(item: IChangeItem) {
       changeItem(index, item);
     },
   });
 
   drag(drop(ref));
 
-  const changeItem = (hoverIndex, item) => {
+  const changeItem = (hoverIndex: number, item: IChangeItem) => {
     dispatch({
       type: CHANGE_ITEM,
       dragItem: item.item,
@@ -54,7 +60,7 @@ export default function ChangeItem({ item, index }) {
       className={`${ChangeStyle.element}  mb-4 pr-2`}
     >
       <span className={`mr-2`}>
-        <DragIcon />
+        <DragIcon type="primary" />
       </span>
       <ConstructorElement
         text={item.name}
@@ -66,9 +72,11 @@ export default function ChangeItem({ item, index }) {
       />
     </li>
   );
-}
+};
 
 ChangeItem.propTypes = {
   item: PropTypes.object.isRequired,
   index: PropTypes.number.isRequired,
 };
+
+export default ChangeItem;

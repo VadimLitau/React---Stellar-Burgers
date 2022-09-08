@@ -1,11 +1,22 @@
-import React, { useState } from "react";
+import React, { FC } from "react";
 import { useSelector } from "react-redux";
 import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import feedItemStyle from "./feedItem.module.css";
 import { useLocation, Link } from "react-router-dom";
-import { v4 as uuidv4 } from "uuid";
 import PropTypes from "prop-types";
-export function FeedItemImage({ data, number, lengthArr }) {
+import { RootState } from "../../../services/types";
+
+interface IFeedItemImage {
+  data: any;
+  number?: any;
+  lengthArr?: any;
+  key?: any;
+}
+export const FeedItemImage: FC<IFeedItemImage> = ({
+  data,
+  number,
+  lengthArr,
+}) => {
   let count = lengthArr - number;
 
   return (
@@ -51,16 +62,15 @@ export function FeedItemImage({ data, number, lengthArr }) {
       )}
     </>
   );
-}
-export default function FeedItem(item) {
+};
+export default function FeedItem(item: any) {
   //console.log(item);
   const location = useLocation();
-  const burgerData = useSelector((store) => store.item.burgerData);
+  const burgerData = useSelector((store: RootState) => store.item.burgerData);
   const ingredients = item.item.ingredients;
   //console.log(ingredients);
-
+  const ingrArr: string[] = [];
   const info = {
-    ingrArr: [],
     itemDay: "",
     time: item.item.createdAt,
     now: new Date(),
@@ -70,25 +80,25 @@ export default function FeedItem(item) {
     acc: [],
   };
 
-  let price = 0;
-  let countImage = 0;
-  let test = [];
+  let price: number = 0;
+  let countImage: number = 0;
+  let test: any | undefined = [];
 
   const nowDay = info.now.getDate();
   const findT = info.time.indexOf("T");
   const findDay = info.time.slice(findT - 2, findT);
   const findTime = info.time.slice(findT + 1, findT + 6);
 
-  const sum = burgerData.map((el) => {
-    const data = ingredients.find((item) => el._id === item);
-    test = ingredients.reduce(function (acc, data) {
+  const sum = burgerData.map((el: any) => {
+    const data = ingredients.find((item: string) => el._id === item);
+    test = ingredients.reduce(function (acc: any, data: any) {
       //console.log(data);
       acc[data] = (acc[data] || 0) + 1;
       return acc;
     }, []);
 
     if (data) {
-      info.ingrArr.push(el);
+      ingrArr.push(el);
     }
   }, 0);
 
@@ -135,9 +145,9 @@ export default function FeedItem(item) {
           </p>
           <div className={feedItemStyle.wrapPrice}>
             <div className={feedItemStyle.price}>
-              {info.ingrArr.reverse().map((item) => {
+              {ingrArr.reverse().map((item: any) => {
                 price += test[item._id] * item.price;
-                if (info.ingrArr.length <= 6) {
+                if (ingrArr.length <= 6) {
                   return <FeedItemImage data={item} key={item._id} />;
                 } else {
                   return (
@@ -145,7 +155,7 @@ export default function FeedItem(item) {
                       data={item}
                       key={item._id}
                       number={(countImage += 1)}
-                      lengthArr={info.ingrArr.length}
+                      lengthArr={ingrArr.length}
                     />
                   );
                 }
@@ -153,7 +163,7 @@ export default function FeedItem(item) {
             </div>
             <div className={feedItemStyle.wrapPrice}>
               <p className="text text_type_digits-default pr-2">{price}</p>
-              <CurrencyIcon />
+              <CurrencyIcon type="primary" />
             </div>
           </div>
         </div>

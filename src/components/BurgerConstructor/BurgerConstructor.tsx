@@ -1,4 +1,4 @@
-import React from "react";
+import React, { FC } from "react";
 import ConstructorStyle from "./BurgerConstructor.module.css";
 import {
   Button,
@@ -18,8 +18,13 @@ import { useDrop } from "react-dnd";
 import { getServOrder } from "../../services/actions/index";
 import ChangeItem from "./ChangeItem/ChangeItem";
 import { useHistory } from "react-router-dom";
+import { RootState } from "../../services/types";
+interface IModalLoading {
+  load?: boolean;
+  error?: boolean;
+}
 
-export function ModalLoading({ load, error }) {
+export const ModalLoading: FC<IModalLoading> = ({ load, error }) => {
   return (
     <>
       {load && (
@@ -42,15 +47,17 @@ export function ModalLoading({ load, error }) {
       )}
     </>
   );
-}
+};
 
 export default function BurgerConstructor() {
   const history = useHistory();
-  const state = useSelector((store) => store);
+  const state = useSelector((store: RootState) => store);
   const burgerConstructorItems = useSelector(
-    (store) => store.item.burgerConstructorItems
+    (store: RootState) => store.item.burgerConstructorItems
   );
-  const authUser = useSelector((store) => store.route.userAuthorizationSuccess);
+  const authUser = useSelector(
+    (store: RootState) => store.route.userAuthorizationSuccess
+  );
   const orderOverlay = state.item.overlay;
   const dispatch = useDispatch();
 
@@ -80,7 +87,7 @@ export default function BurgerConstructor() {
       dispatch({ type: OPEN_ORDER_MODAL });
     }
   };
-  const handleDrop = (itemId) => {
+  const handleDrop = (itemId: any) => {
     dispatch({
       type: ADD_ITEM,
       item: { ...itemId }, //теперь при каждой новой отрисовке ингридиентов конструктора их ключ, не меняется
@@ -143,7 +150,7 @@ export default function BurgerConstructor() {
       <div className={`${ConstructorStyle.sell} mr-4 mb-10`}>
         <p className={`text text_type_digits-medium mr-3`}>{setOrderPrice()}</p>
         <div className={`${ConstructorStyle.logo} pr-10`}>
-          <CurrencyIcon />
+          <CurrencyIcon type="primary" />
         </div>
         {orderOverlay && (
           <Modal closeModal={closeModal} title={""}>

@@ -7,11 +7,12 @@ import {
   WS_CONNECTION_START,
   WS_CONNECTION_CLOSED,
 } from "../../services/constants/wsActions";
+import { RootState } from "../../services/types";
 
 export default function FeedId() {
-  const { id } = useParams();
+  const { id } = useParams<any>();
   const dispatch = useDispatch();
-  const burgerData = useSelector((store) => store.item.burgerData);
+  const burgerData = useSelector((store: RootState) => store.item.burgerData);
   //console.log(id);
   useEffect(() => {
     if (burgerData.length) {
@@ -21,9 +22,19 @@ export default function FeedId() {
       dispatch({ type: WS_CONNECTION_CLOSED, payload: "" });
     };
   }, [burgerData]);
-  const dataFeed = useSelector((store) => store.ws.messages);
+  const dataFeed = useSelector((store: RootState) => store.ws.messages);
+  interface IInfo {
+    data: null | any;
+    ingredientForModal: null | any;
+    ingredientForModalStatus: null | any;
+    ingredientForModalCreatedAt: string;
+    ingredientForModalIngredients: any;
+    itemDay: string;
+    now: any;
+    ingrArr: any;
+  }
 
-  const info = {
+  const info: IInfo = {
     data: null,
     ingredientForModal: null,
     ingredientForModalStatus: null,
@@ -36,7 +47,7 @@ export default function FeedId() {
   let price = 0;
   if (dataFeed.length > 0) {
     info.data = dataFeed[`${dataFeed.length - 1}`].orders;
-    info.ingredientForModal = info.data.find((ingr) => ingr._id === id);
+    info.ingredientForModal = info.data.find((ingr: any) => ingr._id === id);
     // console.log(info.data);
     info.ingredientForModalStatus = info.ingredientForModal.status;
     info.ingredientForModalCreatedAt = info.ingredientForModal.createdAt;
@@ -72,21 +83,25 @@ export default function FeedId() {
     ? (info.itemDay = "2 дня назад")
     : (info.itemDay = "Архивный заказ");
 
-  const test = info.ingredientForModalIngredients.reduce(function (acc, el) {
+  const test = info.ingredientForModalIngredients.reduce(function (
+    acc: any,
+    el: any
+  ) {
     acc[el] = (acc[el] || 0) + 1;
     return acc;
-  }, []);
+  },
+  []);
   //console.log(test);
   const sum = burgerData.map((el) => {
     const data = info.ingredientForModalIngredients.find(
-      (item) => el._id === item
+      (item: any) => el._id === item
     );
     if (data) {
       info.ingrArr.push(el);
     }
   }, 0);
 
-  info.ingrArr.forEach((item) => {
+  info.ingrArr.forEach((item: any) => {
     price += test[item._id] * item.price;
   });
   return (
@@ -118,7 +133,7 @@ export default function FeedId() {
             <p className="text text_type_main-medium mb-6">Состав:</p>
             <div>
               <ul className={`${feedIdStyle.list} pr-6 mb-10`}>
-                {info.ingrArr.map((item) => {
+                {info.ingrArr.map((item: any) => {
                   //console.log(item);
                   return (
                     <li
@@ -140,7 +155,7 @@ export default function FeedId() {
                           <p className="text text_type_digits-default pl-4">
                             {test[item._id]}&nbsp;x&nbsp;{item.price}
                           </p>
-                          <CurrencyIcon />
+                          <CurrencyIcon type="primary" />
                         </div>
                       </div>
                     </li>
@@ -155,7 +170,7 @@ export default function FeedId() {
               </p>
               <div className={`${feedIdStyle.price}`}>
                 <p className="text text_type_digits-default">{price}</p>{" "}
-                <CurrencyIcon />
+                <CurrencyIcon type="primary" />
               </div>
             </div>
           </div>

@@ -24,10 +24,15 @@ import { useAuth } from "../../services/auth";
 import { getUserDate } from "../../services/actions/route";
 import { getApiBurgerData } from "../../services/actions";
 import AppHeader from "../AppHeader/AppHeader";
-
+import { RootState } from "../../services/types";
+interface LocationState {
+  background: any;
+}
 function App() {
   const history = useHistory();
-  const userAuth = useSelector((store) => store.route.userAuthorizationSuccess);
+  const userAuth = useSelector(
+    (store: RootState) => store.route.userAuthorizationSuccess
+  );
   const auth = useAuth();
   const dispatch = useDispatch();
   React.useEffect(() => {
@@ -42,7 +47,7 @@ function App() {
     dispatch(getApiBurgerData());
   }, [dispatch]);
 
-  const location = useLocation();
+  const location = useLocation<LocationState>();
 
   const background = location.state?.background;
   //console.log(background);
@@ -50,7 +55,7 @@ function App() {
     history.goBack();
   }
 
-  const dataFeed = useSelector((store) => store.ws.messages);
+  const dataFeed = useSelector((store: RootState) => store.ws.messages);
   const [data, setData] = useState();
 
   useEffect(() => {

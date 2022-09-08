@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { FC, MouseEventHandler } from "react";
 import PropTypes from "prop-types";
 import {
   CurrencyIcon,
@@ -7,7 +7,19 @@ import {
 import IngredientStyle from "./Ingredient.module.css";
 import { useDrag } from "react-dnd";
 import { useLocation, Link } from "react-router-dom";
-export default function Ingredient({
+
+interface IIngredient {
+  src: string;
+  name: string;
+  price: number;
+  onCardClick: MouseEventHandler<HTMLImageElement>;
+  id: string;
+  count: number;
+  type: string;
+  index?: string;
+}
+
+const Ingredient: FC<IIngredient> = ({
   src,
   name,
   price,
@@ -16,7 +28,7 @@ export default function Ingredient({
   count,
   type,
   index,
-}) {
+}) => {
   const [{ isDrag }, dragRef] = useDrag({
     type: "item",
     item: { id, name, price, src, count, type, index },
@@ -60,7 +72,7 @@ export default function Ingredient({
       </li>
     </Link>
   );
-}
+};
 
 Ingredient.propTypes = {
   src: PropTypes.string.isRequired,
@@ -72,3 +84,5 @@ Ingredient.propTypes = {
   id: PropTypes.string.isRequired,
   index: PropTypes.string,
 };
+
+export default Ingredient;

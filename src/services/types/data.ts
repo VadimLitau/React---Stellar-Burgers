@@ -64,3 +64,8 @@ export interface IFeedItem {
   updateAt: string;
   _id: string;
 }
+
+export interface IChangeItem {
+  index: number;
+  item: IChangeElem;
+}

@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useEffect } from "react";
+import React, { useState, useCallback, useEffect, FormEvent } from "react";
 import {
   EmailInput,
   PasswordInput,
@@ -19,11 +19,12 @@ import {
 import useForm from "../hooks/useForm";
 
 import { getCookie } from "../utils/utils";
+import { RootState } from "../services/types";
 function ProfileForm() {
   const dispatch = useDispatch();
-  const state = useSelector((store) => store);
+  const state = useSelector((store: RootState) => store);
   const userProfile = state.route.userAuthProfile;
-  const inputRefInput = React.useRef(null);
+  const inputRefInput = React.useRef<HTMLInputElement>(null);
   const [values, handleChange] = useForm();
   React.useEffect(() => {
     values.name = userProfile.name;
@@ -31,7 +32,7 @@ function ProfileForm() {
     values.password = userProfile.password;
   }, [userProfile]);
 
-  function saveProfile(e) {
+  function saveProfile(e: FormEvent) {
     e.preventDefault();
     dispatch(updateUserProfile(values.email, values.password, values.name));
   }
@@ -41,8 +42,9 @@ function ProfileForm() {
     values.password = userProfile.password;
   }
   const onIconClickInput = () => {
-    setTimeout(() => inputRefInput.current.focus(), 0);
+    setTimeout(() => inputRefInput.current?.focus(), 0);
   };
+  console.log(inputRefInput);
   return (
     <form onSubmit={saveProfile}>
       <div className={ProfileStyle.userProfile}>
@@ -86,7 +88,7 @@ function ProfileForm() {
 
 function Profile() {
   const dispatch = useDispatch();
-  const state = useSelector((store) => store);
+  const state = useSelector((store: RootState) => store);
   const history = useHistory();
   const auth = useAuth();
   const handleClickLogout = useCallback(
@@ -102,7 +104,7 @@ function Profile() {
     order: false,
   });
 
-  const onClick = (elem) => {
+  const onClick = (elem: string) => {
     if (elem === "order") {
       setLinkState({ profile: false, order: true });
       history.push("/profile/orders");
@@ -125,7 +127,7 @@ function Profile() {
       dispatch({ type: WS_CONNECTION_CLOSED, payload: "" });
     };
   }, [userProfile]);
-  const dataFeed = useSelector((store) => store.ws.messages);
+  const dataFeed = useSelector((store: RootState) => store.ws.messages);
 
   if (dataFeed.length > 0) {
     //console.log(dataFeed);

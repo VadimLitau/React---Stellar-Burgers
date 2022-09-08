@@ -1,4 +1,4 @@
-import React from "react";
+import React, { FormEvent } from "react";
 import {
   EmailInput,
   PasswordInput,
@@ -11,13 +11,14 @@ import { userRegister } from "../services/actions/route";
 import { useDispatch, useSelector } from "react-redux";
 import { Redirect } from "react-router-dom";
 import useForm from "../hooks/useForm";
+import { RootState } from "../services/types";
 
 function Registration() {
-  const state = useSelector((store) => store);
+  const state = useSelector((store: RootState) => store);
   const dispatch = useDispatch();
   const [values, handleChange] = useForm();
 
-  const onClickRegister = (e) => {
+  const onClickRegister = (e: FormEvent) => {
     e.preventDefault();
     dispatch(userRegister(values.name, values.email, values.password));
   };

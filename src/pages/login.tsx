@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from "react";
+import React, { FormEvent, useCallback, useState } from "react";
 import {
   EmailInput,
   PasswordInput,
@@ -9,13 +9,18 @@ import mainStyle from "./main.module.css";
 import SignInStyle from "./login.module.css";
 import { useAuth } from "../services/auth";
 import useForm from "../hooks/useForm";
+interface LocationState {
+  from: {
+    pathname: string;
+  };
+}
 
 function Login() {
-  const location = useLocation();
+  const location = useLocation<LocationState>();
   const auth = useAuth();
   const [values, handleChange] = useForm();
 
-  const loginHandler = (e) => {
+  const loginHandler = (e: FormEvent) => {
     e.preventDefault();
     auth.signIn(values.email, values.password);
   };

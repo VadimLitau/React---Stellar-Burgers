@@ -12,7 +12,16 @@ import {
 import thunk from "redux-thunk";
 
 const wsUrl = "wss://norma.nomoreparties.space/orders";
-const wsActions = {
+export interface IwsActions {
+  wsInit: typeof WS_CONNECTION_START | typeof WS_CONNECTION_START;
+  wsSendMessage: typeof WS_SEND_MESSAGE | typeof WS_SEND_MESSAGE;
+  onOpen: typeof WS_CONNECTION_SUCCESS | typeof WS_CONNECTION_SUCCESS;
+  onClose: typeof WS_CONNECTION_CLOSED | typeof WS_CONNECTION_CLOSED;
+  onError: typeof WS_CONNECTION_ERROR | typeof WS_CONNECTION_ERROR;
+  onMessage: typeof WS_GET_MESSAGE | typeof WS_GET_MESSAGE;
+}
+
+export const wsActions: IwsActions = {
   wsInit: WS_CONNECTION_START,
   wsSendMessage: WS_SEND_MESSAGE,
   onOpen: WS_CONNECTION_SUCCESS,
@@ -20,10 +29,7 @@ const wsActions = {
   onError: WS_CONNECTION_ERROR,
   onMessage: WS_GET_MESSAGE,
 };
-// const composeEnhancers =
-//   typeof window === "object" && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
-//     ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({})
-//     : compose;
+
 declare global {
   interface Window {
     __REDUX_DEVTOOLS_EXTENSION_COMPOSE__?: typeof compose;
@@ -35,7 +41,7 @@ const composeEnhancers =
     ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
     : compose;
 
-export const enhancer = composeEnhancers(
+const enhancer = composeEnhancers(
   applyMiddleware(thunk, socketMiddleware(wsUrl, wsActions))
 );
 

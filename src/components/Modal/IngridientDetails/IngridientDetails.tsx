@@ -8,9 +8,10 @@ import { useDispatch } from "react-redux";
 import { getBurgerDataRequest } from "../../../utils/Api";
 import { checkResponse } from "../../../utils/constants";
 import { getApiBurgerData } from "../../../services/actions";
+import { RootState } from "../../../services/types";
 export default function IngredientDetails() {
-  const { id } = useParams();
-  const data = useSelector((store) => {
+  const { id }: any = useParams();
+  const data = useSelector((store: RootState) => {
     return store.item.burgerData;
   });
   const ingredientForModal = data.find((ingr) => ingr._id === id);

@@ -4,14 +4,25 @@ import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components
 import { useParams } from "react-router-dom";
 
 import { useSelector } from "react-redux";
+import { RootState } from "../../services/types";
 export default function FeedIdModal() {
-  const { id } = useParams();
-  const burgerData = useSelector((store) => store.item.burgerData);
+  const { id }: any = useParams();
+  const burgerData = useSelector((store: RootState) => store.item.burgerData);
 
-  const dataFeed = useSelector((store) => store.ws.messages);
+  const dataFeed = useSelector((store: RootState) => store.ws.messages);
 
-  let price = 0;
-  const info = {
+  let price: number = 0;
+  interface Iinfo {
+    data: null | any;
+    ingredientForModal: null | any;
+    ingredientForModalStatus: null | any;
+    ingredientForModalCreatedAt: string;
+    ingredientForModalIngredients: any;
+    itemDay: string;
+    now: Date;
+    ingrArr: any;
+  }
+  const info: Iinfo = {
     data: null,
     ingredientForModal: null,
     ingredientForModalStatus: null,
@@ -21,6 +32,7 @@ export default function FeedIdModal() {
     now: new Date(),
     ingrArr: [],
   };
+
   let color = {
     color: "#00CCCC",
     name: "",
@@ -28,7 +40,7 @@ export default function FeedIdModal() {
 
   if (dataFeed.length > 0) {
     info.data = dataFeed[`${dataFeed.length - 1}`].orders;
-    info.ingredientForModal = info.data.find((ingr) => ingr._id === id);
+    info.ingredientForModal = info.data.find((ingr: any) => ingr._id === id);
     info.ingredientForModalStatus = info.ingredientForModal.status;
     info.ingredientForModalCreatedAt = info.ingredientForModal.createdAt;
     info.ingredientForModalIngredients = info.ingredientForModal.ingredients;
@@ -44,15 +56,19 @@ export default function FeedIdModal() {
     color.name = "Готовится";
   }
   //Цыганская магия
-  const test = info.ingredientForModalIngredients.reduce(function (acc, el) {
+  const test = info.ingredientForModalIngredients.reduce(function (
+    acc: any,
+    el: any
+  ) {
     //console.log(el);
     acc[el] = (acc[el] || 0) + 1;
     return acc;
-  }, []);
+  },
+  []);
 
   const sum = burgerData.map((el) => {
     const data = info.ingredientForModalIngredients.find(
-      (item) => el._id === item
+      (item: string) => el._id === item
     );
 
     if (data) {
@@ -60,7 +76,7 @@ export default function FeedIdModal() {
     }
   }, 0);
 
-  info.ingrArr.forEach((item) => {
+  info.ingrArr.forEach((item: any) => {
     price += test[item._id] * item.price;
   });
 
@@ -106,7 +122,7 @@ export default function FeedIdModal() {
             <p className="text text_type_main-medium mb-6">Состав:</p>
             <div>
               <ul className={`${feedIdStyle.list} pr-6 mb-10`}>
-                {info.ingrArr.map((item) => {
+                {info.ingrArr.map((item: any) => {
                   //console.log(item._id);
                   return (
                     <li
@@ -128,7 +144,7 @@ export default function FeedIdModal() {
                           <p className="text text_type_digits-default pl-4">
                             {test[item._id]}&nbsp;x&nbsp;{item.price}
                           </p>
-                          <CurrencyIcon />
+                          <CurrencyIcon type="primary" />
                         </div>
                       </div>
                     </li>
@@ -143,7 +159,7 @@ export default function FeedIdModal() {
               </p>
               <div className={`${feedIdStyle.price}`}>
                 <p className="text text_type_digits-default">{price}</p>{" "}
-                <CurrencyIcon />
+                <CurrencyIcon type="primary" />
               </div>
             </div>
           </div>

@@ -70,7 +70,7 @@ export const itemReducer = (
           return { ...state };
         }
       } else if (action.item.payload.type != "bun") {
-        console.log(action.item.payload.type);
+        //console.log(action.item.payload.type);
         return {
           ...state,
           burgerConstructorItems: [

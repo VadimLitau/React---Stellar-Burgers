@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { FC } from "react";
 import feedStyle from "./feedProfile.module.css";
 import FeedItem from "../Feed/FeedItem/feedItem";
 import { useDispatch, useSelector } from "react-redux";
@@ -9,8 +9,10 @@ import {
   WS_CONNECTION_CLOSED,
 } from "../../services/constants/wsActions";
 import { getCookie } from "../../utils/utils";
-
-export default function FeedProfile({ data }) {
+interface IFeedProfile {
+  data: any;
+}
+const FeedProfile: FC<IFeedProfile> = ({ data }) => {
   return (
     <section className={feedStyle.head}>
       <ul className={feedStyle.content}>
@@ -22,4 +24,6 @@ export default function FeedProfile({ data }) {
       </ul>
     </section>
   );
-}
+};
+
+export default FeedProfile;

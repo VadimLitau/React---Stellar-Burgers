@@ -63,7 +63,12 @@ export const FeedItemImage: FC<IFeedItemImage> = ({
     </>
   );
 };
-export default function FeedItem(item: any) {
+interface IFeedItem {
+  item: any;
+  key: any;
+  profile?: string;
+}
+const FeedItem: FC<IFeedItem> = (item: any) => {
   //console.log(item);
   const location = useLocation();
   const burgerData = useSelector((store: RootState) => store.item.burgerData);
@@ -170,8 +175,7 @@ export default function FeedItem(item: any) {
       </li>
     </Link>
   );
-}
-
+};
 FeedItem.propTypes = {
   item: PropTypes.object.isRequired,
 };
@@ -181,3 +185,4 @@ FeedItemImage.propTypes = {
   number: PropTypes.number,
   lengthArr: PropTypes.number,
 };
+export default FeedItem;

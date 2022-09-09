@@ -1,20 +1,21 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
+import { RootState } from "../../services/types";
 import feedInfoStyle from "./feedInfo.module.css";
 export default function FeedInfo() {
-  const dataFeed = useSelector((store) => store.ws.messages);
+  const dataFeed = useSelector((store: RootState) => store.ws.messages);
   let data;
   let total = 0;
   let totalDay = 0;
-  let feedDone = [];
-  let feedWork = [];
+  let feedDone: any[] = [];
+  let feedWork: any[] = [];
   let textSizeDone = "default";
   let textSizeWork = "default";
   if (dataFeed.length > 0) {
     data = dataFeed[`${dataFeed.length - 1}`].orders;
     total = dataFeed[`${dataFeed.length - 1}`].total;
     totalDay = dataFeed[`${dataFeed.length - 1}`].totalToday;
-    data.forEach((item) => {
+    data.forEach((item: any) => {
       if (item.status === "done") {
         feedDone.push(item.number);
       } else {
@@ -38,7 +39,7 @@ export default function FeedInfo() {
             Готовы:
           </h2>
           <div className={`${feedInfoStyle.listDone}`}>
-            {feedDone.map((item) => {
+            {feedDone.map((item: any) => {
               return (
                 <p
                   className={`${feedInfoStyle.listItem} text text text_type_digits-${textSizeDone} pt-1 pb-1`}
@@ -57,7 +58,7 @@ export default function FeedInfo() {
             В работе:
           </h2>
           <div className={`${feedInfoStyle.listWork}`}>
-            {feedWork.map((item) => {
+            {feedWork.map((item: any) => {
               return (
                 <p
                   className={`${feedInfoStyle.listItem} text text_type_digits-${textSizeWork} pt-1 pb-1`}

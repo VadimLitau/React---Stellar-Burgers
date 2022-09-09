@@ -1,4 +1,4 @@
-import React from "react";
+import React, { FC, MouseEvent } from "react";
 import PropTypes from "prop-types";
 import ModalStyle from "./Modal.module.css";
 import { useEffect } from "react";
@@ -7,11 +7,17 @@ import { createPortal } from "react-dom";
 import ModalOverlay from "./ModalOverlay/ModalOverlay";
 import { useParams } from "react-router-dom";
 
-export default function Modal({ children, title, closeModal }) {
-  const modalRoot = document.getElementById("react-modals");
+interface IModal {
+  children: any;
+  title: string;
+  closeModal: any;
+}
+
+const Modal: FC<IModal> = ({ children, title, closeModal }) => {
+  const modalRoot: any = document.getElementById("react-modals");
 
   useEffect(() => {
-    const handleEscClose = (evt) => {
+    const handleEscClose = (evt: KeyboardEvent) => {
       if (evt.key === "Escape") {
         closeModal();
       }
@@ -38,7 +44,7 @@ export default function Modal({ children, title, closeModal }) {
     </>,
     modalRoot
   );
-}
+};
 //Хм, интерсно, спасибо, надо будет попробовать)))
 Modal.propTypes = {
   children: PropTypes.oneOfType([
@@ -48,3 +54,5 @@ Modal.propTypes = {
   title: PropTypes.string.isRequired,
   closeModal: PropTypes.func.isRequired,
 };
+
+export default Modal;

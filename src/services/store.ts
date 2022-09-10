@@ -1,6 +1,6 @@
 import { createStore, applyMiddleware, compose } from "redux";
 import { rootReducer } from "./reducers/index";
-import { socketMiddleware } from "./middleware";
+import { socketMiddleware } from "./middleware/socketMiddleware";
 import {
   WS_CONNECTION_CLOSED,
   WS_CONNECTION_ERROR,

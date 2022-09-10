@@ -25,9 +25,8 @@ import { getUserDate } from "../../services/actions/route";
 import { getApiBurgerData } from "../../services/actions";
 import AppHeader from "../AppHeader/AppHeader";
 import { RootState } from "../../services/types";
-interface LocationState {
-  background: any;
-}
+import { LocationState } from "../../services/types/data";
+
 function App() {
   const history = useHistory();
   const userAuth = useSelector(
@@ -50,7 +49,7 @@ function App() {
   const location = useLocation<LocationState>();
 
   const background = location.state?.background;
-  //console.log(background);
+  //console.log(location.state);
   function closeModals() {
     history.goBack();
   }

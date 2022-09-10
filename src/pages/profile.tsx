@@ -44,7 +44,7 @@ function ProfileForm() {
   const onIconClickInput = () => {
     setTimeout(() => inputRefInput.current?.focus(), 0);
   };
-  console.log(inputRefInput);
+
   return (
     <form onSubmit={saveProfile}>
       <div className={ProfileStyle.userProfile}>

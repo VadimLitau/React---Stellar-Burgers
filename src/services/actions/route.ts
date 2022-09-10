@@ -60,6 +60,7 @@ export interface IUserResetPasswordFailed {
 }
 export interface IUserAuthorizationSucces {
   readonly type: typeof USER_AUTHORIZATION_SUCCESS;
+  readonly payload: { email: string; password: string; name: string };
 }
 export interface IUserAuthorizationRequest {
   readonly type: typeof USER_AUTHORIZATION_REQUEST;
@@ -72,6 +73,7 @@ export interface IUserLogout {
 }
 export interface IUpdateUserProfile {
   readonly type: typeof UPDATE_USER_PROFILE;
+  readonly payload: { email: string; password: string; name: string };
 }
 export type TRouteActions =
   | IUserRegisterSucces
@@ -121,8 +123,13 @@ export const UserResetPasswordSucces = (
 export const UserResetPasswordFailed = (): IUserResetPasswordFailed => ({
   type: USER_RESETPASSWORD_FAILED,
 });
-export const UserAuthorizationSucces = (): IUserAuthorizationSucces => ({
+export const UserAuthorizationSucces = (payload: {
+  email: string;
+  password: string;
+  name: string;
+}): IUserAuthorizationSucces => ({
   type: USER_AUTHORIZATION_SUCCESS,
+  payload,
 });
 export const UserAuthorizationRequest = (): IUserAuthorizationRequest => ({
   type: USER_AUTHORIZATION_REQUEST,
@@ -133,8 +140,13 @@ export const UserAuthorizationFailed = (): IUserAuthorizationFailed => ({
 export const UserLogout = (): IUserLogout => ({
   type: USER_LOGOUT,
 });
-export const UpdateUserProfile = (): IUpdateUserProfile => ({
+export const UpdateUserProfile = (payload: {
+  email: string;
+  password: string;
+  name: string;
+}): IUpdateUserProfile => ({
   type: UPDATE_USER_PROFILE,
+  payload,
 });
 
 export const userRegister: AppThunk = (

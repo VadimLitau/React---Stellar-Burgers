@@ -5,6 +5,7 @@ import feedItemStyle from "./feedItem.module.css";
 import { useLocation, Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import { RootState } from "../../../services/types";
+import { IIngr } from "../../../services/types/data";
 
 interface IFeedItemImage {
   data: any;
@@ -65,16 +66,15 @@ export const FeedItemImage: FC<IFeedItemImage> = ({
 };
 interface IFeedItem {
   item: any;
-  key: any;
+  key: string;
   profile?: string;
 }
-const FeedItem: FC<IFeedItem> = (item: any) => {
+const FeedItem: FC<IFeedItem> = (item) => {
   //console.log(item);
   const location = useLocation();
   const burgerData = useSelector((store: RootState) => store.item.burgerData);
   const ingredients = item.item.ingredients;
-  //console.log(ingredients);
-  const ingrArr: string[] = [];
+  const ingrArr: object[] = [];
   const info = {
     itemDay: "",
     time: item.item.createdAt,
@@ -87,20 +87,24 @@ const FeedItem: FC<IFeedItem> = (item: any) => {
 
   let price: number = 0;
   let countImage: number = 0;
-  let test: any | undefined = [];
+  let test: never[];
 
   const nowDay = info.now.getDate();
   const findT = info.time.indexOf("T");
   const findDay = info.time.slice(findT - 2, findT);
   const findTime = info.time.slice(findT + 1, findT + 6);
 
-  const sum = burgerData.map((el: any) => {
+  const sum = burgerData.map((el: IIngr) => {
     const data = ingredients.find((item: string) => el._id === item);
-    test = ingredients.reduce(function (acc: any, data: any) {
-      //console.log(data);
+    test = ingredients.reduce(function (
+      acc: { [x: string]: number },
+      data: string
+    ) {
+      //console.log(acc);
       acc[data] = (acc[data] || 0) + 1;
       return acc;
-    }, []);
+    },
+    []);
 
     if (data) {
       ingrArr.push(el);

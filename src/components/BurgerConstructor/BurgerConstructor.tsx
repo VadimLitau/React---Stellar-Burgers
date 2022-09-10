@@ -19,6 +19,7 @@ import { getServOrder } from "../../services/actions/index";
 import ChangeItem from "./ChangeItem/ChangeItem";
 import { useHistory } from "react-router-dom";
 import { RootState } from "../../services/types";
+import { IAddElems, IAddElem } from "../../services/types/data";
 interface IModalLoading {
   load?: boolean;
   error?: boolean;
@@ -87,7 +88,8 @@ export default function BurgerConstructor() {
       dispatch({ type: OPEN_ORDER_MODAL });
     }
   };
-  const handleDrop = (itemId: any) => {
+  const handleDrop = (itemId: IAddElems) => {
+    //console.log(itemId);
     dispatch({
       type: ADD_ITEM,
       item: { ...itemId }, //теперь при каждой новой отрисовке ингридиентов конструктора их ключ, не меняется
@@ -95,8 +97,7 @@ export default function BurgerConstructor() {
   };
   const [{ isHover }, dropTarget] = useDrop({
     accept: "item",
-    drop(itemId) {
-      //console.log(itemId);
+    drop(itemId: IAddElem) {
       handleDrop(addIngredient(itemId));
     },
     collect: (monitor) => ({

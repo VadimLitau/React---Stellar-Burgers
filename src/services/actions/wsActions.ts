@@ -9,6 +9,7 @@ export interface IWsConnectionSucces {
 }
 export interface IWsConnectionError {
   readonly type: typeof WS_CONNECTION_ERROR;
+  readonly payload: string;
 }
 export interface IWsConnectionClosed {
   readonly type: typeof WS_CONNECTION_CLOSED;
@@ -16,6 +17,12 @@ export interface IWsConnectionClosed {
 export interface IWsGetMessage {
   readonly type: typeof WS_GET_MESSAGE;
   readonly message: string;
+  readonly payload: {
+    succes: boolean;
+    orders: any;
+    total: number;
+    totalDay: number;
+  };
 }
 export type TWsActions =
   | IWsConnectionSucces
@@ -26,15 +33,20 @@ export type TWsActions =
 export const WsConnectionSucces = (): IWsConnectionSucces => ({
   type: WS_CONNECTION_SUCCESS,
 });
-export const WsConnectionError = (): IWsConnectionError => ({
+export const WsConnectionError = (payload: string): IWsConnectionError => ({
   type: WS_CONNECTION_ERROR,
+  payload,
 });
 export const WsConnectionClosed = (): IWsConnectionClosed => ({
   type: WS_CONNECTION_CLOSED,
 });
-export const WsGetMessage = (message: string): IWsGetMessage => ({
+export const WsGetMessage = (
+  message: string,
+  payload: { succes: boolean; orders: any; total: number; totalDay: number }
+): IWsGetMessage => ({
   type: WS_GET_MESSAGE,
   message,
+  payload,
 });
 
 export const wsConnectionSuccess = () => {

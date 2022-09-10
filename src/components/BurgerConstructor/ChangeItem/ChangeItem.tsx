@@ -8,14 +8,9 @@ import {
   ConstructorElement,
   DragIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import { IChangeItem } from "../../../services/types/data";
+import { IChangeItem, IChangeElem } from "../../../services/types/data";
 
-interface IChangeItems {
-  item: any;
-  index: number;
-}
-
-const ChangeItem: FC<IChangeItems> = ({ item, index }) => {
+const ChangeItem: FC<IChangeItem> = ({ item, index }) => {
   const ref = React.useRef(null);
 
   const dispatch = useDispatch();
@@ -28,7 +23,7 @@ const ChangeItem: FC<IChangeItems> = ({ item, index }) => {
     }),
   });
 
-  const deleteElement = (item: IChangeItem) => {
+  const deleteElement = (item: IChangeElem) => {
     dispatch({
       type: DELETE_ITEM,
       item,
@@ -75,7 +70,7 @@ const ChangeItem: FC<IChangeItems> = ({ item, index }) => {
 };
 
 ChangeItem.propTypes = {
-  item: PropTypes.object.isRequired,
+  //item: PropTypes.object.isRequired,
   index: PropTypes.number.isRequired,
 };
 

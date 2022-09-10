@@ -29,17 +29,22 @@ export interface IAddElem {
   id: string;
   index: string;
   name: string;
-  key: undefined | string;
+  key: string;
   price: number;
   src: string;
   type: string;
+  _id?: string;
+}
+
+export interface IAddElems {
+  payload: IAddElem;
 }
 
 export interface IChangeElem {
   count: number;
   id: string;
-  index: string;
-  key: string;
+  index?: string;
+  key?: string;
   name: string;
   price: number;
   src: string;
@@ -57,7 +62,7 @@ export interface INewElem {
 
 export interface IFeedItem {
   createAd: string;
-  ingredients: ReadonlyArray<string>;
+  ingredients: string[];
   name: string;
   number: number;
   status: string;
@@ -68,4 +73,19 @@ export interface IFeedItem {
 export interface IChangeItem {
   index: number;
   item: IChangeElem;
+}
+export interface LocationState {
+  background: any;
+}
+
+export interface IBun {
+  count: number;
+  id: string;
+  index: string;
+  key: string;
+  name: string;
+  price: number;
+  src: string;
+  type: string;
+  _id?: string;
 }

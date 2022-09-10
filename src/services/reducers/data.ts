@@ -12,13 +12,13 @@ import {
   GET_SERV_ORDER_FAILED,
   CHANGE_ITEM,
 } from "../constants/index";
-import { IIngr, IAddElem } from "../types/data";
+import { IIngr, IAddElem, IBun } from "../types/data";
 import { TIndexActions } from "../actions/index";
 
 type TIndexInitialState = {
   burgerData: ReadonlyArray<IIngr>;
   burgerConstructorItems: ReadonlyArray<IAddElem>;
-  bun: any;
+  bun: IBun;
   servOrder: null | number;
   isLoading: boolean;
   hasError: boolean;
@@ -33,7 +33,18 @@ type TIndexInitialState = {
 export const initialState: TIndexInitialState = {
   burgerData: [],
   burgerConstructorItems: [],
-  bun: {},
+  bun: {
+    count: 0,
+    id: "",
+    index: "",
+    key: "",
+    name: "",
+    price: 0,
+    src: "",
+    type: ",",
+    _id: "",
+  },
+  //думал что можно обойтись без начальных значений в объекте, но не нашел как. Можно было бы использовать здесь массив, но тогда пришлось бы видоизменять логику в конструкторе.
   servOrder: null,
   isLoading: false,
   hasError: false,
@@ -70,7 +81,6 @@ export const itemReducer = (
           return { ...state };
         }
       } else if (action.item.payload.type != "bun") {
-        //console.log(action.item.payload.type);
         return {
           ...state,
           burgerConstructorItems: [
@@ -78,7 +88,6 @@ export const itemReducer = (
             action.item.payload,
           ],
           burgerData: [...state.burgerData].map((item) => {
-            //console.log(action.item)
             if (item.type != "bun" && item._id === action.item.payload.id) {
               return { ...item, count: ++item.count };
             } else {
@@ -86,8 +95,6 @@ export const itemReducer = (
             }
           }),
         };
-      } else {
-        return { ...state, bun: action.item };
       }
       return {
         ...state,
@@ -114,7 +121,6 @@ export const itemReducer = (
       const deletetElement = state.burgerConstructorItems.find(
         (item) => item.index === action.item.index
       );
-
       return {
         ...state,
         burgerData: [...state.burgerData].map((item) =>
@@ -146,7 +152,17 @@ export const itemReducer = (
         servOrder: action.servOrder,
         servOrderRequest: false,
         burgerConstructorItems: [],
-        bun: {},
+        bun: {
+          count: 0,
+          id: "",
+          index: "",
+          key: "",
+          name: "",
+          price: 0,
+          src: "",
+          type: ",",
+          _id: "",
+        },
         burgerData: [...state.burgerData].map((item) => {
           return { ...item, count: 0 };
         }),

@@ -12,7 +12,7 @@ import {
   GET_SERV_ORDER_FAILED,
   CHANGE_ITEM,
 } from "../constants/index";
-import { IIngr, IDeleteIngr, IChangeElem, IAddElem } from "../types/data";
+import { IIngr, IDeleteIngr, IChangeElem, IAddElem, IBun } from "../types/data";
 import { AppThunk, AppDispatch } from "../types";
 
 export interface IOpenOrderModal {
@@ -23,12 +23,12 @@ export interface ICloseOrderModal {
 }
 export interface IAddItem {
   readonly type: typeof ADD_ITEM;
-  readonly item: any;
+  readonly item: { payload: IAddElem };
 }
 
 export interface IDeleteItem {
   readonly type: typeof DELETE_ITEM;
-  readonly item: any;
+  readonly item: IAddElem;
 }
 export interface IGetApiItemsSucces {
   readonly type: typeof GET_API_ITEMS_SUCCESS;
@@ -46,9 +46,9 @@ export interface IGetServOrderFailed {
 }
 export interface IChangeItem {
   readonly type: typeof CHANGE_ITEM;
-  readonly dragItem: any;
-  readonly dragIndex: any;
-  readonly hoverIndex: any;
+  readonly dragItem: IAddElem;
+  readonly dragIndex: number;
+  readonly hoverIndex: number;
 }
 export type TIndexActions =
   | IOpenOrderModal
@@ -67,7 +67,7 @@ export const OpenOrdarModal = (): IOpenOrderModal => ({
 export const CloseOrderModal = (): ICloseOrderModal => ({
   type: CLOSE_ORDER_MODAL,
 });
-export const DeleteItem = (item: ReadonlyArray<IDeleteIngr>): IDeleteItem => ({
+export const DeleteItem = (item: IAddElem): IDeleteItem => ({
   type: DELETE_ITEM,
   item,
 });
@@ -90,20 +90,20 @@ export const GetServOrderFailed = (): IGetServOrderFailed => ({
   type: GET_SERV_ORDER_FAILED,
 });
 export const ChangeItem = (
-  dragItem: any,
-  dragIndex: any,
-  hoverIndex: any
+  dragItem: IAddElem,
+  dragIndex: number,
+  hoverIndex: number
 ): IChangeItem => ({
   type: CHANGE_ITEM,
   dragItem,
   dragIndex,
   hoverIndex,
 });
-export const AddItem = (item: any): IAddItem => ({
+export const AddItem = (item: { payload: IAddElem }): IAddItem => ({
   type: ADD_ITEM,
   item,
 });
-export const addIngredient = (item: any) => {
+export const addIngredient = (item: IAddElem) => {
   const uuids = uuid();
   return {
     payload: { ...item, key: uuids },

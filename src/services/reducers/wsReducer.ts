@@ -21,7 +21,7 @@ const initialState: TWsInitialState = {
 
 export const wsReducer = (
   state = initialState,
-  action: any
+  action: TWsActions
 ): TWsInitialState => {
   switch (action.type) {
     case WS_CONNECTION_SUCCESS:
@@ -32,6 +32,8 @@ export const wsReducer = (
       };
 
     case WS_CONNECTION_ERROR:
+      console.log(action.payload);
+
       return {
         ...state,
         wsError: action.payload,

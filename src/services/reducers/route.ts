@@ -30,9 +30,9 @@ type TRouteState = {
   userResetPasswordSucces: boolean;
   userResetPasswordFailed: boolean;
   userAuth: boolean;
-  userAuthProfile: any;
-  newUserProfile: null | any;
-  user: object;
+  userAuthProfile: IRouteuserAuthProfile;
+  newUserProfile: null | IRouteuserAuthProfile;
+  user: IRouteuserAuthProfile;
 };
 
 export const routeState: TRouteState = {
@@ -49,12 +49,15 @@ export const routeState: TRouteState = {
   userResetPasswordSucces: false,
   userResetPasswordFailed: false,
   userAuth: false,
-  user: {},
+  user: { name: "", email: "", password: "" },
   userAuthProfile: { name: "", email: "", password: "" },
   newUserProfile: null,
 };
 
-export const routeReducer = (state = routeState, action: any): TRouteState => {
+export const routeReducer = (
+  state = routeState,
+  action: TRouteActions
+): TRouteState => {
   switch (action.type) {
     case USER_REGISTER_REQUEST: {
       return {

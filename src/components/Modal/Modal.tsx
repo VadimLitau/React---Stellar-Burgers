@@ -1,4 +1,5 @@
-import React, { FC, MouseEvent } from "react";
+import React, { FC, ReactNode } from "react";
+import ReactDOM from "react-dom";
 import PropTypes from "prop-types";
 import ModalStyle from "./Modal.module.css";
 import { useEffect } from "react";
@@ -8,13 +9,13 @@ import ModalOverlay from "./ModalOverlay/ModalOverlay";
 import { useParams } from "react-router-dom";
 
 interface IModal {
-  children: any;
+  children: ReactNode;
   title: string;
-  closeModal: any;
+  closeModal: () => void;
 }
 
 const Modal: FC<IModal> = ({ children, title, closeModal }) => {
-  const modalRoot: any = document.getElementById("react-modals");
+  const modalRoot = document.getElementById("react-modals");
 
   useEffect(() => {
     const handleEscClose = (evt: KeyboardEvent) => {
@@ -27,23 +28,25 @@ const Modal: FC<IModal> = ({ children, title, closeModal }) => {
       document.removeEventListener("keydown", handleEscClose);
     };
   }, [closeModal]);
-  return createPortal(
-    <>
-      <section>
-        <ModalOverlay closeModalOverlay={closeModal} />
-        <div className={ModalStyle.container}>
-          <div className={`${ModalStyle.text} pt-10 pr-10 pl-10`}>
-            <h1 className="text text_type_main-large">{title}</h1>
-            <button className={ModalStyle.button} onClick={closeModal}>
-              <CloseIcon type="primary" />
-            </button>
-          </div>
-          {children}
-        </div>
-      </section>
-    </>,
-    modalRoot
-  );
+  return modalRoot
+    ? ReactDOM.createPortal(
+        <>
+          <section>
+            <ModalOverlay closeModalOverlay={closeModal} />
+            <div className={ModalStyle.container}>
+              <div className={`${ModalStyle.text} pt-10 pr-10 pl-10`}>
+                <h1 className="text text_type_main-large">{title}</h1>
+                <button className={ModalStyle.button} onClick={closeModal}>
+                  <CloseIcon type="primary" />
+                </button>
+              </div>
+              {children}
+            </div>
+          </section>
+        </>,
+        modalRoot
+      )
+    : null;
 };
 //Хм, интерсно, спасибо, надо будет попробовать)))
 Modal.propTypes = {

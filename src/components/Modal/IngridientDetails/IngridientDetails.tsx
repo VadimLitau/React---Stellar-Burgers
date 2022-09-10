@@ -1,16 +1,11 @@
 import React, { useEffect } from "react";
-import PropTypes from "prop-types";
 import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import ItemStyle from "./IngridientDetails.module.css";
-import { useLocation } from "react-router-dom";
-import { useDispatch } from "react-redux";
-import { getBurgerDataRequest } from "../../../utils/Api";
-import { checkResponse } from "../../../utils/constants";
-import { getApiBurgerData } from "../../../services/actions";
 import { RootState } from "../../../services/types";
 export default function IngredientDetails() {
-  const { id }: any = useParams();
+  const { id }: { [x: string]: string } = useParams();
+
   const data = useSelector((store: RootState) => {
     return store.item.burgerData;
   });

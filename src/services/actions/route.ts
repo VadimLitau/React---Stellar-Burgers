@@ -27,10 +27,16 @@ import {
   UPDATE_USER_PROFILE,
 } from "../constants/route";
 import { AppDispatch, AppThunk } from "../types";
+import {
+  IUserRegister,
+  IUserForgotPass,
+  IUserResetPassword,
+  IRouteuserAuthProfile,
+} from "../types/route";
 
 export interface IUserRegisterSucces {
   readonly type: typeof USER_REGISTER_SUCCESS;
-  readonly data: any;
+  readonly data: IUserRegister;
 }
 export interface IUserRegisterRequest {
   readonly type: typeof USER_REGISTER_REQUEST;
@@ -40,7 +46,7 @@ export interface IUserRegisterFailed {
 }
 export interface IUserForgotSucces {
   readonly type: typeof USER_FORGOT_SUCCESS;
-  readonly data: any;
+  readonly data: IUserForgotPass;
 }
 export interface IUserForgotRequest {
   readonly type: typeof USER_FORGOT_REQUEST;
@@ -53,7 +59,7 @@ export interface IUserResetPasswordRequest {
 }
 export interface IUserResetPasswordSucces {
   readonly type: typeof USER_RESETPASSWORD_SUCCESS;
-  readonly data: any;
+  readonly data: IUserResetPassword;
 }
 export interface IUserResetPasswordFailed {
   readonly type: typeof USER_RESETPASSWORD_FAILED;
@@ -91,7 +97,9 @@ export type TRouteActions =
   | IUserLogout
   | IUpdateUserProfile;
 
-export const UserRegisterSucces = (data: any): IUserRegisterSucces => ({
+export const UserRegisterSucces = (
+  data: IUserRegister
+): IUserRegisterSucces => ({
   type: USER_REGISTER_SUCCESS,
   data,
 });
@@ -101,7 +109,7 @@ export const UserRegisterRequest = (): IUserRegisterRequest => ({
 export const UserRegisterFailed = (): IUserRegisterFailed => ({
   type: USER_REGISTER_FAILED,
 });
-export const UserForgotSucces = (data: any): IUserForgotSucces => ({
+export const UserForgotSucces = (data: IUserForgotPass): IUserForgotSucces => ({
   type: USER_FORGOT_SUCCESS,
   data,
 });
@@ -115,7 +123,7 @@ export const UserResetPasswordRequest = (): IUserResetPasswordRequest => ({
   type: USER_RESETPASSWORD_REQUEST,
 });
 export const UserResetPasswordSucces = (
-  data: any
+  data: IUserResetPassword
 ): IUserResetPasswordSucces => ({
   type: USER_RESETPASSWORD_SUCCESS,
   data,
@@ -174,6 +182,8 @@ export const userForgotPass: AppThunk = (userEmail: string) => {
     getForgotPass(userEmail)
       .then(checkResponse)
       .then((data) => {
+        console.log(data);
+
         dispatch(UserForgotSucces(data));
       })
       .catch((err) => {
@@ -193,6 +203,8 @@ export const userResetPass: AppThunk = (
     getResetPass(resetToken, resetPass)
       .then(checkResponse)
       .then((data) => {
+        console.log(data);
+
         dispatch(UserResetPasswordSucces(data));
       })
       .catch((err) => {
@@ -252,7 +264,7 @@ export const signOutUser: AppThunk = (token: string) => {
   };
 };
 
-export const getUserDate: AppThunk = (user: any) => {
+export const getUserDate: AppThunk = (user: IRouteuserAuthProfile) => {
   return function (dispatch: AppDispatch) {
     getUserRequest()
       .then(checkResponse)

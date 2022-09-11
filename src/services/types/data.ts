@@ -1,6 +1,7 @@
 export interface IIngr {
   calories: string | number;
   carbohydrates: string | number;
+  count: number;
   fat: string | number;
   image: string;
   image_large: string;
@@ -11,7 +12,6 @@ export interface IIngr {
   type: string;
   __v: number;
   _id: string;
-  count: number;
   id: string;
 }
 export interface IDeleteIngr {
@@ -61,13 +61,14 @@ export interface INewElem {
 }
 
 export interface IFeedItem {
-  createAd: string;
+  createdAt: string;
   ingredients: string[];
   name: string;
   number: number;
   status: string;
   updateAt: string;
   _id: string;
+  find: Function;
 }
 
 export interface IChangeItem {

@@ -5,27 +5,29 @@ import { useParams } from "react-router-dom";
 
 import { useSelector } from "react-redux";
 import { RootState } from "../../services/types";
+import { IFeedItem, IIngr } from "../../services/types/data";
 export default function FeedIdModal() {
-  const { id }: any = useParams();
+  const { id } = useParams<{ id: string }>();
+
   const burgerData = useSelector((store: RootState) => store.item.burgerData);
 
   const dataFeed = useSelector((store: RootState) => store.ws.messages);
 
   let price: number = 0;
   interface Iinfo {
-    data: null | any;
-    ingredientForModal: null | any;
-    ingredientForModalStatus: null | any;
-    ingredientForModalCreatedAt: string;
-    ingredientForModalIngredients: any;
+    data: IFeedItem | null;
+    ingredientForModal: IFeedItem | null;
+    ingredientForModalStatus: string | undefined;
+    ingredientForModalCreatedAt: string | undefined;
+    ingredientForModalIngredients: string[] | undefined;
     itemDay: string;
     now: Date;
-    ingrArr: any;
+    ingrArr: IIngr[] | never;
   }
   const info: Iinfo = {
     data: null,
     ingredientForModal: null,
-    ingredientForModalStatus: null,
+    ingredientForModalStatus: undefined,
     ingredientForModalCreatedAt: "",
     ingredientForModalIngredients: [],
     itemDay: "",
@@ -40,10 +42,14 @@ export default function FeedIdModal() {
 
   if (dataFeed.length > 0) {
     info.data = dataFeed[`${dataFeed.length - 1}`].orders;
-    info.ingredientForModal = info.data.find((ingr: any) => ingr._id === id);
-    info.ingredientForModalStatus = info.ingredientForModal.status;
-    info.ingredientForModalCreatedAt = info.ingredientForModal.createdAt;
-    info.ingredientForModalIngredients = info.ingredientForModal.ingredients;
+    info.ingredientForModal = info.data?.find(
+      (ingr: { _id: string }) => ingr._id === id
+    );
+
+    info.ingredientForModalStatus = info.ingredientForModal?.status;
+
+    info.ingredientForModalCreatedAt = info.ingredientForModal?.createdAt;
+    info.ingredientForModalIngredients = info.ingredientForModal?.ingredients;
   }
   if (info.ingredientForModalStatus === "done") {
     color.color = "#00CCCC";
@@ -56,18 +62,18 @@ export default function FeedIdModal() {
     color.name = "Готовится";
   }
   //Цыганская магия
-  const test = info.ingredientForModalIngredients.reduce(function (
+  const test = info.ingredientForModalIngredients?.reduce(function (
     acc: any,
-    el: any
+    el: string
   ) {
-    //console.log(el);
+    console.log(el);
     acc[el] = (acc[el] || 0) + 1;
     return acc;
   },
   []);
 
   const sum = burgerData.map((el) => {
-    const data = info.ingredientForModalIngredients.find(
+    const data = info.ingredientForModalIngredients?.find(
       (item: string) => el._id === item
     );
 
@@ -76,11 +82,11 @@ export default function FeedIdModal() {
     }
   }, 0);
 
-  info.ingrArr.forEach((item: any) => {
+  info.ingrArr.forEach((item: IIngr) => {
     price += test[item._id] * item.price;
   });
 
-  const time = info.ingredientForModalCreatedAt;
+  const time: string = info.ingredientForModalCreatedAt || "";
   const nowDay = info.now.getDate();
   const findT = time.indexOf("T");
   const findDay = time.slice(findT - 2, findT);
@@ -122,7 +128,7 @@ export default function FeedIdModal() {
             <p className="text text_type_main-medium mb-6">Состав:</p>
             <div>
               <ul className={`${feedIdStyle.list} pr-6 mb-10`}>
-                {info.ingrArr.map((item: any) => {
+                {info.ingrArr.map((item: IIngr) => {
                   //console.log(item._id);
                   return (
                     <li

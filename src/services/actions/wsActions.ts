@@ -4,6 +4,16 @@ import {
   WS_CONNECTION_CLOSED,
   WS_GET_MESSAGE,
 } from "../constants/wsActions";
+interface IFeedItem {
+  createAt: string;
+  ingredients: string[];
+  name: string;
+  number: number;
+  status: string;
+  updateAt: string;
+  _id: string;
+  find: Function;
+}
 export interface IWsConnectionSucces {
   readonly type: typeof WS_CONNECTION_SUCCESS;
 }
@@ -19,7 +29,7 @@ export interface IWsGetMessage {
   readonly message: string;
   readonly payload: {
     succes: boolean;
-    orders: any;
+    orders: IFeedItem;
     total: number;
     totalDay: number;
   };
@@ -42,7 +52,12 @@ export const WsConnectionClosed = (): IWsConnectionClosed => ({
 });
 export const WsGetMessage = (
   message: string,
-  payload: { succes: boolean; orders: any; total: number; totalDay: number }
+  payload: {
+    succes: boolean;
+    orders: IFeedItem;
+    total: number;
+    totalDay: number;
+  }
 ): IWsGetMessage => ({
   type: WS_GET_MESSAGE,
   message,
@@ -67,7 +82,7 @@ export const wsConnectionClosed = () => {
   };
 };
 
-export const wsGetMessage = (message: any) => {
+export const wsGetMessage = (message: string) => {
   return {
     type: WS_GET_MESSAGE,
     payload: message,

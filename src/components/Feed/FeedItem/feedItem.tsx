@@ -5,20 +5,20 @@ import feedItemStyle from "./feedItem.module.css";
 import { useLocation, Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import { RootState } from "../../../services/types";
-import { IIngr } from "../../../services/types/data";
+import { IIngr, IFeedItem } from "../../../services/types/data";
 
 interface IFeedItemImage {
-  data: any;
+  data: IIngr;
   number?: any;
-  lengthArr?: any;
-  key?: any;
+  lengthArr?: number;
+  key: string;
 }
 export const FeedItemImage: FC<IFeedItemImage> = ({
   data,
   number,
-  lengthArr,
+  lengthArr = 0,
 }) => {
-  let count = lengthArr - number;
+  let count: number = lengthArr - number;
 
   return (
     <>
@@ -64,17 +64,18 @@ export const FeedItemImage: FC<IFeedItemImage> = ({
     </>
   );
 };
-interface IFeedItem {
-  item: any;
+interface IFeedItems {
+  item: IFeedItem;
   key: string;
   profile?: string;
 }
-const FeedItem: FC<IFeedItem> = (item) => {
-  //console.log(item);
+const FeedItem: FC<IFeedItems> = (item) => {
   const location = useLocation();
   const burgerData = useSelector((store: RootState) => store.item.burgerData);
   const ingredients = item.item.ingredients;
-  const ingrArr: object[] = [];
+
+  console.log(ingredients);
+  const ingrArr: IIngr[] = [];
   const info = {
     itemDay: "",
     time: item.item.createdAt,
@@ -87,7 +88,7 @@ const FeedItem: FC<IFeedItem> = (item) => {
 
   let price: number = 0;
   let countImage: number = 0;
-  let test: never[];
+  let test: any;
 
   const nowDay = info.now.getDate();
   const findT = info.time.indexOf("T");
@@ -96,15 +97,11 @@ const FeedItem: FC<IFeedItem> = (item) => {
 
   const sum = burgerData.map((el: IIngr) => {
     const data = ingredients.find((item: string) => el._id === item);
-    test = ingredients.reduce(function (
-      acc: { [x: string]: number },
-      data: string
-    ) {
+    test = ingredients.reduce(function (acc: any, data: string) {
       //console.log(acc);
       acc[data] = (acc[data] || 0) + 1;
       return acc;
-    },
-    []);
+    }, []);
 
     if (data) {
       ingrArr.push(el);
@@ -154,7 +151,9 @@ const FeedItem: FC<IFeedItem> = (item) => {
           </p>
           <div className={feedItemStyle.wrapPrice}>
             <div className={feedItemStyle.price}>
-              {ingrArr.reverse().map((item: any) => {
+              {ingrArr.reverse().map((item: IIngr) => {
+                console.log(item);
+
                 price += test[item._id] * item.price;
                 if (ingrArr.length <= 6) {
                   return <FeedItemImage data={item} key={item._id} />;
@@ -180,13 +179,13 @@ const FeedItem: FC<IFeedItem> = (item) => {
     </Link>
   );
 };
-FeedItem.propTypes = {
-  item: PropTypes.object.isRequired,
-};
+// FeedItem.propTypes = {
+//   item: PropTypes.object.isRequired,
+// };
 
-FeedItemImage.propTypes = {
-  data: PropTypes.object.isRequired,
-  number: PropTypes.number,
-  lengthArr: PropTypes.number,
-};
+// FeedItemImage.propTypes = {
+//   // data: PropTypes.object.isRequired,
+//   number: PropTypes.number,
+//   lengthArr: PropTypes.number,
+// };
 export default FeedItem;

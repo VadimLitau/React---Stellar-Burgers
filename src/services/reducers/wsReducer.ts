@@ -48,6 +48,8 @@ export const wsReducer = (
       };
 
     case WS_GET_MESSAGE:
+      console.log(action.payload);
+
       return {
         ...state,
         messages: state.messages.length

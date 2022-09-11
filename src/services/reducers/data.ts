@@ -134,7 +134,7 @@ export const itemReducer = (
     case GET_API_ITEMS_SUCCESS: {
       return {
         ...state,
-        burgerData: action.burgerData.map((item: any) => {
+        burgerData: action.burgerData.map((item: IIngr) => {
           return { ...item, count: 0 };
         }),
       };

@@ -88,7 +88,7 @@ const FeedItem: FC<IFeedItems> = (item) => {
 
   let price: number = 0;
   let countImage: number = 0;
-  let test: any;
+  let test: { [x: string]: number };
 
   const nowDay = info.now.getDate();
   const findT = info.time.indexOf("T");

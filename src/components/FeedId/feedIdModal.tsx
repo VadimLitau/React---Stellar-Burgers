@@ -62,15 +62,12 @@ export default function FeedIdModal() {
     color.name = "Готовится";
   }
   //Цыганская магия
-  const test = info.ingredientForModalIngredients?.reduce(function (
-    acc: any,
-    el: string
-  ) {
-    console.log(el);
-    acc[el] = (acc[el] || 0) + 1;
-    return acc;
-  },
-  []);
+  const test: { [x: string]: number } =
+    info.ingredientForModalIngredients?.reduce(function (acc: any, el: string) {
+      console.log(el);
+      acc[el] = (acc[el] || 0) + 1;
+      return acc;
+    }, []);
 
   const sum = burgerData.map((el) => {
     const data = info.ingredientForModalIngredients?.find(

@@ -32,8 +32,6 @@ export const wsReducer = (
       };
 
     case WS_CONNECTION_ERROR:
-      console.log(action.payload);
-
       return {
         ...state,
         wsError: action.payload,
@@ -48,8 +46,6 @@ export const wsReducer = (
       };
 
     case WS_GET_MESSAGE:
-      console.log(action.payload);
-
       return {
         ...state,
         messages: state.messages.length

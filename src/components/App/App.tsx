@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, FC } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Constructor from "../../pages/constructor";
 import Login from "../../pages/login";
@@ -27,7 +27,7 @@ import AppHeader from "../AppHeader/AppHeader";
 import { RootState } from "../../services/types";
 import { LocationState } from "../../services/types/data";
 
-function App() {
+const App: FC = () => {
   const history = useHistory();
   const userAuth = useSelector(
     (store: RootState) => store.route.userAuthorizationSuccess
@@ -143,6 +143,6 @@ function App() {
       )}
     </>
   );
-}
+};
 
 export default App;

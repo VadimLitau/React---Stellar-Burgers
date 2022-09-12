@@ -85,14 +85,11 @@ export default function FeedId() {
     ? (info.itemDay = "2 дня назад")
     : (info.itemDay = "Архивный заказ");
 
-  const test = info.ingredientForModalIngredients?.reduce(function (
-    acc: any,
-    el: string
-  ) {
-    acc[el] = (acc[el] || 0) + 1;
-    return acc;
-  },
-  []);
+  const test: { [x: string]: number } =
+    info.ingredientForModalIngredients?.reduce(function (acc: any, el: string) {
+      acc[el] = (acc[el] || 0) + 1;
+      return acc;
+    }, []);
   //console.log(test);
   const sum = burgerData.map((el) => {
     const data = info.ingredientForModalIngredients?.find(
@@ -103,7 +100,7 @@ export default function FeedId() {
     }
   }, 0);
 
-  info.ingrArr.forEach((item: any) => {
+  info.ingrArr.forEach((item: IIngr) => {
     price += test[item._id] * item.price;
   });
   return (

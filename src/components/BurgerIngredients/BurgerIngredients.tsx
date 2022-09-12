@@ -44,7 +44,6 @@ function BurgerIngredients() {
       : setCurrent("main");
   };
   /*на мой взггляд это очень топорное решение, привязанное к конкретному кол-ву элементов. Увы, подругому я не смог =(*/
-  //console.log(location)
   return (
     <>
       <section className={mainStyle.head}>

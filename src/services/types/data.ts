@@ -76,7 +76,7 @@ export interface IChangeItem {
   item: IChangeElem;
 }
 export interface LocationState {
-  background: any;
+  background?: any;
 }
 
 export interface IBun {

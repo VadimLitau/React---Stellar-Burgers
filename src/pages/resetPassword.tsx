@@ -28,7 +28,7 @@ function Reset() {
       />
     );
   }
-  console.log(state.route.userForgotPasswordSuccess);
+  //console.log(state.route.userForgotPasswordSuccess);
   if (!state.route.userForgotPasswordSuccess) {
     return (
       <Redirect

@@ -41,7 +41,7 @@ export default function FeedIdModal() {
 
   if (dataFeed.length > 0) {
     info.data = dataFeed[`${dataFeed.length - 1}`].orders;
-    console.log(info.data);
+    //console.log(info.data);
 
     info.ingredientForModal = info.data?.find(
       (ingr: { _id: string }) => ingr._id === id

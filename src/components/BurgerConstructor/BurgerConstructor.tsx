@@ -78,7 +78,7 @@ export default function BurgerConstructor() {
 
   const getOrder = () => {
     if (!authUser) {
-      console.log(!authUser);
+      //console.log(!authUser);
       return history.replace("/login");
     } else {
       dispatch(getServOrder(orderId));

@@ -50,6 +50,8 @@ export default function FeedId() {
     info.ingredientForModal = info.data?.find(
       (ingr: { _id: string }) => ingr._id === id
     );
+    //console.log(info.ingredientForModal);
+
     info.ingredientForModalStatus = info.ingredientForModal?.status;
     info.ingredientForModalCreatedAt = info.ingredientForModal?.createdAt;
     info.ingredientForModalIngredients = info.ingredientForModal?.ingredients;

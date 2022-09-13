@@ -7,7 +7,7 @@ interface IFeedProfile {
   data: Array<IFeedItem>;
 }
 const FeedProfile: FC<IFeedProfile> = ({ data }) => {
-  console.log(data);
+  //console.log(data);
 
   return (
     <section className={feedStyle.head}>

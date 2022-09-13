@@ -147,7 +147,7 @@ const FeedItem: FC<IFeedItems> = (item) => {
           <div className={feedItemStyle.wrapPrice}>
             <div className={feedItemStyle.price}>
               {ingrArr.reverse().map((item) => {
-                console.log(item);
+                //console.log(item);
 
                 price += test[item._id] * item.price;
                 if (ingrArr.length <= 6) {

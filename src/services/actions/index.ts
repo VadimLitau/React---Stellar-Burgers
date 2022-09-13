@@ -120,7 +120,7 @@ export const getServOrder: AppThunk = (orderId: number) => {
         dispatch(GetServOrderSuccess(data.order.number));
       })
       .catch((err) => {
-        console.log(err);
+        //console.log(err);
         dispatch(GetServOrderFailed());
       });
   };
@@ -134,7 +134,7 @@ export const getApiBurgerData: AppThunk = () => {
         dispatch(GetApiItemsSucces(data.data));
       })
       .catch((err) => {
-        console.log(err);
+        //console.log(err);
       });
   };
 };

@@ -1,8 +1,10 @@
 import {
+  WS_CONNECTION_FINISH,
   WS_CONNECTION_SUCCESS,
   WS_CONNECTION_ERROR,
   WS_CONNECTION_CLOSED,
   WS_GET_MESSAGE,
+  WS_CONNECTION_START,
 } from "../constants/wsActions";
 interface IFeedItem {
   createAt: string;
@@ -33,6 +35,14 @@ export interface IWsGetMessage {
     total: number;
     totalDay: number;
   };
+}
+export interface IWsActions {
+  wsInit: typeof WS_CONNECTION_START;
+  wsFinish: typeof WS_CONNECTION_FINISH;
+  onOpen: typeof wsConnectionSuccess;
+  onClose: typeof wsConnectionClosed;
+  onError: typeof wsConnectionError;
+  onMessage: typeof wsGetMessage;
 }
 export type TWsActions =
   | IWsConnectionSucces

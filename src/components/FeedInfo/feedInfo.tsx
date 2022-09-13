@@ -1,11 +1,10 @@
 import React from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { RootState } from "../../services/types";
+import { useSelector } from "../../services/hooks";
 import feedInfoStyle from "./feedInfo.module.css";
 import { IFeedItem } from "../../services/types/data";
 export default function FeedInfo() {
-  const dataFeed = useSelector((store: RootState) => store.ws.messages);
-  let data;
+  const dataFeed = useSelector((store) => store.ws.messages);
+  let data: IFeedItem[];
   let total = 0;
   let totalDay = 0;
   let feedDone: number[] = [];
@@ -16,9 +15,7 @@ export default function FeedInfo() {
     data = dataFeed[`${dataFeed.length - 1}`].orders;
     total = dataFeed[`${dataFeed.length - 1}`].total;
     totalDay = dataFeed[`${dataFeed.length - 1}`].totalToday;
-    data.forEach((item: IFeedItem) => {
-      //console.log(item);
-
+    data.forEach((item) => {
       if (item.status === "done") {
         feedDone.push(item.number);
       } else {
@@ -42,7 +39,7 @@ export default function FeedInfo() {
             Готовы:
           </h2>
           <div className={`${feedInfoStyle.listDone}`}>
-            {feedDone.map((item: number) => {
+            {feedDone.map((item) => {
               return (
                 <p
                   className={`${feedInfoStyle.listItem} text text text_type_digits-${textSizeDone} pt-1 pb-1`}
@@ -61,7 +58,7 @@ export default function FeedInfo() {
             В работе:
           </h2>
           <div className={`${feedInfoStyle.listWork}`}>
-            {feedWork.map((item: number) => {
+            {feedWork.map((item) => {
               return (
                 <p
                   className={`${feedInfoStyle.listItem} text text_type_digits-${textSizeWork} pt-1 pb-1`}

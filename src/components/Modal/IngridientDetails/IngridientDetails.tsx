@@ -1,12 +1,11 @@
 import React, { useEffect } from "react";
-import { useSelector } from "react-redux";
+import { useSelector } from "../../../services/hooks";
 import { useParams } from "react-router-dom";
 import ItemStyle from "./IngridientDetails.module.css";
-import { RootState } from "../../../services/types";
 export default function IngredientDetails() {
   const { id }: { [x: string]: string } = useParams();
 
-  const data = useSelector((store: RootState) => {
+  const data = useSelector((store) => {
     return store.item.burgerData;
   });
   const ingredientForModal = data.find((ingr) => ingr._id === id);

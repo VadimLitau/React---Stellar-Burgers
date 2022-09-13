@@ -1,8 +1,7 @@
 import React, { useEffect } from "react";
 import feedStyle from "./feed.module.css";
 import FeedItem from "./FeedItem/feedItem";
-import { useDispatch, useSelector } from "react-redux";
-import { v4 as uuidv4 } from "uuid";
+import { useSelector } from "../../services/hooks";
 import { RootState } from "../../services/types";
 import { IFeedItem } from "../../services/types/data";
 export default function Feed() {

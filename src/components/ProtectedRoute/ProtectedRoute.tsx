@@ -1,14 +1,11 @@
-import React, { useEffect, useState, ReactNode, FC } from "react";
+import React, { useEffect, useState, FC } from "react";
 import { useAuth } from "../../services/auth";
-import { Redirect, Route, useLocation } from "react-router-dom";
-import { getCookie } from "../../utils/utils";
-import { useSelector } from "react-redux";
-interface IProtectedRoute {
-  children: ReactNode;
-  path: string;
-  exact: boolean;
-}
-export const ProtectedRoute: FC<IProtectedRoute> = ({ children, ...rest }) => {
+import { Redirect, Route, RouteProps, useLocation } from "react-router-dom";
+
+export const ProtectedRoute: FC<RouteProps & { children: React.ReactNode }> = ({
+  children,
+  ...rest
+}) => {
   const location = useLocation();
   let { getUser, ...auth } = useAuth();
   const [isUserLoaded, setUserLoaded] = useState(false);

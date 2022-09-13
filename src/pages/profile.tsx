@@ -7,7 +7,7 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import mainStyle from "./main.module.css";
 import ProfileStyle from "./profile.module.css";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch, useSelector } from "../services/hooks";
 import { useAuth } from "../services/auth";
 import { updateUserProfile } from "../services/actions/route";
 import FeedProfile from "../components/FeedProfile/feedProfile";
@@ -19,10 +19,9 @@ import {
 import useForm from "../hooks/useForm";
 
 import { getCookie } from "../utils/utils";
-import { RootState } from "../services/types";
 function ProfileForm() {
   const dispatch = useDispatch();
-  const state = useSelector((store: RootState) => store);
+  const state = useSelector((store) => store);
   const userProfile = state.route.userAuthProfile;
   const inputRefInput = React.useRef<HTMLInputElement>(null);
   const [values, handleChange] = useForm();
@@ -88,7 +87,7 @@ function ProfileForm() {
 
 function Profile() {
   const dispatch = useDispatch();
-  const state = useSelector((store: RootState) => store);
+  const state = useSelector((store) => store);
   const history = useHistory();
   const auth = useAuth();
   const handleClickLogout = useCallback(
@@ -127,7 +126,7 @@ function Profile() {
       dispatch({ type: WS_CONNECTION_CLOSED, payload: "" });
     };
   }, [userProfile]);
-  const dataFeed = useSelector((store: RootState) => store.ws.messages);
+  const dataFeed = useSelector((store) => store.ws.messages);
 
   if (dataFeed.length > 0) {
     //console.log(dataFeed);

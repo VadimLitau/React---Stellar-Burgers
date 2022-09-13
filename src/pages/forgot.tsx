@@ -6,12 +6,11 @@ import {
 import mainStyle from "./main.module.css";
 import { Link } from "react-router-dom";
 import { userForgotPass } from "../services/actions/route";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch, useSelector } from "../services/hooks";
 import { Redirect } from "react-router-dom";
 import useForm from "../hooks/useForm";
-import { RootState } from "../services/types";
 function Forgot() {
-  const state = useSelector((store: RootState) => store);
+  const state = useSelector((store) => store);
   const dispatch = useDispatch();
   const [values, handleChange] = useForm();
 

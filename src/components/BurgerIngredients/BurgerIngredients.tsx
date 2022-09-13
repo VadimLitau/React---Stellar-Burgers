@@ -2,10 +2,9 @@ import React, { useState } from "react";
 import mainStyle from "./BurgerIngredients.module.css";
 import tabStyle from "./Tab/Tab.module.css";
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
-import { useSelector } from "react-redux";
+import { useSelector } from "../../services/hooks";
 import Ingredient from "./Ingredient/Ingredient";
 import { v4 as uuidv4 } from "uuid";
-import { RootState } from "../../services/types";
 import { INewElem } from "../../services/types/data";
 
 function BurgerIngredients() {
@@ -14,7 +13,7 @@ function BurgerIngredients() {
   const handleClick = (evt: string) => {
     setCurrent(evt);
   };
-  const data = useSelector((store: RootState) => store.item.burgerData);
+  const data = useSelector((store) => store.item.burgerData);
 
   const [state, setState] = useState({ overlay: false, ingredient: {} });
 
@@ -34,9 +33,9 @@ function BurgerIngredients() {
   const openModal = (item: INewElem) => {
     setState({ ...state, overlay: true, ingredient: item });
   };
-
-  const ingridietScroll = (evt: any) => {
-    const scroll = evt.target.scrollTop;
+  //Зараза...я пытался применить такую типизацию, но упустил момент с currentTarget. Спасибо =)
+  const ingridietScroll = (evt: React.UIEvent<HTMLDivElement, UIEvent>) => {
+    const scroll = evt.currentTarget.scrollTop;
     scroll <= 260
       ? setCurrent("bun")
       : scroll <= 1200
@@ -65,7 +64,7 @@ function BurgerIngredients() {
           <section className={mainStyle.headIngridient}>
             <p className={`text text_type_main-medium mt-10`}>Булки</p>
             <ul className={`${mainStyle.itemIngridient} ml-4 mr-4`}>
-              {resultBun.map((item: INewElem) => (
+              {resultBun.map((item) => (
                 <Ingredient
                   type={item.type}
                   count={item.count}
@@ -82,7 +81,7 @@ function BurgerIngredients() {
           <section className={mainStyle.headIngridient}>
             <p className={`text text_type_main-medium mt-10`}>Начинки</p>
             <ul className={`${mainStyle.itemIngridient} ml-4 mr-4`}>
-              {resultMain.map((item: INewElem) => (
+              {resultMain.map((item) => (
                 <Ingredient
                   index={uuidv4()}
                   type={item.type}
@@ -100,7 +99,7 @@ function BurgerIngredients() {
           <section className={mainStyle.headIngridient}>
             <p className={`text text_type_main-medium mt-10`}>Соусы</p>
             <ul className={`${mainStyle.itemIngridient} ml-4 mr-4`}>
-              {resultSauce.map((item: INewElem) => (
+              {resultSauce.map((item) => (
                 <Ingredient
                   index={uuidv4()}
                   type={item.type}

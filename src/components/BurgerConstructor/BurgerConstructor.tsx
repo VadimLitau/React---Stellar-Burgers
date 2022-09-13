@@ -7,7 +7,7 @@ import {
 import Modal from "../Modal/Modal";
 import OrderDetails from "../Modal/OrderDetails/OrderDetails";
 import { ConstructorElement } from "@ya.praktikum/react-developer-burger-ui-components";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch, useSelector } from "../../services/hooks";
 import { addIngredient } from "../../services/actions";
 import {
   OPEN_ORDER_MODAL,
@@ -18,7 +18,6 @@ import { useDrop } from "react-dnd";
 import { getServOrder } from "../../services/actions/index";
 import ChangeItem from "./ChangeItem/ChangeItem";
 import { useHistory } from "react-router-dom";
-import { RootState } from "../../services/types";
 import { IAddElems, IAddElem } from "../../services/types/data";
 interface IModalLoading {
   load?: boolean;
@@ -52,13 +51,11 @@ export const ModalLoading: FC<IModalLoading> = ({ load, error }) => {
 
 export default function BurgerConstructor() {
   const history = useHistory();
-  const state = useSelector((store: RootState) => store);
+  const state = useSelector((store) => store);
   const burgerConstructorItems = useSelector(
-    (store: RootState) => store.item.burgerConstructorItems
+    (store) => store.item.burgerConstructorItems
   );
-  const authUser = useSelector(
-    (store: RootState) => store.route.userAuthorizationSuccess
-  );
+  const authUser = useSelector((store) => store.route.userAuthorizationSuccess);
   const orderOverlay = state.item.overlay;
   const dispatch = useDispatch();
 

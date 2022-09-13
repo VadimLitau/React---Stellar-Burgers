@@ -6,13 +6,12 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import mainStyle from "./main.module.css";
 import { userResetPass } from "../services/actions/route";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch, useSelector } from "../services/hooks";
 import { Link, Redirect } from "react-router-dom";
 import useForm from "../hooks/useForm";
-import { RootState } from "../services/types";
 
 function Reset() {
-  const state = useSelector((store: RootState) => store);
+  const state = useSelector((store) => store);
   const [values, handleChange] = useForm();
   const dispatch = useDispatch();
   const onClickToken = (e: FormEvent) => {

@@ -1,6 +1,4 @@
 import { combineReducers } from "redux";
-//import { routeReducer } from "./route";
-//import { wsReducer } from "./wsReducer";
 import {
   OPEN_ORDER_MODAL,
   DELETE_ITEM,
@@ -134,7 +132,7 @@ export const itemReducer = (
     case GET_API_ITEMS_SUCCESS: {
       return {
         ...state,
-        burgerData: action.burgerData.map((item: IIngr) => {
+        burgerData: action.burgerData.map((item) => {
           return { ...item, count: 0 };
         }),
       };

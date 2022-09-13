@@ -1,19 +1,18 @@
 import React, { useEffect } from "react";
 import feedIdStyle from "./feedId.module.css";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch, useSelector } from "../../services/hooks";
 import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useParams } from "react-router-dom";
 import {
   WS_CONNECTION_START,
   WS_CONNECTION_CLOSED,
 } from "../../services/constants/wsActions";
-import { RootState } from "../../services/types";
 import { IFeedItem, IIngr } from "../../services/types/data";
 
 export default function FeedId() {
   const { id } = useParams<{ id: string }>();
   const dispatch = useDispatch();
-  const burgerData = useSelector((store: RootState) => store.item.burgerData);
+  const burgerData = useSelector((store) => store.item.burgerData);
   //console.log(id);
   useEffect(() => {
     if (burgerData.length) {
@@ -23,13 +22,13 @@ export default function FeedId() {
       dispatch({ type: WS_CONNECTION_CLOSED, payload: "" });
     };
   }, [burgerData]);
-  const dataFeed = useSelector((store: RootState) => store.ws.messages);
+  const dataFeed = useSelector((store) => store.ws.messages);
   interface IInfo {
     data: IFeedItem | null;
     ingredientForModal: IFeedItem | null;
     ingredientForModalStatus: string | undefined;
     ingredientForModalCreatedAt: string | undefined;
-    ingredientForModalIngredients: string[] | undefined;
+    ingredientForModalIngredients: any[] | undefined;
     itemDay: string;
     now: Date;
     ingrArr: IIngr[] | never;
@@ -85,22 +84,21 @@ export default function FeedId() {
     ? (info.itemDay = "2 дня назад")
     : (info.itemDay = "Архивный заказ");
 
-  const test: { [x: string]: number } =
-    info.ingredientForModalIngredients?.reduce(function (acc: any, el: string) {
-      acc[el] = (acc[el] || 0) + 1;
-      return acc;
-    }, []);
+  const test = info.ingredientForModalIngredients?.reduce(function (acc, el) {
+    acc[el] = (acc[el] || 0) + 1;
+    return acc;
+  }, []);
   //console.log(test);
   const sum = burgerData.map((el) => {
     const data = info.ingredientForModalIngredients?.find(
-      (item: string) => el._id === item
+      (item) => el._id === item
     );
     if (data) {
       info.ingrArr.push(el);
     }
   }, 0);
 
-  info.ingrArr.forEach((item: IIngr) => {
+  info.ingrArr.forEach((item) => {
     price += test[item._id] * item.price;
   });
   return (
@@ -132,7 +130,7 @@ export default function FeedId() {
             <p className="text text_type_main-medium mb-6">Состав:</p>
             <div>
               <ul className={`${feedIdStyle.list} pr-6 mb-10`}>
-                {info.ingrArr.map((item: IIngr) => {
+                {info.ingrArr.map((item) => {
                   //console.log(item);
                   return (
                     <li

@@ -1,10 +1,8 @@
 import React, { FC } from "react";
-import { useSelector } from "react-redux";
+import { useSelector } from "../../../services/hooks";
 import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import feedItemStyle from "./feedItem.module.css";
 import { useLocation, Link } from "react-router-dom";
-import PropTypes from "prop-types";
-import { RootState } from "../../../services/types";
 import { IIngr, IFeedItem } from "../../../services/types/data";
 
 interface IFeedItemImage {
@@ -71,10 +69,8 @@ interface IFeedItems {
 }
 const FeedItem: FC<IFeedItems> = (item) => {
   const location = useLocation();
-  const burgerData = useSelector((store: RootState) => store.item.burgerData);
-  const ingredients = item.item.ingredients;
-
-  console.log(ingredients);
+  const burgerData = useSelector((store) => store.item.burgerData);
+  const ingredients: any[] | undefined = item.item.ingredients;
   const ingrArr: IIngr[] = [];
   const info = {
     itemDay: "",
@@ -95,10 +91,9 @@ const FeedItem: FC<IFeedItems> = (item) => {
   const findDay = info.time.slice(findT - 2, findT);
   const findTime = info.time.slice(findT + 1, findT + 6);
 
-  const sum = burgerData.map((el: IIngr) => {
-    const data = ingredients.find((item: string) => el._id === item);
-    test = ingredients.reduce(function (acc: any, data: string) {
-      //console.log(acc);
+  const sum = burgerData.map((el) => {
+    const data = ingredients.find((item) => el._id === item);
+    test = ingredients?.reduce(function (acc, data) {
       acc[data] = (acc[data] || 0) + 1;
       return acc;
     }, []);
@@ -151,7 +146,7 @@ const FeedItem: FC<IFeedItems> = (item) => {
           </p>
           <div className={feedItemStyle.wrapPrice}>
             <div className={feedItemStyle.price}>
-              {ingrArr.reverse().map((item: IIngr) => {
+              {ingrArr.reverse().map((item) => {
                 console.log(item);
 
                 price += test[item._id] * item.price;

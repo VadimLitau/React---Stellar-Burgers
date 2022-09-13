@@ -1,8 +1,7 @@
 import React, { ReactNode, FC } from "react";
 import { useContext, createContext } from "react";
 import { userAuthorization, getUserDate, signOutUser } from "./actions/route";
-import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "./types";
+import { useDispatch, useSelector } from "../services/hooks";
 
 const AuthContext: any = createContext(undefined);
 interface IProvideAuth {
@@ -22,7 +21,7 @@ export function useAuth(): any {
 
 export function useProvideAuth() {
   const dispatch = useDispatch();
-  const user = useSelector((store: RootState) => {
+  const user = useSelector((store) => {
     return store.route.userAuthProfile;
   });
 

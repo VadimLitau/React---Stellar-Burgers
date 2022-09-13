@@ -1,5 +1,5 @@
 import React, { useEffect, useState, FC } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch, useSelector } from "../../services/hooks";
 import Constructor from "../../pages/constructor";
 import Login from "../../pages/login";
 import Profile from "../../pages/profile";
@@ -24,14 +24,11 @@ import { useAuth } from "../../services/auth";
 import { getUserDate } from "../../services/actions/route";
 import { getApiBurgerData } from "../../services/actions";
 import AppHeader from "../AppHeader/AppHeader";
-import { RootState } from "../../services/types";
 import { LocationState } from "../../services/types/data";
 
 const App: FC = () => {
   const history = useHistory();
-  const userAuth = useSelector(
-    (store: RootState) => store.route.userAuthorizationSuccess
-  );
+  const userAuth = useSelector((store) => store.route.userAuthorizationSuccess);
   const auth = useAuth();
   const dispatch = useDispatch();
   React.useEffect(() => {
@@ -54,7 +51,7 @@ const App: FC = () => {
     history.goBack();
   }
 
-  const dataFeed = useSelector((store: RootState) => store.ws.messages);
+  const dataFeed = useSelector((store) => store.ws.messages);
   const [data, setData] = useState();
 
   useEffect(() => {

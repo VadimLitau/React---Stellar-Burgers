@@ -1,7 +1,7 @@
 import React, { FC } from "react";
 import PropTypes from "prop-types";
 import { useDrop, useDrag } from "react-dnd";
-import { useDispatch } from "react-redux";
+import { useDispatch } from "../../../services/hooks";
 import { DELETE_ITEM, CHANGE_ITEM } from "../../../services/constants/index";
 import ChangeStyle from "./ChangeItem.module.css";
 import {

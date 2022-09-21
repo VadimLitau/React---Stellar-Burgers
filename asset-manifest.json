@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/React-Stellar-Burgers/static/css/main.fefdb50d.css",
-    "main.js": "/React-Stellar-Burgers/static/js/main.9a10f556.js",
+    "main.js": "/React-Stellar-Burgers/static/js/main.ad089a61.js",
     "static/js/787.2b4cbca8.chunk.js": "/React-Stellar-Burgers/static/js/787.2b4cbca8.chunk.js",
     "static/media/JetBrainsMono-Bold.woff": "/React-Stellar-Burgers/static/media/JetBrainsMono-Bold.3914674f1cb2335acf26.woff",
     "static/media/JetBrainsMono-Regular.woff": "/React-Stellar-Burgers/static/media/JetBrainsMono-Regular.f52bee61d00ce995b89f.woff",
@@ -13,11 +13,11 @@
     "static/media/done-icon.svg": "/React-Stellar-Burgers/static/media/done-icon.93d96e3dc0b871492f5659af50a8458e.svg",
     "index.html": "/React-Stellar-Burgers/index.html",
     "main.fefdb50d.css.map": "/React-Stellar-Burgers/static/css/main.fefdb50d.css.map",
-    "main.9a10f556.js.map": "/React-Stellar-Burgers/static/js/main.9a10f556.js.map",
+    "main.ad089a61.js.map": "/React-Stellar-Burgers/static/js/main.ad089a61.js.map",
     "787.2b4cbca8.chunk.js.map": "/React-Stellar-Burgers/static/js/787.2b4cbca8.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.fefdb50d.css",
-    "static/js/main.9a10f556.js"
+    "static/js/main.ad089a61.js"
   ]
 }

@@ -15,6 +15,8 @@ export const socketMiddleware = (
         wsActions;
 
       if (type === wsInit) {
+        console.log(wsUrl);
+
         socket = new WebSocket(`${wsUrl}${payload}`);
       }
       if (socket && type === onClose) {

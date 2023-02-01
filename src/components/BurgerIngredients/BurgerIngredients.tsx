@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { memo, useMemo, useState} from "react";
 import mainStyle from "./BurgerIngredients.module.css";
 import tabStyle from "./Tab/Tab.module.css";
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
@@ -8,7 +8,6 @@ import { v4 as uuidv4 } from "uuid";
 import { INewElem } from "../../services/types/data";
 
 function BurgerIngredients() {
-  // console.log(BurgerIngredients)
   const [current, setCurrent] = useState("bun");
   const handleClick = (evt: string) => {
     setCurrent(evt);
@@ -17,15 +16,15 @@ function BurgerIngredients() {
 
   const [state, setState] = useState({ overlay: false, ingredient: {} });
 
-  const resultBun = React.useMemo(
+  const resultBun = useMemo(
     () => data.filter((element) => element.type === "bun"),
     [data]
   );
-  const resultMain = React.useMemo(
+  const resultMain = useMemo(
     () => data.filter((element) => element.type === "main"),
     [data]
   );
-  const resultSauce = React.useMemo(
+  const resultSauce = useMemo(
     () => data.filter((element) => element.type === "sauce"),
     [data]
   );
@@ -33,7 +32,6 @@ function BurgerIngredients() {
   const openModal = (item: INewElem) => {
     setState({ ...state, overlay: true, ingredient: item });
   };
-  //Зараза...я пытался применить такую типизацию, но упустил момент с currentTarget. Спасибо =)
   const ingridietScroll = (evt: React.UIEvent<HTMLDivElement, UIEvent>) => {
     const scroll = evt.currentTarget.scrollTop;
     scroll <= 260
@@ -42,7 +40,6 @@ function BurgerIngredients() {
       ? setCurrent("sauce")
       : setCurrent("main");
   };
-  /*на мой взггляд это очень топорное решение, привязанное к конкретному кол-ву элементов. Увы, подругому я не смог =(*/
   return (
     <>
       <section className={mainStyle.head}>
@@ -120,4 +117,4 @@ function BurgerIngredients() {
   );
 }
 
-export default React.memo(BurgerIngredients);
+export default memo(BurgerIngredients);

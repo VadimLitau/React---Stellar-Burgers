@@ -12,7 +12,7 @@ import {
   GET_SERV_ORDER_FAILED,
   CHANGE_ITEM,
 } from "../constants/index";
-import { IIngr, IDeleteIngr, IChangeElem, IAddElem, IBun } from "../types/data";
+import { IIngr, IAddElem } from "../types/data";
 import { AppThunk, AppDispatch } from "../types";
 
 export interface IOpenOrderModal {
@@ -110,7 +110,6 @@ export const addIngredient = (item: IAddElem) => {
   };
 };
 
-//Все что вы указали как "можно лучше" я обязуюсь доделать. Сейчас сдам работу как есть, т.к в любой момент могут вызвать на работу и я боюсь не успеть до дедлайна
 export const getServOrder: AppThunk = (orderId: number) => {
   return function (dispatch: AppDispatch) {
     dispatch(GetServOrderRequest());
@@ -119,8 +118,7 @@ export const getServOrder: AppThunk = (orderId: number) => {
       .then((data) => {
         dispatch(GetServOrderSuccess(data.order.number));
       })
-      .catch((err) => {
-        //console.log(err);
+      .catch(() => {
         dispatch(GetServOrderFailed());
       });
   };
@@ -133,8 +131,5 @@ export const getApiBurgerData: AppThunk = () => {
       .then((data) => {
         dispatch(GetApiItemsSucces(data.data));
       })
-      .catch((err) => {
-        //console.log(err);
-      });
   };
 };

@@ -1,4 +1,4 @@
-import React, { ChangeEvent, FormEventHandler, FormEvent } from "react";
+import React, { FormEvent } from "react";
 import {
   Input,
   Button,
@@ -16,7 +16,6 @@ function Forgot() {
 
   const forgotHandler = (e: FormEvent) => {
     e.preventDefault();
-    //console.log(values.email);
     dispatch(userForgotPass(values.email));
   };
 

@@ -84,7 +84,6 @@ export const getUserAuthorization = async (
 };
 
 export const logoutRequest = async (token: string) => {
-  //console.log(token)
   return await fetch(`${baseUrl}auth/logout`, {
     method: "POST",
     mode: "cors",

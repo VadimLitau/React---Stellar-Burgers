@@ -78,7 +78,6 @@ export default function BurgerConstructor() {
 
   const getOrder = () => {
     if (!authUser) {
-      //console.log(!authUser);
       return history.replace("/login");
     } else {
       dispatch(getServOrder(orderId));
@@ -86,12 +85,12 @@ export default function BurgerConstructor() {
     }
   };
   const handleDrop = (itemId: IAddElems) => {
-    //console.log(itemId);
     dispatch({
       type: ADD_ITEM,
-      item: { ...itemId }, //теперь при каждой новой отрисовке ингридиентов конструктора их ключ, не меняется
+      item: { ...itemId }, 
     });
   };
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [{ isHover }, dropTarget] = useDrop({
     accept: "item",
     drop(itemId: IAddElem) {

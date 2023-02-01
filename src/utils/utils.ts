@@ -2,11 +2,11 @@ export function getCookie(name: string) {
   const matches = document.cookie.match(
     new RegExp(
       "(?:^|; )" +
+        // eslint-disable-next-line no-useless-escape
         name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, "\\$1") +
         "=([^;]*)"
     )
   );
-  //console.log(matches)
   return matches ? decodeURIComponent(matches[1]) : undefined;
 }
 

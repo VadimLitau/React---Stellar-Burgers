@@ -29,6 +29,7 @@ const Ingredient: FC<IIngredient> = ({
   type,
   index,
 }) => {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [{ isDrag }, dragRef] = useDrag({
     type: "item",
     item: { id, name, price, src, count, type, index },
@@ -37,9 +38,7 @@ const Ingredient: FC<IIngredient> = ({
     }),
   });
   const location = useLocation();
-  // console.log(id);
   return (
-    //<Link to={`/ingredients/${id}`} state={{ background: location }} key={id} className={IngredientStyle.link}>
     <Link
       to={{
         pathname: `/ingredients/${id}`,

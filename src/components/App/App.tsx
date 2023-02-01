@@ -1,4 +1,4 @@
-import React, { useEffect, useState, FC } from "react";
+import React, { useEffect, FC } from "react";
 import { useDispatch, useSelector } from "../../services/hooks";
 import Constructor from "../../pages/constructor";
 import Login from "../../pages/login";
@@ -13,7 +13,6 @@ import Feeds from "../../pages/feeds";
 import FeedId from "../FeedId/feedId";
 import FeedIdModal from "../FeedId/feedIdModal";
 import {
-  BrowserRouter as Router,
   Route,
   Switch,
   useLocation,
@@ -31,14 +30,14 @@ const App: FC = () => {
   const userAuth = useSelector((store) => store.route.userAuthorizationSuccess);
   const auth = useAuth();
   const dispatch = useDispatch();
-  React.useEffect(() => {
+  useEffect(() => {
     if (!userAuth) {
       document.title = "react burger";
       dispatch(getUserDate(auth.user));
     }
-  }, [dispatch, userAuth]);
+  }, [auth.user, dispatch, userAuth]);
 
-  React.useEffect(() => {
+ useEffect(() => {
     document.title = "react burger";
     dispatch(getApiBurgerData());
   }, [dispatch]);
@@ -46,23 +45,10 @@ const App: FC = () => {
   const location = useLocation<LocationState>();
 
   const background = location.state?.background;
-  //console.log(location.state);
   function closeModals() {
     history.goBack();
   }
 
-  const dataFeed = useSelector((store) => store.ws.messages);
-  const [data, setData] = useState();
-
-  useEffect(() => {
-    if (dataFeed.length > 0) {
-      setData(dataFeed[`${dataFeed.length - 1}`].orders);
-    }
-  }, [dataFeed]);
-
-  //console.log(data);
-
-  //console.log(burgerData.length);
   return (
     <>
       <AppHeader />

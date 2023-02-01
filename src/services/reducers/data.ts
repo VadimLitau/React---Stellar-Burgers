@@ -1,4 +1,3 @@
-import { combineReducers } from "redux";
 import {
   OPEN_ORDER_MODAL,
   DELETE_ITEM,
@@ -42,7 +41,6 @@ export const initialState: TIndexInitialState = {
     type: ",",
     _id: "",
   },
-  //думал что можно обойтись без начальных значений в объекте, но не нашел как. Можно было бы использовать здесь массив, но тогда пришлось бы видоизменять логику в конструкторе.
   servOrder: null,
   isLoading: false,
   hasError: false,
@@ -78,7 +76,7 @@ export const itemReducer = (
         } else if (action.item.payload.count >= 1) {
           return { ...state };
         }
-      } else if (action.item.payload.type != "bun") {
+      } else if (action.item.payload.type !== "bun") {
         return {
           ...state,
           burgerConstructorItems: [
@@ -86,7 +84,7 @@ export const itemReducer = (
             action.item.payload,
           ],
           burgerData: [...state.burgerData].map((item) => {
-            if (item.type != "bun" && item._id === action.item.payload.id) {
+            if (item.type !== "bun" && item._id === action.item.payload.id) {
               return { ...item, count: ++item.count };
             } else {
               return { ...item };
@@ -125,7 +123,7 @@ export const itemReducer = (
           item._id === action.item.id ? { ...item, count: --item.count } : item
         ),
         burgerConstructorItems: state.burgerConstructorItems.filter(
-          (item) => item != deletetElement
+          (item) => item !== deletetElement
         ),
       };
     }

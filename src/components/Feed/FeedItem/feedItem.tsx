@@ -91,6 +91,7 @@ const FeedItem: FC<IFeedItems> = (item) => {
   const findDay = info.time.slice(findT - 2, findT);
   const findTime = info.time.slice(findT + 1, findT + 6);
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars, array-callback-return
   const sum = burgerData.map((el) => {
     const data = ingredients.find((item) => el._id === item);
     test = ingredients?.reduce(function (acc, data) {
@@ -103,8 +104,6 @@ const FeedItem: FC<IFeedItems> = (item) => {
     }
   }, 0);
 
-  //console.log(test);
-  //console.log(info.ingrArr);
   nowDay.toString() === findDay
     ? (info.itemDay = "Cегодня")
     : Number(nowDay) - Number(findDay) === 1
@@ -116,7 +115,6 @@ const FeedItem: FC<IFeedItems> = (item) => {
   info.profileUrl === "true"
     ? (info.url = `/profile/order/${info.id}`)
     : (info.url = `/feed/${info.id}`);
-  // console.log(location);
   return (
     <Link
       to={{
@@ -147,7 +145,6 @@ const FeedItem: FC<IFeedItems> = (item) => {
           <div className={feedItemStyle.wrapPrice}>
             <div className={feedItemStyle.price}>
               {ingrArr.reverse().map((item) => {
-                //console.log(item);
 
                 price += test[item._id] * item.price;
                 if (ingrArr.length <= 6) {
@@ -174,13 +171,4 @@ const FeedItem: FC<IFeedItems> = (item) => {
     </Link>
   );
 };
-// FeedItem.propTypes = {
-//   item: PropTypes.object.isRequired,
-// };
-
-// FeedItemImage.propTypes = {
-//   // data: PropTypes.object.isRequired,
-//   number: PropTypes.number,
-//   lengthArr: PropTypes.number,
-// };
 export default FeedItem;

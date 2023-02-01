@@ -169,8 +169,7 @@ export const userRegister: AppThunk = (
       .then((data) => {
         dispatch(UserRegisterSucces(data));
       })
-      .catch((err) => {
-        console.log(err);
+      .catch(() => {
         dispatch(UserRegisterFailed());
       });
   };
@@ -182,11 +181,9 @@ export const userForgotPass: AppThunk = (userEmail: string) => {
     getForgotPass(userEmail)
       .then(checkResponse)
       .then((data) => {
-        console.log(data);
-
         dispatch(UserForgotSucces(data));
       })
-      .catch((err) => {
+      .catch(() => {
         dispatch({
           type: USER_FORGOT_FAILED,
         });
@@ -203,11 +200,9 @@ export const userResetPass: AppThunk = (
     getResetPass(resetToken, resetPass)
       .then(checkResponse)
       .then((data) => {
-        console.log(data);
-
         dispatch(UserResetPasswordSucces(data));
       })
-      .catch((err) => {
+      .catch(() => {
         dispatch(UserResetPasswordFailed());
       });
   };
@@ -226,13 +221,10 @@ export const userAuthorization: AppThunk = (
           authToken = data.accessToken.split("Bearer ")[1];
         }
         if (authToken) {
-          //console.log(data.refreshToken);
           setCookie("token", authToken, 0);
           localStorage.setItem("refreshToken", `${data.refreshToken}`);
-          //localStorage.setItem('token', `${authToken}`);
         }
         if (data.success) {
-          // //console.log(data);
           dispatch({
             type: USER_AUTHORIZATION_SUCCESS,
             payload: { userEmail, usePass, ...data.user },
@@ -248,7 +240,6 @@ export const userAuthorization: AppThunk = (
 
 export const signOutUser: AppThunk = (token: string) => {
   return function (dispatch: AppDispatch) {
-    //console.log(token)
     logoutRequest(token)
       .then(checkResponse)
       .then((data) => data)
@@ -282,6 +273,7 @@ export const getUserDate: AppThunk = (user: IRouteuserAuthProfile) => {
       })
       .catch((e) => {
         if (user.name) {
+          // eslint-disable-next-line @typescript-eslint/no-unused-vars
           const data = updateUserTokenRequest()
             .then(checkResponse)
             .then((data) => {
@@ -297,12 +289,8 @@ export const getUserDate: AppThunk = (user: IRouteuserAuthProfile) => {
                 localStorage.setItem("refreshToken", `${data.refreshToken}`);
                 console.log("Token обновлен");
               }
-            })
-            .catch((e) => {
-              console.log(e.type);
-            });
+            })            
         }
-        console.log(e.type);
       });
   };
 };
@@ -324,8 +312,5 @@ export const updateUserProfile: AppThunk = (
           localStorage.setItem("password", password);
         }
       })
-      .catch((e) => {
-        console.log(e.type);
-      });
   };
 };

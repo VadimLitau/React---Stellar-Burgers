@@ -29,7 +29,7 @@ function ProfileForm() {
     values.name = userProfile.name;
     values.email = userProfile.email;
     values.password = userProfile.password;
-  }, [userProfile]);
+  }, [userProfile, values]);
 
   function saveProfile(e: FormEvent) {
     e.preventDefault();
@@ -117,7 +117,6 @@ function Profile() {
   let data = null;
   useEffect(() => {
     const token = "?token=" + getCookie("token");
-    // console.log(userProfile);
     if (userProfile) {
       dispatch({ type: WS_CONNECTION_START, payload: token });
     }
@@ -125,11 +124,10 @@ function Profile() {
     return () => {
       dispatch({ type: WS_CONNECTION_CLOSED, payload: "" });
     };
-  }, [userProfile]);
+  }, [dispatch, userProfile]);
   const dataFeed = useSelector((store) => store.ws.messages);
 
   if (dataFeed.length > 0) {
-    //console.log(dataFeed);
     data = dataFeed[`${dataFeed.length - 1}`].orders;
   }
 
@@ -192,7 +190,6 @@ function Profile() {
               <FeedProfile data={data} />
             </Route>
           </Switch>
-          {/* {linkState.order && <FeedProfile profile="true" />} */}
         </div>
       </div>
     </section>

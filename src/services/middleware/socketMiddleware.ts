@@ -9,14 +9,12 @@ export const socketMiddleware = (
   return (store: MiddlewareAPI<AppDispatch, RootState>) => {
     let socket: WebSocket | null = null;
     return (next) => (action) => {
-      const { dispatch, getState } = store;
+      const { dispatch} = store;
       const { type, payload } = action;
       const { wsInit, wsSendMessage, onOpen, onClose, onError, onMessage } =
         wsActions;
 
       if (type === wsInit) {
-        console.log(wsUrl);
-
         socket = new WebSocket(`${wsUrl}${payload}`);
       }
       if (socket && type === onClose) {
@@ -25,7 +23,6 @@ export const socketMiddleware = (
 
       if (socket) {
         socket.onopen = (event) => {
-          //console.log('открылся');
           dispatch({ type: onOpen, payload: event });
         };
 
@@ -39,7 +36,6 @@ export const socketMiddleware = (
         };
 
         socket.onclose = (event) => {
-          //console.log("закрылся");
           dispatch({ type: onClose, payload: event });
         };
 

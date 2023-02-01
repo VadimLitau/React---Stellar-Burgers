@@ -1,4 +1,4 @@
-import React, { FormEvent, useCallback, useState } from "react";
+import React, { FormEvent} from "react";
 import {
   EmailInput,
   PasswordInput,
@@ -25,7 +25,6 @@ function Login() {
     auth.signIn(values.email, values.password);
   };
 
-  // console.log(auth.user.name);
   if (auth.user.name) {
     return <Redirect to={location?.state?.from || "/"} />;
   }

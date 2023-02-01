@@ -1,3 +1,4 @@
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import React, { ChangeEvent, SetStateAction, useState } from "react";
 
 const useForm = () => {
@@ -24,4 +25,3 @@ const useForm = () => {
   return [state, handleChange];
 };
 export default useForm;
-//с формами я обязательно разберусь =)

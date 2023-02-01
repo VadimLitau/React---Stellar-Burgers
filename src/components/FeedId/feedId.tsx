@@ -13,7 +13,6 @@ export default function FeedId() {
   const { id } = useParams<{ id: string }>();
   const dispatch = useDispatch();
   const burgerData = useSelector((store) => store.item.burgerData);
-  //console.log(id);
   useEffect(() => {
     if (burgerData.length) {
       dispatch({ type: WS_CONNECTION_START, payload: "/all" });
@@ -21,7 +20,7 @@ export default function FeedId() {
     return () => {
       dispatch({ type: WS_CONNECTION_CLOSED, payload: "" });
     };
-  }, [burgerData]);
+  }, [burgerData, dispatch]);
   const dataFeed = useSelector((store) => store.ws.messages);
   interface IInfo {
     data: IFeedItem | null;
@@ -50,7 +49,6 @@ export default function FeedId() {
     info.ingredientForModal = info.data?.find(
       (ingr: { _id: string }) => ingr._id === id
     );
-    //console.log(info.ingredientForModal);
 
     info.ingredientForModalStatus = info.ingredientForModal?.status;
     info.ingredientForModalCreatedAt = info.ingredientForModal?.createdAt;
@@ -90,7 +88,7 @@ export default function FeedId() {
     acc[el] = (acc[el] || 0) + 1;
     return acc;
   }, []);
-  //console.log(test);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars, array-callback-return
   const sum = burgerData.map((el) => {
     const data = info.ingredientForModalIngredients?.find(
       (item) => el._id === item
@@ -133,7 +131,6 @@ export default function FeedId() {
             <div>
               <ul className={`${feedIdStyle.list} pr-6 mb-10`}>
                 {info.ingrArr.map((item) => {
-                  //console.log(item);
                   return (
                     <li
                       className={`${feedIdStyle.listItem} pb-4`}

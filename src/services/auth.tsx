@@ -10,7 +10,6 @@ interface IProvideAuth {
 
 export const ProvideAuth: FC<IProvideAuth> = ({ children }) => {
   const auth = useProvideAuth();
-  //console.log(AuthContext);
 
   return <AuthContext.Provider value={auth}>{children}</AuthContext.Provider>;
 };

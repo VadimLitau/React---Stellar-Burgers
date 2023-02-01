@@ -28,7 +28,6 @@ export default function FeedInfo() {
 
   feedWork.length > 45 ? (textSizeWork = "small") : (textSizeWork = "default");
 
-  //console.log(data);
   return (
     <section className={`${feedInfoStyle.main} ml-15`}>
       <div className={feedInfoStyle.wrap}>

@@ -70,7 +70,6 @@ const ChangeItem: FC<IChangeItem> = ({ item, index }) => {
 };
 
 ChangeItem.propTypes = {
-  //item: PropTypes.object.isRequired,
   index: PropTypes.number.isRequired,
 };
 
